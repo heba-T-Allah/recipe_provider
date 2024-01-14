@@ -10,7 +10,7 @@
     },
     {
       "title": "Blueberry Muffins",
-      "image": "assets/images/blueberry_muffins.png"
+      "image": "assets/images/muffins.png"
     },
     {
       "title": "Glazed salmon",
@@ -44,7 +44,7 @@
     },
     {
       "title": "Blueberry Muffins",
-      "image": "assets/images/blueberry_muffins.png",
+      "image": "assets/images/muffins.png",
       "meal_type": "Dinner",
       "rating": 3.0,
       "calories": 170.0,

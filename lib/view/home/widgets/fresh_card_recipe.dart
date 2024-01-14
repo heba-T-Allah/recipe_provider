@@ -18,77 +18,72 @@ class FreshCardRecipe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned(
-          child: Card(
-              margin: const EdgeInsets.only(right: AppMargin.m60),
-              color: ColorManager.backgroundGreyColor,
-              elevation: 2,
-              shape: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(AppSize.s30),
-                  borderSide: BorderSide.none),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * .50,
-                child: Padding(
-                  padding: const EdgeInsets.all(AppPadding.p20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    // mainAxisSize: MainAxisSize.max,
-                    children: [
-                      MyFavIcon(favourite: recipe.favorite!),
-                      const SizedBox(
-                        width: AppSize.s90,
-                        height: AppSize.s90,
+    return Card(
+        margin: const EdgeInsets.only(right: AppMargin.m60),
+        color: ColorManager.backgroundGreyColor,
+        elevation: 2,
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(AppSize.s30),
+            borderSide: BorderSide.none),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * .50,
+          child: Padding(
+            padding: const EdgeInsets.all(AppPadding.p20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisSize: MainAxisSize.max,
+              children: [
+                Row(
+                  crossAxisAlignment:CrossAxisAlignment.start,
+                  children: [
+                    MyFavIcon(favourite: recipe.favorite!),
+                    Transform.translate(
+                      offset: Offset(50, 0),
+                      child: Image.asset(
+                        recipe.image!,
+                        height:AppSize.s120,
+                        width: AppSize.s140,
+                        fit: BoxFit.contain,
                       ),
-                      Text(
-                        recipe.mealType!,
-                        style: TextStyles.textStyleMedium10Blue,
-                      ),
-                      const SizedBox(
-                        height: AppSize.s5,
-                      ),
-                    
-                      Flexible(
-                        child: Text(recipe.title!,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyles.textStyleMedium14Black),
-                      ),
-                      const SizedBox(
-                        height: AppSize.s5,
-                      ),
-                      MyRatingBar(
-                        rate: recipe.rating!,
-                      ),
-                      const SizedBox(
-                        height: AppSize.s5,
-                      ),
-                      Text(
-                        "${recipe.calories!} Calories",
-                        style: TextStyles.textStyleRegular10Orange,
-                      ),
-                      const SizedBox(
-                        height: AppSize.s5,
-                      ),
-                      PrepTimeAndServing(
-                          prepTime: recipe.prepTime!, serving: recipe.serving!),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )),
-        ),
-        Positioned(
-          right: -7,
-          top: -20,
-          child: Image.asset(
-            recipe.image!,
-            width: AppSize.s150,
-            height: AppSize.s150,
+
+                Text(
+                  recipe.mealType!,
+                  style: TextStyles.textStyleMedium10Blue,
+                ),
+                const SizedBox(
+                  height: AppSize.s5,
+                ),
+                Flexible(
+                  child: Text(recipe.title!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyles.textStyleMedium14Black),
+                ),
+                const SizedBox(
+                  height: AppSize.s5,
+                ),
+                MyRatingBar(
+                  rate: recipe.rating!,
+                ),
+                const SizedBox(
+                  height: AppSize.s5,
+                ),
+                Text(
+                  "${recipe.calories!} Calories",
+                  style: TextStyles.textStyleRegular10Orange,
+                ),
+                const SizedBox(
+                  height: AppSize.s5,
+                ),
+                PrepTimeAndServing(
+                    prepTime: recipe.prepTime!, serving: recipe.serving!),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ));
   }
 }

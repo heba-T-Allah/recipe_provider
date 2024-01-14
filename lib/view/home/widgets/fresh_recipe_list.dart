@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:registration/view/home/widgets/fresh_card_recipe.dart';
 import '../../../model/recipe.dart';
 
-import '../../../resources/values_manager.dart';
 
 class FreshRecipeList extends StatelessWidget {
   const FreshRecipeList({
@@ -16,7 +15,7 @@ class FreshRecipeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * .3,
+      height: MediaQuery.of(context).size.height/3,
       child: ListView.builder(
         itemCount: recipeList.length,
         shrinkWrap: true,

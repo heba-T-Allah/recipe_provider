@@ -30,8 +30,8 @@ class RecommendedCard extends StatelessWidget {
           children: [
             Image.asset(
               recipe.image!,
-              height: AppSize.s80,
-              width: AppSize.s80,
+              height:AppSize.s90,
+              width: AppSize.s90,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
