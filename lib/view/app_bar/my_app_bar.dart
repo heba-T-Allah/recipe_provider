@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 import '../../resources/assets_manager.dart';
 import '../../resources/constants_manager.dart';
@@ -20,13 +21,20 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       leading: IconButton(
         onPressed: () {
-          if (scaffoldKey.currentState!.isDrawerOpen) {
-            scaffoldKey.currentState!.closeDrawer();
+          if (ZoomDrawer.of(context)!.isOpen()) {
+            ZoomDrawer.of(context)!.close();
             //close drawer, if drawer is open
           } else {
-            scaffoldKey.currentState!.openDrawer();
+            ZoomDrawer.of(context)!.open();
             //open drawer, if drawer is closed
           }
+          // if (scaffoldKey.currentState!.isDrawerOpen) {
+          //   scaffoldKey.currentState!.closeDrawer();
+          //   //close drawer, if drawer is open
+          // } else {
+          //   scaffoldKey.currentState!.openDrawer();
+          //   //open drawer, if drawer is closed
+          // }
         },
         icon: Image.asset(
           ImageAssets.menuIcon,

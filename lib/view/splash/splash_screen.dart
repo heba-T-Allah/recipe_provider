@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:registration/drawer_animation/drawer_screen.dart';
 import 'package:registration/resources/constants_manager.dart';
 import 'package:registration/resources/strings_manager.dart';
 
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _goNext() {
     if (isLoggedIn) {
-      NavigationUtils.pushReplacement(context: context, page: HomeScreen());
+      NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
       // Navigator.pushReplacementNamed(context, Routes.homeScreen);
     } else {
       NavigationUtils.pushReplacement(
