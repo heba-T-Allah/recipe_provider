@@ -4,9 +4,7 @@ import 'package:registration/drawer_animation/menu_screen.dart';
 import 'package:registration/resources/color_manager.dart';
 import 'package:registration/view/home/home_screen.dart';
 
-import '../resources/assets_manager.dart';
-import '../resources/constants_manager.dart';
-import '../resources/values_manager.dart';
+
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({super.key});

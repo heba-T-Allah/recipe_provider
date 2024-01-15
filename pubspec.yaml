@@ -46,6 +46,8 @@ dependencies:
   provider: ^6.1.1
   flutter_screenutil: ^5.9.0
   flutter_zoom_drawer: ^3.1.1
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
 
 
 dev_dependencies:
