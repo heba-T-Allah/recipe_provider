@@ -15,29 +15,22 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  Future getValidateData() async {
-    // isLoggedIn = PreferencesService.retrieveBoolValueIsLoggedIn();
-    // isLoggedIn =
-    //     GetIt.I.get<SharedPreferences>().getBool(AppStrings.isLoggedInPref) ??
-    //         false;
-    // print("loggedIn splash $isLoggedIn");
-    await Future.delayed(const Duration(seconds: 1));
-
-    FirebaseAuth.instance.authStateChanges().listen((user) {
-      if (user != null) {
-        NavigationUtils.pushReplacement(
-            context: context, page: const OnBoardingScreen());
-      } else {
-        NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
-      }
+  Future<void> getValidateData() async {
+    await Future.delayed(const Duration(seconds: 5), () {
+      FirebaseAuth.instance.authStateChanges().listen((user) {
+        user == null
+            ? NavigationUtils.pushReplacement(
+                context: context, page: const OnBoardingScreen())
+            : NavigationUtils.pushReplacement(
+                context: context, page: DrawerScreen());
+      });
     });
   }
 
   @override
   void initState() {
-    super.initState();
-    // _startDelay();
     getValidateData();
+    super.initState();
   }
 
   @override

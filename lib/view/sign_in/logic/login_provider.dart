@@ -1,26 +1,54 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../resources/strings_manager.dart';
+import 'package:flutter/material.dart';
+import 'package:registration/view/drawer/drawer_screen.dart';
+import 'package:registration/view/sign_up/signup_screen.dart';
 import '../../../utils/navigation.dart';
-import '../../home/home_screen.dart';
 
 class LoginProvider extends ChangeNotifier {
-  Future<void> login(
-      String email, String password, BuildContext context) async {
-    try {
-      await GetIt.I
-          .get<SharedPreferences>()
-          .setString(AppStrings.emailPref, email);
-      GetIt.I
-          .get<SharedPreferences>()
-          .setString(AppStrings.passwordPref, password);
-      GetIt.I.get<SharedPreferences>().setBool(AppStrings.isLoggedInPref, true);
-      print("login Successfully.");
-      NavigationUtils.pushReplacement(context: context, page: HomeScreen());
-      notifyListeners();
-    } on Exception catch (e) {}
+  TextEditingController? emailController;
+  TextEditingController? passwordController;
+  GlobalKey<FormState>? formKey;
+
+  void init() {
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    formKey = GlobalKey<FormState>();
   }
+
+  void providerDispose() {
+    passwordController?.dispose();
+    emailController?.dispose();
+    // formKey=null;
+  }
+
+  void openSignUpScreen(BuildContext context) {
+    providerDispose();
+    NavigationUtils.pushReplacement(context: context, page: SignUpScreen());
+  }
+
+  Future<void> login(BuildContext context) async {
+    // showDialog(
+    //   context: context,
+    //   barrierDismissible: false,
+    //   builder: (context) =>Center(child: CircularProgressIndicator(),),
+    // );
+    try {
+      if (formKey?.currentState?.validate() ?? false) {
+        var credentials = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailController!.text,
+                password: passwordController!.text);
+        print("login Successfully. $credentials ");
+        // providerDispose();
+        NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+    // Navigator.pop(context);
+    // navigatorkey.currentstate!.popuntil((route) = route.isfirst);}
+
+}
 }

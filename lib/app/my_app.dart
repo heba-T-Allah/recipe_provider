@@ -18,7 +18,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final appRouter = AppRouter();
-
+// final navigatorKey=GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
         child: MaterialApp(
           title: AppStrings.appTitle,
           debugShowCheckedModeBanner: false,
+          // navigatorKey: navigatorKey,
           // theme: ThemeData(
           //     inputDecorationTheme: InputDecorationTheme(
           //       filled: true,

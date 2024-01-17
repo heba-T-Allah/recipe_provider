@@ -39,11 +39,11 @@ class FreshCardRecipe extends StatelessWidget {
                   children: [
                     MyFavIcon(favourite: recipe.favorite!),
                     Transform.translate(
-                      offset: Offset(50, 0),
+                      offset: Offset(70, 0),
                       child: Image.asset(
                         recipe.image!,
                         height:AppSize.s120,
-                        width: AppSize.s140,
+                        width: AppSize.s120,
                         fit: BoxFit.contain,
                       ),
                     ),

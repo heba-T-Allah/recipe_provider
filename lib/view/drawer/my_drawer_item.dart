@@ -1,12 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:registration/view/about/about_screen.dart';
 import 'package:registration/view/favorite/favourite_screen.dart';
+import 'package:registration/view/on_boarding/on_boarding_screen.dart';
 import 'package:registration/view/recently_viewed/recently_viewed_screen.dart';
 import 'package:registration/view/settings/settings_screen.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/text_style.dart';
 import '../../utils/navigation.dart';
-import '../costom/shared_functions.dart';
 import '../help/help_screen.dart';
 import '../home/home_screen.dart';
 
@@ -40,7 +41,7 @@ class _MyDrawerItemState extends State<MyDrawerItem> {
         : ColorManager.greyText;
   }
 
-  onItemTapped(int index) {
+  onItemTapped(int index) async {
     setState(() {
       widget.selectedIndex = index;
     });
@@ -64,8 +65,12 @@ class _MyDrawerItemState extends State<MyDrawerItem> {
         return NavigationUtils.pushAndRemoveUntil(
             context: context, page: HelpScreen());
       case 6:
-        final sharedFunctions = SharedFunctions(context: context);
-        return sharedFunctions.logoutUser();
+        try {
+          await FirebaseAuth.instance.signOut();
+          return Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => OnBoardingScreen(),), (route) => false);
+        } catch (e) {
+          print(e);
+        }
       default:
         return NavigationUtils.pushAndRemoveUntil(
             context: context, page: HomeScreen());

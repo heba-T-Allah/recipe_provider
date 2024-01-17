@@ -6,10 +6,10 @@ import '../../drawer/drawer_screen.dart';
 import '../../sign_in/signin_screen.dart';
 
 class SignUpProvider extends ChangeNotifier {
-   TextEditingController? fullNameController;
-   TextEditingController? emailController;
-   TextEditingController? passwordController;
-   GlobalKey<FormState>? formKey;
+  TextEditingController? fullNameController;
+  TextEditingController? emailController;
+  TextEditingController? passwordController;
+  GlobalKey<FormState>? formKey;
 
   void init() {
     fullNameController = TextEditingController();
@@ -34,16 +34,19 @@ class SignUpProvider extends ChangeNotifier {
                 password: passwordController!.text);
         if (credentials.user != null) {
           credentials.user?.updateDisplayName(fullNameController!.text);
-          providerDispose();
+          // providerDispose();
+          print("signUp Successfully. $credentials ");
           NavigationUtils.pushReplacement(
               context: context, page: DrawerScreen());
         }
       }
-    } catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 
   void openSigninScreen(BuildContext context) {
-    providerDispose();
+    // providerDispose();
     NavigationUtils.pushReplacement(context: context, page: SignInScreen());
   }
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../resources/assets_manager.dart';
@@ -5,10 +6,24 @@ import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 
-class MyDrawerHeader extends StatelessWidget {
+class MyDrawerHeader extends StatefulWidget {
   const MyDrawerHeader({
     super.key,
   });
+
+  @override
+  State<MyDrawerHeader> createState() => _MyDrawerHeaderState();
+}
+
+class _MyDrawerHeaderState extends State<MyDrawerHeader> {
+
+
+  String getuserName() {
+   String userName = FirebaseAuth.instance.currentUser?.displayName.toString() ??
+        "Emma Holmes";
+    setState(() {});
+    return userName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +45,7 @@ class MyDrawerHeader extends StatelessWidget {
                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    "Emma Holmes",
+                    getuserName(),
                     style: TextStyles.textStyleRegular18Black,
                   ),
                   // SizedBox(height: 20),

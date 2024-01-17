@@ -101,10 +101,11 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
     );
   }
 
-  @override
-  void dispose() {
-    Provider.of<SignUpProvider>(context, listen: false).providerDispose();
-
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   if (mounted) {
+  //     Provider.of<SignUpProvider>(context, listen: false).providerDispose();
+  //   }
+  //   super.dispose();
+  // }
 }

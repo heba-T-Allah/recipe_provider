@@ -18,7 +18,7 @@ class PrepTimeAndServing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
 
         Row(
@@ -35,7 +35,6 @@ class PrepTimeAndServing extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(width: 40,),
         Row(
           children: [
             Image.asset(
