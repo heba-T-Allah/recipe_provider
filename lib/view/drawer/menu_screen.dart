@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:registration/resources/color_manager.dart';
 
-import '../view/drawer/my_drawer.dart';
+import 'my_drawer.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});

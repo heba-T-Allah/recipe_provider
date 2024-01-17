@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:registration/resources/color_manager.dart';
 import 'package:registration/resources/strings_manager.dart';
 import 'my_drawer_header.dart';
 import 'my_drawer_item.dart';
@@ -15,6 +14,15 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   int selectedIndex = 0;
+  List<Map> drawerItems = [
+    {'index': 0, 'icon': Icons.home, 'title': AppStrings.home},
+    {'index': 1, 'icon': Icons.favorite_border, 'title': AppStrings.favorites},
+    {'index': 2, 'icon': Icons.play_arrow_outlined, 'title': AppStrings.recentlyViewed},
+    {'index': 3, 'icon': Icons.settings, 'title': AppStrings.setting},
+    {'index': 4, 'icon': Icons.info_outline_rounded, 'title': AppStrings.aboutUs},
+    {'index': 5, 'icon': Icons.help, 'title': AppStrings.help},
+    {'index': 6, 'icon': Icons.logout, 'title': AppStrings.signOut},
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -24,48 +32,13 @@ class _MyDrawerState extends State<MyDrawer> {
         // padding: EdgeInsets.zero,
         children: [
           MyDrawerHeader(),
-          MyDrawerItem(
+          Column(children: drawerItems.map((e) => MyDrawerItem(
             selectedIndex: selectedIndex,
-            icon: Icons.home,
-            index: 0,
-            title: AppStrings.home,
-          ),
-          MyDrawerItem(
-            selectedIndex: selectedIndex,
-            icon: Icons.favorite_border,
-            index: 1,
-            title: AppStrings.favorites,
-          ),
-          MyDrawerItem(
-            selectedIndex: selectedIndex,
-            icon: Icons.play_arrow_outlined,
-            index: 2,
-            title: AppStrings.recentlyViewed,
-          ),
-          MyDrawerItem(
-            selectedIndex: selectedIndex,
-            icon: Icons.settings,
-            index: 3,
-            title: AppStrings.setting,
-          ),
-          MyDrawerItem(
-            selectedIndex: selectedIndex,
-            icon: Icons.info_outline_rounded,
-            index: 4,
-            title: AppStrings.aboutUs,
-          ),
-          MyDrawerItem(
-            selectedIndex: selectedIndex,
-            icon: Icons.help,
-            index: 5,
-            title: AppStrings.help,
-          ),
-          MyDrawerItem(
-            selectedIndex: selectedIndex,
-            icon: Icons.logout,
-            index: 6,
-            title: AppStrings.signOut,
-          ),
+            icon: e['icon'],
+            index: e['index'],
+            title: e['title'],
+          ),).toList(),),
+
         ],
       ),
     );

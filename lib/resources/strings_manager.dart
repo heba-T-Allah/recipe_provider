@@ -23,6 +23,7 @@ class AppStrings {
   static const passwordPref = "password";
   static const notValidEmail = "Not Valid Email";
   static const passwordTooShort = "Password is too short";
+  static const pleaseEnterValidPassword ="Please enter a valid Password";
 
   ////home page
   static const whatWouldYouLikeToCook = "What Would you Like to Cook \n Today?";

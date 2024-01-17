@@ -137,4 +137,8 @@ class _MyCarouselSliderState extends State<MyCarouselSlider> {
           )
         ]);
   }
+  @override
+  void dispose() {
+super.dispose();
+  }
 }

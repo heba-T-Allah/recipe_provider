@@ -9,10 +9,8 @@ import '../../resources/values_manager.dart';
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
     super.key,
-    required this.scaffoldKey,
   });
 
-  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +19,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       leading: IconButton(
         onPressed: () {
-          if (ZoomDrawer.of(context)!.isOpen()) {
-            ZoomDrawer.of(context)!.close();
-            //close drawer, if drawer is open
-          } else {
-            ZoomDrawer.of(context)!.open();
-            //open drawer, if drawer is closed
-          }
-          // if (scaffoldKey.currentState!.isDrawerOpen) {
-          //   scaffoldKey.currentState!.closeDrawer();
-          //   //close drawer, if drawer is open
-          // } else {
-          //   scaffoldKey.currentState!.openDrawer();
-          //   //open drawer, if drawer is closed
-          // }
+         ZoomDrawer.of(context)!.toggle();
         },
         icon: Image.asset(
           ImageAssets.menuIcon,

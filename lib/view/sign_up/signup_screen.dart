@@ -19,7 +19,7 @@ class SignUpScreen extends StatelessWidget {
         print("tapped");
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.transparent,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -28,23 +28,27 @@ class SignUpScreen extends StatelessWidget {
                   width: width,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage(ImageAssets.bgMask),
-                    fit: BoxFit.cover,
-                  )),
-                  child: ListView(children: [
-                    Image.asset(
-                      ImageAssets.logo,
-                      scale: 3,
-                    ),
+                        image: AssetImage(ImageAssets.bgMask),
+                        fit: BoxFit.cover,
+                      )),
+                  child: ListView(
+                      children: [
+                        Image.asset(
+                          ImageAssets.logo,
+                          scale: 3,
+                        ),
 
-                    Center(
-                      child: Text(
-                        AppStrings.signUp,
-                        style:
-                            TextStyles.textStyleBold22White.copyWith(height: 1.5),
-                      ),
-                    ),
-                    const FormSectionSignUp(),
+                        Center(
+                          child: Text(
+                            AppStrings.signIn,
+                            style: TextStyles.textStyleBold22White
+                                .copyWith(height: 1.5),
+                          ),
+                        ),
+                        SizedBox(
+                          height:20,
+                        ),
+                   const FormSectionSignUp(),
                   ])),
             ],
           ),

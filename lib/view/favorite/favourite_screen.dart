@@ -19,7 +19,7 @@ class FavoriteScreen extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: MyAppBar(scaffoldKey: scaffoldKey),
+      appBar: MyAppBar(),
       drawer: MyDrawer(),
       body: Padding(
         padding: const EdgeInsets.only(

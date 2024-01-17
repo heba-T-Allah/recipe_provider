@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/routing/app-router.dart';
 import 'package:registration/view/home/logic/home_provider.dart';
+import 'package:registration/view/sign_up/logic/signup_provider.dart';
 import '../resources/strings_manager.dart';
 import '../routing/routes.dart';
 import '../view/favorite/logic/favorite_provider.dart';
@@ -24,6 +25,8 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider<LoginProvider>(
             create: (BuildContext context) => LoginProvider(),
+          ),ChangeNotifierProvider<SignUpProvider>(
+            create: (BuildContext context) => SignUpProvider(),
           ),
           ChangeNotifierProvider<HomeProvider>(
             create: (BuildContext context) => HomeProvider()..getAdsAndRecipes(),

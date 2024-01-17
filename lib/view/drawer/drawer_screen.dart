@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'package:registration/drawer_animation/menu_screen.dart';
 import 'package:registration/resources/color_manager.dart';
 import 'package:registration/view/home/home_screen.dart';
+
+import 'menu_screen.dart';
 
 
 
@@ -18,25 +19,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar( actions: [
-      //   Padding(
-      //     padding: const EdgeInsets.symmetric(
-      //         horizontal: AppConstants.horizontalPadding),
-      //     child: Image.asset(
-      //       ImageAssets.notificationsIcon,
-      //       color: Colors.black,
-      //       width: AppSize.s20,
-      //       height: AppSize.s20,
-      //     ),
-      //   )
-      // ],),
-      backgroundColor: ColorManager.backgroundGreyColor,
-      body: ZoomDrawer(
+    return ZoomDrawer(
         controller: zoomController,
         menuScreen: MenuScreen(),
         mainScreen: HomeScreen(),
-        clipMainScreen: false,
+        clipMainScreen: true,
+
         slideWidth: MediaQuery
             .of(context)
             .size
@@ -46,7 +34,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
         openCurve: Curves.fastOutSlowIn,
         closeCurve: Curves.bounceIn,
       // showShadow: true,
-      ),
+        menuBackgroundColor: ColorManager.backgroundGreyColor,
+
     );
   }
 }

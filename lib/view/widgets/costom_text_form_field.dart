@@ -1,8 +1,8 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:registration/resources/color_manager.dart';
 import 'package:registration/resources/text_style.dart';
 import '../../resources/strings_manager.dart';
+import '../../utils/app_regex.dart';
 
 class CostomTextFormField extends StatefulWidget {
   CostomTextFormField(
@@ -88,14 +88,15 @@ class _CostomTextFormFieldState extends State<CostomTextFormField> {
             return _errorMsg(widget.hintText);
           }
           if (widget.hintText == AppStrings.emailHintText) {
-            if (!EmailValidator.validate(value)) {
+            if (!AppRegex.isEmailValid(value)) {
               return AppStrings.notValidEmail;
             }
-            return null;
           }
           if (widget.hintText == AppStrings.password) {
-            if (value.length < 6) {
-              return AppStrings.passwordTooShort;
+            if (value == null ||
+                value.isEmpty ||
+                !AppRegex.isPasswordValid(value)) {
+              return AppStrings.pleaseEnterValidPassword;
             }
           }
         });

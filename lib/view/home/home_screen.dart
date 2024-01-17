@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: MyAppBar(scaffoldKey: scaffoldKey),
+      appBar: MyAppBar(),
       drawer: MyDrawer(),
       body: Consumer<HomeProvider>(builder: (context, value, child) {
         return Padding(
