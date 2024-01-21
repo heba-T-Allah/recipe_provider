@@ -22,15 +22,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    // init();
+    init();
     super.initState();
   }
 
-  // init() {
-  //   Future.delayed(const Duration(milliseconds: 500), () {
-  //     Provider.of<HomeProvider>(context).getAdsAndRecipes();
-  //   });
-  // }
+  init() async {
+    // Future.delayed(const Duration(milliseconds: 500), () {
+    await Provider.of<HomeProvider>(context, listen: false).getAdsAndRecipes();
+    // });
+  }
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -42,61 +42,66 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: MyAppBar(),
       drawer: MyDrawer(),
       body: Consumer<HomeProvider>(builder: (context, value, child) {
-        return Padding(
-          padding: const EdgeInsets.only(
-              top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
-          child: SingleChildScrollView(
-            child: value.adsList.isEmpty
-                ? const Center(child: CircularProgressIndicator())
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: AppSize.s20,
-                        child: Text(
-                          "Bonjour Emma",
-                          style: TextStyles.textStyleRegular13Grey,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      Text(
-                        AppStrings.whatWouldYouLikeToCook,
-                        style: TextStyles.textStyleAbrilRegular20Black
-                            .copyWith(height: 1.5),
-                      ),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      const SearchAndFilter(),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      MyCarouselSlider(
-                        adsList: value.adsList,
-                      ),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      CardsTitle(title: AppStrings.todayFresh),
-                      const SizedBox(
-                        height: AppSize.s20,
-                      ),
-                      FreshRecipeList(recipeList: value.recipeList),
-                      const SizedBox(
-                        height: AppSize.s20,
-                      ),
-                      CardsTitle(title: AppStrings.recommended),
-                      const SizedBox(
-                        height: AppSize.s10,
-                      ),
-                      RecommendedRecipeList(recipeList: value.recipeList),
-                    ],
-                  ),
-          ),
-        );
+        return value.recipeList == null
+            ? const Center(child: CircularProgressIndicator())
+            : value.recipeList!.isEmpty
+                ? const Text('No Data Found')
+                : Padding(
+                    padding: const EdgeInsets.only(
+                        top: AppPadding.p8,
+                        left: AppPadding.p20,
+                        right: AppPadding.p20),
+                    child: SingleChildScrollView(
+                      child: value.adsList!.isEmpty
+                          ? const Center(child: CircularProgressIndicator())
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: AppSize.s20,
+                                  child: Text(
+                                    "Bonjour Emma",
+                                    style: TextStyles.textStyleRegular13Grey,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                Text(
+                                  AppStrings.whatWouldYouLikeToCook,
+                                  style: TextStyles.textStyleAbrilRegular20Black
+                                      .copyWith(height: 1.5),
+                                ),
+                                const SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                const SearchAndFilter(),
+                                const SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                MyCarouselSlider(),
+                                const SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                CardsTitle(title: AppStrings.todayFresh),
+                                const SizedBox(
+                                  height: AppSize.s20,
+                                ),
+                                FreshRecipeList(recipeList: value.recipeList!),
+                                const SizedBox(
+                                  height: AppSize.s20,
+                                ),
+                                CardsTitle(title: AppStrings.recommended),
+                                const SizedBox(
+                                  height: AppSize.s10,
+                                ),
+                                RecommendedRecipeList(
+                                    recipeList: value.recipeList!),
+                              ],
+                            ),
+                    ),
+                  );
       }),
     );
   }
