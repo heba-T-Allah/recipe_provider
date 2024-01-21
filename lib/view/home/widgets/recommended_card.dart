@@ -21,7 +21,7 @@ class RecommendedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => NavigationUtils.push(context: context, page:  RecipeViewScreen()),
+      onTap: () => NavigationUtils.push(context: context, page:  RecipeViewScreen(recipe: recipe,)),
       child: Card(
           margin: const EdgeInsets.symmetric(vertical: AppMargin.m8),
           color: ColorManager.backgroundGreyColor,

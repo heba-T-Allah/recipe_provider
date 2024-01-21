@@ -21,7 +21,7 @@ class FreshCardRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => NavigationUtils.push(context: context, page:  RecipeViewScreen()),
+      onTap: () => NavigationUtils.push(context: context, page:  RecipeViewScreen(recipe: recipe,)),
       child: Card(
           margin: const EdgeInsets.only(right: AppMargin.m60),
           color: ColorManager.backgroundGreyColor,

@@ -9,7 +9,7 @@ import '../app_bar/my_app_bar.dart';
 
 
 class RecipeViewScreen extends StatelessWidget {
-  RecipeViewScreen({super.key});
+  RecipeViewScreen({super.key,required this.recipe});
 
   Recipe? recipe;
 
@@ -27,7 +27,7 @@ class RecipeViewScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RecipeSpecifications(),
+              RecipeSpecifications(recipe:recipe!),
               SizedBox(
                 height: AppSize.s20,
               ),
