@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:registration/view/about/about_screen.dart';
 import 'package:registration/view/favorite/favourite_screen.dart';
-import 'package:registration/view/on_boarding/on_boarding_screen.dart';
 import 'package:registration/view/recently_viewed/recently_viewed_screen.dart';
 import 'package:registration/view/settings/settings_screen.dart';
+import 'package:registration/view/sign_up/logic/signup_provider.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/text_style.dart';
 import '../../utils/navigation.dart';
@@ -65,12 +65,7 @@ class _MyDrawerItemState extends State<MyDrawerItem> {
         return NavigationUtils.pushAndRemoveUntil(
             context: context, page: HelpScreen());
       case 6:
-        try {
-          await FirebaseAuth.instance.signOut();
-          return Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => OnBoardingScreen(),), (route) => false);
-        } catch (e) {
-          print(e);
-        }
+        Provider.of<SignUpProvider>(context, listen: false).signOut(context);
       default:
         return NavigationUtils.pushAndRemoveUntil(
             context: context, page: HomeScreen());

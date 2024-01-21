@@ -2,9 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_kit/overlay_kit.dart';
+import 'package:registration/utils/toast_msg_status.dart';
 import 'package:registration/view/drawer/drawer_screen.dart';
 import 'package:registration/view/sign_up/signup_screen.dart';
+import '../../../networking/handling_error_firebase.dart';
 import '../../../utils/navigation.dart';
+import '../../widgets/overlay_custom_toast.dart';
 
 class LoginProvider extends ChangeNotifier {
   TextEditingController? emailController;
@@ -18,9 +22,9 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void providerDispose() {
-    passwordController?.dispose();
-    emailController?.dispose();
-    // formKey=null;
+    passwordController = null;
+    emailController = null;
+    formKey = null;
   }
 
   void openSignUpScreen(BuildContext context) {
@@ -29,11 +33,8 @@ class LoginProvider extends ChangeNotifier {
   }
 
   Future<void> login(BuildContext context) async {
-    // showDialog(
-    //   context: context,
-    //   barrierDismissible: false,
-    //   builder: (context) =>Center(child: CircularProgressIndicator(),),
-    // );
+    OverlayLoadingProgress.start();
+
     try {
       if (formKey?.currentState?.validate() ?? false) {
         var credentials = await FirebaseAuth.instance
@@ -41,14 +42,29 @@ class LoginProvider extends ChangeNotifier {
                 email: emailController!.text,
                 password: passwordController!.text);
         print("login Successfully. $credentials ");
-        // providerDispose();
+        OverlayToastMessage.show(
+            widget: OverlayCustomToast(
+              message: "You login Successfully",status: ToastMessageStatus.success,
+            ));
+        providerDispose();
+        OverlayLoadingProgress.stop();
         NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
       }
     } on FirebaseAuthException catch (e) {
       print(e);
+      OverlayToastMessage.show(
+        widget: OverlayCustomToast(
+          message: ErrorHandler.getErrorMsg(e.code),status: ToastMessageStatus.failed,
+        ),
+      );
+      OverlayLoadingProgress.stop();
+    } catch (e) {
+      print(e);
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+        message: "General error: $e",status: ToastMessageStatus.failed,
+      ));
+      OverlayLoadingProgress.stop();
     }
-    // Navigator.pop(context);
-    // navigatorkey.currentstate!.popuntil((route) = route.isfirst);}
-
-}
+  }
 }

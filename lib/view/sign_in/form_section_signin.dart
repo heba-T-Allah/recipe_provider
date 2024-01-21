@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:registration/resources/strings_manager.dart';
 import 'package:registration/view/sign_in/logic/login_provider.dart';
 import '../../resources/text_style.dart';
-import '../widgets/costom_text_form_field.dart';
+import '../widgets/custom_text_form_field.dart';
 import '../widgets/text_button_widget.dart';
 
 class FormSectionSignIn extends StatefulWidget {
@@ -32,7 +32,7 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: CostomTextFormField(
+                        child: CustomTextFormField(
                           controller: provider.emailController!,
                           hintText: AppStrings.emailHintText,
                           prefixIcon: Icons.email,
@@ -43,7 +43,7 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: CostomTextFormField(
+                        child: CustomTextFormField(
                             controller: provider.passwordController!,
                             hintText: AppStrings.password,
                             prefixIcon: Icons.lock,
@@ -105,11 +105,11 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                 )));
   }
 
-  // @override
-  // void dispose() {
-  //   if (mounted) {
-  //     Provider.of<LoginProvider>(context, listen: false).providerDispose();
-  //   }
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    if (context.mounted) {
+      Provider.of<LoginProvider>(context, listen: false).providerDispose();
+    }
+    super.dispose();
+  }
 }

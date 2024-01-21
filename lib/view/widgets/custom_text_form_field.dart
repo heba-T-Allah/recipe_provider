@@ -4,8 +4,8 @@ import 'package:registration/resources/text_style.dart';
 import '../../resources/strings_manager.dart';
 import '../../utils/app_regex.dart';
 
-class CostomTextFormField extends StatefulWidget {
-  CostomTextFormField(
+class CustomTextFormField extends StatefulWidget {
+  CustomTextFormField(
       {super.key,
       required this.controller,
       required this.hintText,
@@ -22,10 +22,10 @@ class CostomTextFormField extends StatefulWidget {
   final TextInputType inputType;
 
   @override
-  State<CostomTextFormField> createState() => _CostomTextFormFieldState();
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
 }
 
-class _CostomTextFormFieldState extends State<CostomTextFormField> {
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
   // bool isObsecureText = true;
 
   void toggleObsecure() {

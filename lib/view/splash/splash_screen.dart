@@ -15,16 +15,24 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  StreamSubscription<User?>? _listener;
+
   Future<void> getValidateData() async {
-    await Future.delayed(const Duration(seconds: 5), () {
-      FirebaseAuth.instance.authStateChanges().listen((user) {
-        user == null
-            ? NavigationUtils.pushReplacement(
-                context: context, page: const OnBoardingScreen())
-            : NavigationUtils.pushReplacement(
-                context: context, page: DrawerScreen());
-      });
+    await Future.delayed(const Duration(seconds: 1));
+    if (context.mounted)
+    _listener = FirebaseAuth.instance.authStateChanges().listen((user) {
+      user == null
+          ? NavigationUtils.pushReplacement(
+              context: context, page: const OnBoardingScreen())
+          : NavigationUtils.pushReplacement(
+              context: context, page: DrawerScreen());
     });
+  }
+
+  @override
+  void dispose() {
+    _listener?.cancel();
+    super.dispose();
   }
 
   @override

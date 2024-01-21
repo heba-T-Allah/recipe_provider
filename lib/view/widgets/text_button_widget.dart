@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../resources/color_manager.dart';
-import '../../resources/strings_manager.dart';
-import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
-import '../../routing/routes.dart';
 
 class TextButtonWidget extends StatelessWidget {
   final VoidCallback onPressed;

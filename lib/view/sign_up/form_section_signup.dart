@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:registration/resources/strings_manager.dart';
 
 import '../../resources/text_style.dart';
-import '../widgets/costom_text_form_field.dart';
+import '../widgets/custom_text_form_field.dart';
 import '../widgets/text_button_widget.dart';
 import 'logic/signup_provider.dart';
 
@@ -33,7 +33,7 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: CostomTextFormField(
+                      child: CustomTextFormField(
                           controller: provider.fullNameController!,
                           hintText: AppStrings.fullNameHintText,
                           prefixIcon: Icons.person,
@@ -43,7 +43,7 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: CostomTextFormField(
+                      child: CustomTextFormField(
                           controller: provider.emailController!,
                           hintText: AppStrings.emailHintText,
                           prefixIcon: Icons.email,
@@ -53,7 +53,7 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: CostomTextFormField(
+                      child: CustomTextFormField(
                           controller: provider.passwordController!,
                           hintText: AppStrings.password,
                           prefixIcon: Icons.lock,
@@ -101,11 +101,11 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
     );
   }
 
-  // @override
-  // void dispose() {
-  //   if (mounted) {
-  //     Provider.of<SignUpProvider>(context, listen: false).providerDispose();
-  //   }
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    if (context.mounted) {
+      Provider.of<SignUpProvider>(context, listen: false).providerDispose();
+    }
+    super.dispose();
+  }
 }
