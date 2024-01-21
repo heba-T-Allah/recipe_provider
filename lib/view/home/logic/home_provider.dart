@@ -1,27 +1,9 @@
-import 'dart:convert';
-
-import 'package:carousel_slider/carousel_controller.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import '../../../model/recipe.dart';
-import '../../../model/recipe_ad.dart';
-
 
 class HomeProvider extends ChangeNotifier {
-  List<RecipeAd>? _adsList;
-
   List<Recipe>? _recipeList;
-
-  CarouselController? buttonCarouselController;
-  var currentPos = 0;
-
-  List<RecipeAd>? get adsList => _adsList;
-
-  set adsList(List<RecipeAd>? value) {
-    _adsList = value;
-    notifyListeners();
-  }
 
   List<Recipe>? get recipeList => _recipeList;
 
@@ -30,17 +12,32 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
-
-  Future<void> getAdsAndRecipes() async {
+  Future<void> getRecipes() async {
     try {
-      var data = await rootBundle.loadString('assets/data/sample.json');
-      var adsDataDecoded =
-          List<Map<String, dynamic>>.from(jsonDecode(data)['ads']);
-      var recipeDataDecoded =
-          List<Map<String, dynamic>>.from(jsonDecode(data)['recipe']);
-      adsList = adsDataDecoded.map((e) => RecipeAd.fromJson(e)).toList();
-      recipeList = recipeDataDecoded.map((e) => Recipe.fromJson(e)).toList();
-    } catch (e) {}
+      var result = await FirebaseFirestore.instance.collection("recipe").get();
+      if (result.docs.isNotEmpty) {
+        recipeList = List<Recipe>.from(
+            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+      } else {
+        recipeList = [];
+      }
+      notifyListeners();
+      // var data = await rootBundle.loadString('assets/data/sample.json');
+      // var adsDataDecoded =
+      //     List<Map<String, dynamic>>.from(jsonDecode(data)['ads']);
+      // var recipeDataDecoded =
+      //     List<Map<String, dynamic>>.from(jsonDecode(data)['recipe']);
+      // adsList = adsDataDecoded.map((e) => RecipeAd.fromJson(e)).toList();
+      // recipeList = recipeDataDecoded.map((e) => Recipe.fromJson(e)).toList();
+    } catch (e) {
+      // recipeList = [];
+      print(e);
+      // notifyListeners();
+      // OverlayToastMessage.show(
+      //     widget: OverlayCustomToast(
+      //       message: "Error: $e",
+      //       status: ToastMessageStatus.failed,
+      //     ));
+    }
   }
 }

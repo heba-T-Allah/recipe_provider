@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   init() async {
     // Future.delayed(const Duration(milliseconds: 500), () {
-    await Provider.of<HomeProvider>(context, listen: false).getAdsAndRecipes();
+    await Provider.of<HomeProvider>(context, listen: false).getRecipes();
     // });
   }
 
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         left: AppPadding.p20,
                         right: AppPadding.p20),
                     child: SingleChildScrollView(
-                      child: value.adsList!.isEmpty
+                      child: value.recipeList!.isEmpty
                           ? const Center(child: CircularProgressIndicator())
                           : Column(
                               mainAxisAlignment: MainAxisAlignment.start,

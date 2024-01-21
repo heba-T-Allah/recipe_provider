@@ -50,6 +50,11 @@ class TextStyles {
       fontWeight: FontWeightManager.bold,
       fontFamily: FontConstants.fontFamilyHellix,
       color: ColorManager.textBlack);
+  static TextStyle textStyleBold22Black = TextStyle(
+      fontSize: FontSize.s22,
+      fontWeight: FontWeightManager.bold,
+      fontFamily: FontConstants.fontFamilyHellix,
+      color: ColorManager.textBlack);
   static TextStyle textStyleRegular18Black = TextStyle(
       fontSize: FontSize.s18,
       fontWeight: FontWeightManager.regular,

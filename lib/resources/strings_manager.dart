@@ -46,6 +46,9 @@ class AppStrings {
   static const help = "Help";
   static const signOut = "Sign Out";
 
+  static const ingredients ="Ingredients";
+  static const directions ="Directions";
+
 
 
 

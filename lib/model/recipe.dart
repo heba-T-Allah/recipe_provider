@@ -1,4 +1,5 @@
 class Recipe {
+  String? docId;
   String? title;
   String? image;
   String? mealType;
@@ -8,17 +9,27 @@ class Recipe {
   int? serving;
   bool? favorite;
 
+  List<dynamic>? ingredients;
+  List<dynamic>? directions;
+
   Recipe();
 
-  Recipe.fromJson(Map<String, dynamic> data) {
+  Recipe.fromJson(Map<String, dynamic> data, [String? id]) {
+    docId = id;
     title = data['title'];
     image = data['image'];
     mealType = data['meal_type'];
-    rating = data['rating'];
-    calories = data['calories'];
+    rating = double.parse(data['rating'].toString());
+    calories = double.parse(data['calories'].toString());
     prepTime = data['prep_time'];
     serving = data['serving'];
-    favorite = data['favourite'];
+    favorite = data['favorite'];
+    // print("==================${data['directions'][0]}");
+    // directions = data['directions'].map((e) => e.toString()).toList();
+
+    // directions = data['directions'].map((e) => e.toString()).toList();
+    // data['directions'].map((item) =>  item as String)?.toList() ;
+    // ingredients = (map['ingredients'] as List)?.map((item) => item as String)?.toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -30,7 +41,9 @@ class Recipe {
       'calories': calories,
       'prep_time': prepTime,
       'serving': serving,
-      'favourite': favorite
+      'favorite': favorite,
+      'directions': directions,
+      'ingredients': ingredients
     };
   }
 }
