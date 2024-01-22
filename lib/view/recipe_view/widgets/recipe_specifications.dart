@@ -82,7 +82,7 @@ class RecipeSpecifications extends StatelessWidget {
                 ],
               ),
               Transform.translate(
-                offset: Offset(10, -40),
+                offset: Offset(20, -40),
                 child: CachedNetworkImage(
                     imageUrl: recipe.image!,
                     placeholder: (context, url) => const CircleAvatar(

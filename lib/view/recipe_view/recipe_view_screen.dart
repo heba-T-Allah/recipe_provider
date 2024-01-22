@@ -19,7 +19,7 @@ class RecipeViewScreen extends StatelessWidget {
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        appBar: MyAppBar(),
+        appBar: MyAppBar(backbtn: true,),
         body: Padding(
           padding: const EdgeInsets.all(AppPadding.p30),
           child: SingleChildScrollView(
