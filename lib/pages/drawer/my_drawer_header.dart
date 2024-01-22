@@ -16,12 +16,11 @@ class MyDrawerHeader extends StatefulWidget {
 }
 
 class _MyDrawerHeaderState extends State<MyDrawerHeader> {
-
-
   @override
   Widget build(BuildContext context) {
-    String userName = FirebaseAuth.instance.currentUser?.displayName.toString() ??
-        "Emma Holmes";
+    String userName =
+        FirebaseAuth.instance.currentUser?.displayName.toString() ??
+            "Emma Holmes";
 
     return SafeArea(
       child: Padding(
@@ -37,19 +36,15 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    userName,
-                    style: TextStyles.textStyleRegular18Black,
-                  ),
-                  // SizedBox(height: 20),
-                  Text(
-                    AppStrings.viewProfile,
-                    style: TextStyles.textStyleRegular10Grey,
-                  )
-                ],
+              child: ListTile(
+                title: Text(
+                  userName,
+                  style: TextStyles.textStyleRegular18Black,
+                ),
+                subtitle: Text(
+                  AppStrings.viewProfile,
+                  style: TextStyles.textStyleRegular10Grey,
+                ),
               ),
             ),
             Align(

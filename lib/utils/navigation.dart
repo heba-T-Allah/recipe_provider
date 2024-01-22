@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:registration/view/home/home_screen.dart';
 
-import '../routing/routes.dart';
 
 abstract class NavigationUtils {
   static void push({required BuildContext context, required Widget page}) {

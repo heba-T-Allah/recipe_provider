@@ -2,15 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/routing/app-router.dart';
-import 'package:registration/view/home/logic/ads_provider.dart';
-import 'package:registration/view/home/logic/home_provider.dart';
-import 'package:registration/view/sign_up/logic/signup_provider.dart';
-import '../resources/color_manager.dart';
+import 'package:registration/pages/home/logic/ads_provider.dart';
+import 'package:registration/pages/home/logic/home_provider.dart';
+import 'package:registration/pages/sign_up/logic/signup_provider.dart';
 import '../resources/strings_manager.dart';
 import '../routing/routes.dart';
-import '../view/favorite/logic/favorite_provider.dart';
-import '../view/recently_viewed/logic/recently_viewed_provider.dart';
-import '../view/sign_in/logic/login_provider.dart';
+import '../pages/favorite/logic/favorite_provider.dart';
+import '../pages/recently_viewed/logic/recently_viewed_provider.dart';
+import '../pages/sign_in/logic/login_provider.dart';
 
 class MyApp extends StatefulWidget {
   MyApp({super.key});

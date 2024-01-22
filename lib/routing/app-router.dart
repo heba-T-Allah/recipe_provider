@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:registration/view/on_boarding/on_boarding_screen.dart';
-import 'package:registration/view/splash/splash_screen.dart';
-
-import '../view/home/home_screen.dart';
-import '../view/sign_in/signin_screen.dart';
-import '../view/sign_up/signup_screen.dart';
+import '../pages/home/home_screen.dart';
+import '../pages/on_boarding/on_boarding_screen.dart';
+import '../pages/sign_in/signin_screen.dart';
+import '../pages/sign_up/signup_screen.dart';
+import '../pages/splash/splash_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
