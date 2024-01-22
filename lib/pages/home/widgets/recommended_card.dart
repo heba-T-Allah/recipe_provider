@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:registration/view/home/widgets/prep_time_and_serving.dart';
+import 'package:registration/pages/home/widgets/prep_time_and_serving.dart';
 
 import '../../../model/recipe.dart';
 import '../../../resources/color_manager.dart';

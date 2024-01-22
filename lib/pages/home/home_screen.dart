@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:registration/view/drawer/my_drawer.dart';
-import 'package:registration/view/home/widgets/cards_title.dart';
-import 'package:registration/view/home/widgets/fresh_recipe_list.dart';
-import 'package:registration/view/home/widgets/my_carousel_slider.dart';
-import 'package:registration/view/home/widgets/recommended_list.dart';
-import 'package:registration/view/home/widgets/search_and_filter.dart';
+import 'package:registration/pages/drawer/my_drawer.dart';
+import 'package:registration/pages/home/widgets/cards_title.dart';
+import 'package:registration/pages/home/widgets/fresh_recipe_list.dart';
+import 'package:registration/pages/home/widgets/my_carousel_slider.dart';
+import 'package:registration/pages/home/widgets/recommended_list.dart';
+import 'package:registration/pages/home/widgets/search_and_filter.dart';
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';

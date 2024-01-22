@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/resources/strings_manager.dart';
-import 'package:registration/view/favorite/logic/favorite_provider.dart';
+import 'package:registration/pages/favorite/logic/favorite_provider.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';

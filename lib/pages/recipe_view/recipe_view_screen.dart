@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:registration/view/recipe_view/widgets/recipe_specifications.dart';
+import 'package:registration/pages/recipe_view/widgets/recipe_specifications.dart';
 import '../../model/recipe.dart';
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:registration/view/home/widgets/fresh_card_recipe.dart';
+import 'package:registration/pages/home/widgets/fresh_card_recipe.dart';
 import '../../../model/recipe.dart';
 
 

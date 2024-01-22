@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/resources/strings_manager.dart';
-import 'package:registration/view/sign_in/logic/login_provider.dart';
+import 'package:registration/pages/sign_in/logic/login_provider.dart';
 import '../../resources/text_style.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/text_button_widget.dart';

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:registration/view/about/about_screen.dart';
-import 'package:registration/view/favorite/favourite_screen.dart';
-import 'package:registration/view/recently_viewed/recently_viewed_screen.dart';
-import 'package:registration/view/settings/settings_screen.dart';
-import 'package:registration/view/sign_up/logic/signup_provider.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/text_style.dart';
 import '../../utils/navigation.dart';
+import '../about/about_screen.dart';
+import '../favorite/favourite_screen.dart';
 import '../help/help_screen.dart';
 import '../home/home_screen.dart';
+import '../recently_viewed/recently_viewed_screen.dart';
+import '../settings/settings_screen.dart';
+import '../sign_up/logic/signup_provider.dart';
 
 class MyDrawerItem extends StatefulWidget {
   MyDrawerItem(

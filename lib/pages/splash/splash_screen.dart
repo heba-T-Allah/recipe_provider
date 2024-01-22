@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:registration/view/drawer/drawer_screen.dart';
+import 'package:registration/pages/drawer/drawer_screen.dart';
 import 'package:registration/resources/strings_manager.dart';
 import 'package:registration/utils/navigation.dart';
-import 'package:registration/view/on_boarding/on_boarding_screen.dart';
-import 'package:registration/view/splash/widgets/splash_logo_and_title.dart';
+import 'package:registration/pages/on_boarding/on_boarding_screen.dart';
+import 'package:registration/pages/splash/widgets/splash_logo_and_title.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
