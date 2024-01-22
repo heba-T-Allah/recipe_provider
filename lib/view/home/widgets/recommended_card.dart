@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:registration/view/home/widgets/prep_time_and_serving.dart';
 
@@ -21,7 +22,11 @@ class RecommendedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => NavigationUtils.push(context: context, page:  RecipeViewScreen(recipe: recipe,)),
+      onTap: () => NavigationUtils.push(
+          context: context,
+          page: RecipeViewScreen(
+            recipe: recipe,
+          )),
       child: Card(
           margin: const EdgeInsets.symmetric(vertical: AppMargin.m8),
           color: ColorManager.backgroundGreyColor,
@@ -33,14 +38,19 @@ class RecommendedCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top:20.0,right: 10),
-                child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      recipe.image!,
-                    ),
-                    radius: AppSize.s40),
+                padding: const EdgeInsets.only(top: 20.0, right: 10),
+                child: CachedNetworkImage(
+                  imageUrl: recipe.image!,
+                  placeholder: (context, url) =>
+                      new CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  imageBuilder: (context, image) => CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        recipe.image!,
+                      ),
+                      radius: AppSize.s40),
+                ),
               ),
-
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
                 child: Column(

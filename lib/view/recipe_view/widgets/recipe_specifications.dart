@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:registration/resources/color_manager.dart';
 
 import '../../../model/recipe.dart';
 import '../../../resources/assets_manager.dart';
@@ -85,10 +86,7 @@ class RecipeSpecifications extends StatelessWidget {
                 offset: Offset(20, -40),
                 child: CachedNetworkImage(
                     imageUrl: recipe.image!,
-                    placeholder: (context, url) => const CircleAvatar(
-                          backgroundColor: Colors.amber,
-                          radius: 100,
-                        ),
+                    placeholder: (context, url) =>  new CircularProgressIndicator(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                     imageBuilder: (context, image) => CircleAvatar(
                           backgroundImage: NetworkImage(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:registration/utils/navigation.dart';
 import 'package:registration/view/home/widgets/prep_time_and_serving.dart';
@@ -21,7 +22,11 @@ class FreshCardRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => NavigationUtils.push(context: context, page:  RecipeViewScreen(recipe: recipe,)),
+      onTap: () => NavigationUtils.push(
+          context: context,
+          page: RecipeViewScreen(
+            recipe: recipe,
+          )),
       child: Card(
           margin: const EdgeInsets.only(right: AppMargin.m60),
           color: ColorManager.backgroundGreyColor,
@@ -43,14 +48,18 @@ class FreshCardRecipe extends StatelessWidget {
                     children: [
                       MyFavIcon(favourite: recipe.favorite!),
                       Transform.translate(
-                          offset: Offset(70, 0),
-                          child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                recipe.image!,
-
-                              ),
-
-                              radius: AppSize.s60)),
+                        offset: Offset(70, 0),
+                        child: CachedNetworkImage(
+                            imageUrl: recipe.image!,
+                            placeholder: (context, url) => new CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                            imageBuilder: (context, image) => CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  recipe.image!,
+                                ),
+                                radius: AppSize.s60)),
+                      ),
                     ],
                   ),
                   Text(
