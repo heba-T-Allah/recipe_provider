@@ -56,7 +56,7 @@ class FreshCardRecipe extends StatelessWidget {
                                   Icon(Icons.error),
                             imageBuilder: (context, image) => CircleAvatar(
                                 backgroundImage: NetworkImage(
-                                  recipe.image!,
+                                   recipe.image!,
                                 ),
                                 radius: AppSize.s60)),
                       ),
