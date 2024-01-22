@@ -53,7 +53,7 @@ class FreshCardRecipe extends StatelessWidget {
                             imageUrl: recipe.image!,
                             placeholder: (context, url) => new CircularProgressIndicator(),
                             errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                                  Icon(Icons.error),
                             imageBuilder: (context, image) => CircleAvatar(
                                 backgroundImage: NetworkImage(
                                   recipe.image!,
