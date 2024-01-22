@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -81,14 +82,22 @@ class RecipeSpecifications extends StatelessWidget {
                 ],
               ),
               Transform.translate(
-                offset: Offset(80, -40),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    recipe.image!,
-
-                  ),radius: 100,
-                )
-              ),
+                  offset: Offset(80, -40),
+                  child:
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      recipe.image!,
+                    ),
+                    radius: 100,
+                  )),
+              // CachedNetworkImage(
+              //   height: 100,
+              //   width: 100,
+              //   imageUrl:  recipe.image!,
+              //   placeholder: (context, url) => CircularProgressIndicator(),
+              //
+              //   errorWidget: (context, url, error) => Icon(Icons.error),
+              // ),)
             ],
           ),
         ),

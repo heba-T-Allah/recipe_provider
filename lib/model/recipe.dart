@@ -24,9 +24,13 @@ class Recipe {
     prepTime = data['prep_time'];
     serving = data['serving'];
     favorite = data['favorite'];
-    // print("==================${data['directions'][0]}");
+    print("==================${data['directions']}");
+    data['directions'].forEach((val) {
+      directions!.add(val.toString());
+    });
+    // print (directions!.first.toString());
     // directions = data['directions'].map((e) => e.toString()).toList();
-
+    // directions = List<String>.from(data['directions'].map((x) => x)).toList();
     // directions = data['directions'].map((e) => e.toString()).toList();
     // data['directions'].map((item) =>  item as String)?.toList() ;
     // ingredients = (map['ingredients'] as List)?.map((item) => item as String)?.toList();
