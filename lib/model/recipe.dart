@@ -7,7 +7,7 @@ class Recipe {
   double? calories;
   int? prepTime;
   int? serving;
-  // bool? favorite;
+  bool? favorite;
 
   List<dynamic>? ingredients;
   List<dynamic>? directions;
@@ -24,7 +24,7 @@ class Recipe {
     calories = double.parse(data['calories'].toString());
     prepTime = data['prep_time'];
     serving = data['serving'];
-    // favorite = data['favorite'];
+    favorite = data['favorite'];
     directions = data['directions'].map((e) => e.toString()).toList();
     ingredients = data['ingredients'].map((e) => e.toString()).toList();
     favUsersIds = data['users_ids'] != null
@@ -41,7 +41,7 @@ class Recipe {
       'calories': calories,
       'prep_time': prepTime,
       'serving': serving,
-      // 'favorite': favorite,
+      'favorite': favorite,
       'directions': directions,
       'ingredients': ingredients,
       "users_ids": favUsersIds,
