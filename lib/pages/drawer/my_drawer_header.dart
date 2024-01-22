@@ -33,32 +33,27 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
                 backgroundImage: AssetImage("assets/images/1686.jpg"),
                 radius: AppSize.s40),
             // SizedBox(width: 10,),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 20),
-              child: ListTile(
-                title: Text(
-                  userName,
-                  style: TextStyles.textStyleRegular18Black,
-                ),
-                subtitle: Text(
-                  AppStrings.viewProfile,
-                  style: TextStyles.textStyleRegular10Grey,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topRight,
-              child: IconButton(
-                onPressed: () {},
-                icon: Image.asset(
-                  ImageAssets.notificationsIcon,
-                  color: Colors.black,
-                  width: AppSize.s20,
-                  height: AppSize.s20,
+            Flexible(
+              child: Padding(
+                padding: const EdgeInsets.only(left:8,
+                top: 14),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      userName,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyles.textStyleRegular18Black,
+                    ),
+                    Text(
+                      AppStrings.viewProfile,
+                      style: TextStyles.textStyleRegular10Grey,
+                    ),
+                  ],
                 ),
               ),
             ),
+
           ],
         ),
       ),

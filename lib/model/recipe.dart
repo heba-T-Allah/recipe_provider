@@ -11,6 +11,7 @@ class Recipe {
 
   List<dynamic>? ingredients;
   List<dynamic>? directions;
+  List<String>? users_ids;
 
   Recipe();
 
@@ -26,7 +27,9 @@ class Recipe {
     favorite = data['favorite'];
     directions = data['directions'].map((e) => e.toString()).toList();
     ingredients = data['ingredients'].map((e) => e.toString()).toList();
-
+    users_ids = data['users_ids'] != null
+        ? List<String>.from(data['users_ids'].map((e) => e.toString()))
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,7 +43,9 @@ class Recipe {
       'serving': serving,
       'favorite': favorite,
       'directions': directions,
-      'ingredients': ingredients
+      'ingredients': ingredients,
+      "users_ids": users_ids,
+
     };
   }
 }
