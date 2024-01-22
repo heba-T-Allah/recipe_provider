@@ -49,17 +49,17 @@ class _MyAppState extends State<MyApp> {
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             // navigatorKey: navigatorKey,
-            theme: ThemeData(
-                inputDecorationTheme: InputDecorationTheme(
-                  filled: true,
-                  fillColor: Colors.grey.shade200,
-                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-                ),
-                colorScheme: ColorScheme.fromSeed(
-                  seedColor: ColorManager.primaryColor,
-                  primary: ColorManager.primaryColor,
-                  secondary: ColorManager.primaryColor,
-                )),
+            // theme: ThemeData(
+            //     inputDecorationTheme: InputDecorationTheme(
+            //       filled: true,
+            //       fillColor: Colors.grey.shade200,
+            //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+            //     ),
+            //     colorScheme: ColorScheme.fromSeed(
+            //       seedColor: ColorManager.primaryColor,
+            //       primary: ColorManager.primaryColor,
+            //       secondary: ColorManager.primaryColor,
+            //     )),
             initialRoute: Routes.splashScreen,
             onGenerateRoute: appRouter.generateRoute,
           ),
