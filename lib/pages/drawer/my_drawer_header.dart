@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../resources/assets_manager.dart';
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
@@ -20,7 +19,7 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
   Widget build(BuildContext context) {
     String userName =
         FirebaseAuth.instance.currentUser?.displayName.toString() ??
-            "Emma Holmes";
+            "No name";
 
     return SafeArea(
       child: Padding(

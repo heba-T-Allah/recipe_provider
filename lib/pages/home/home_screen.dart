@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/pages/drawer/my_drawer.dart';
@@ -27,24 +28,27 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   init() async {
-    // Future.delayed(const Duration(milliseconds: 500), () {
-    await Provider.of<HomeProvider>(context, listen: false).getRecipes();
-    // });
+    await Provider.of<HomeProvider>(context, listen: false).getFreshRecipes();
+    await Provider.of<HomeProvider>(context, listen: false).getRecommendedRecipes();
+
   }
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    String userName =
+        FirebaseAuth.instance.currentUser?.displayName.toString() ??
+            "No name";
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
       drawer: MyDrawer(),
       body: Consumer<HomeProvider>(builder: (context, value, child) {
-        return value.recipeList == null
+        return value.freshRecipeList == null
             ? const Center(child: CircularProgressIndicator())
-            : value.recipeList!.isEmpty
+            : value.freshRecipeList!.isEmpty
                 ? const Text('No Data Found')
                 : Padding(
                     padding: const EdgeInsets.only(
@@ -52,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         left: AppPadding.p20,
                         right: AppPadding.p20),
                     child: SingleChildScrollView(
-                      child: value.recipeList!.isEmpty
+                      child: value.freshRecipeList!.isEmpty
                           ? const Center(child: CircularProgressIndicator())
                           : Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(
                                   height: AppSize.s20,
                                   child: Text(
-                                    "Bonjour Emma",
+                                    "Bonjour $userName",
                                     style: TextStyles.textStyleRegular13Grey,
                                   ),
                                 ),
@@ -88,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: AppSize.s20,
                                 ),
-                                FreshRecipeList(recipeList: value.recipeList!),
+                                FreshRecipeList(recipeList: value.freshRecipeList!),
                                 const SizedBox(
                                   height: AppSize.s20,
                                 ),
@@ -97,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: AppSize.s10,
                                 ),
                                 RecommendedRecipeList(
-                                    recipeList: value.recipeList!),
+                                    recipeList: value.recommendedRecipeList!),
                               ],
                             ),
                     ),
