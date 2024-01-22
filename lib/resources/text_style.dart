@@ -95,4 +95,15 @@ class TextStyles {
       fontWeight: FontWeightManager.regular,
       fontFamily: FontConstants.fontFamilyHellix,
       color: ColorManager.greyText);
+
+static TextStyle textStyleRegular16Black = TextStyle(
+    fontSize: FontSize.s16,
+    fontWeight: FontWeightManager.regular,
+    fontFamily: FontConstants.fontFamilyHellix,
+    color: ColorManager.textBlack);
+  static TextStyle textStyleMedium16Black = TextStyle(
+      fontSize: FontSize.s16,
+      fontWeight: FontWeightManager.medium,
+      fontFamily: FontConstants.fontFamilyHellix,
+      color: ColorManager.textBlack);
 }
