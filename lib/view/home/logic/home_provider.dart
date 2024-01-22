@@ -25,22 +25,16 @@ class HomeProvider extends ChangeNotifier {
         recipeList = [];
       }
       notifyListeners();
-      // var data = await rootBundle.loadString('assets/data/sample.json');
-      // var adsDataDecoded =
-      //     List<Map<String, dynamic>>.from(jsonDecode(data)['ads']);
-      // var recipeDataDecoded =
-      //     List<Map<String, dynamic>>.from(jsonDecode(data)['recipe']);
-      // adsList = adsDataDecoded.map((e) => RecipeAd.fromJson(e)).toList();
-      // recipeList = recipeDataDecoded.map((e) => Recipe.fromJson(e)).toList();
+
     } catch (e) {
       recipeList = [];
       print(e);
       notifyListeners();
-      OverlayToastMessage.show(
-          widget: OverlayCustomToast(
-            message: "Error: $e",
-            status: ToastMessageStatus.failed,
-          ));
+      // OverlayToastMessage.show(
+      //     widget: OverlayCustomToast(
+      //       message: "Error: $e",
+      //       status: ToastMessageStatus.failed,
+      //     ));
     }
   }
 }

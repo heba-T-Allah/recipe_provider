@@ -28,25 +28,22 @@ class RecipeViewScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 RecipeSpecifications(recipe: recipe!),
-                // SizedBox(
-                //   height: AppSize.s20,
-                // ),
                 Text(
                   AppStrings.ingredients,
                   style: TextStyles.textStyleBold18Black,
                 ),
-                
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p12),
                   child: ListView.builder(
                     shrinkWrap: true,
                     primary: false,
-
                     itemCount: recipe!.ingredients!.length,
                     itemBuilder: (context, index) {
-                      return Flexible(
-                        child: Text("• ${recipe!.ingredients![index]}", overflow: TextOverflow.ellipsis,
-                          maxLines: 2,style: TextStyles.textStyleRegular16Black,),
+                      return Text(
+                        "• ${recipe!.ingredients![index]}",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyles.textStyleRegular16Black,
                       );
                     },
                   ),
@@ -63,19 +60,24 @@ class RecipeViewScreen extends StatelessWidget {
                   child: ListView.builder(
                     shrinkWrap: true,
                     primary: false,
-
                     itemCount: recipe!.directions!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("• Step ${index+1}:",style: TextStyles.textStyleMedium16Black,),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Flexible(child: Text("• ${recipe!.directions![index]}", overflow: TextOverflow.ellipsis,
-                              maxLines: 4,style: TextStyles.textStyleRegular16Black,)),
+                          Text(
+                            "• Step ${index + 1}:",
+                            style: TextStyles.textStyleMedium16Black,
                           ),
+                          Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Text(
+                                "• ${recipe!.directions![index]}",
+                                maxLines: 7,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyles.textStyleRegular16Black,
+                              )),
                         ],
                       );
                     },
