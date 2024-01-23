@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:registration/pages/drawer/menu_screen.dart';
 
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
-import '../drawer/my_drawer.dart';
 import '../home/widgets/search_and_filter.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class NotificationsScreen extends StatelessWidget {
         key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: MyAppBar(),
-        drawer: MyDrawer(),
+        drawer: MenuScreen(),
         body: Padding(
             padding: const EdgeInsets.only(
                 top: AppPadding.p8,

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:registration/utils/navigation.dart';
 import 'package:registration/pages/home/widgets/prep_time_and_serving.dart';
@@ -12,15 +13,19 @@ import 'my_fav_icon.dart';
 import 'my_rating_bar.dart';
 
 class FreshCardRecipe extends StatelessWidget {
-  const FreshCardRecipe({
+   FreshCardRecipe({
     super.key,
     required this.recipe,
   });
 
   final Recipe recipe;
 
+  bool? isFav;
+
   @override
   Widget build(BuildContext context) {
+    isFav = recipe.favUsersIds
+        ?.contains(FirebaseAuth.instance.currentUser?.uid);
     return InkWell(
       onTap: () => NavigationUtils.push(
           context: context,
@@ -37,7 +42,7 @@ class FreshCardRecipe extends StatelessWidget {
           child: SizedBox(
             width: MediaQuery.of(context).size.width * .50,
             child: Padding(
-              padding: const EdgeInsets.all(AppPadding.p20),
+              padding: const EdgeInsets.all(AppPadding.p12),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +51,8 @@ class FreshCardRecipe extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MyFavIcon(favourite: recipe.favorite!),
+                      MyFavIcon(isFav: isFav, docId: recipe.docId, listType: "fresh"),
+
                       Transform.translate(
                         offset: Offset(70, 0),
                         child: CachedNetworkImage(

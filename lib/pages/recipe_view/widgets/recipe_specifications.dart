@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:registration/resources/color_manager.dart';
 
 import '../../../model/recipe.dart';
 import '../../../resources/assets_manager.dart';
@@ -16,8 +16,12 @@ class RecipeSpecifications extends StatelessWidget {
 
   Recipe recipe;
 
+  bool? isFav;
+
   @override
   Widget build(BuildContext context) {
+    isFav = recipe.favUsersIds
+        ?.contains(FirebaseAuth.instance.currentUser?.uid);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +43,8 @@ class RecipeSpecifications extends StatelessWidget {
                   maxLines: 2,
                   style: TextStyles.textStyleBold22Black),
             ),
-            MyFavIcon(favourite: recipe.favorite!),
+            MyFavIcon(isFav: isFav, docId: recipe.docId, listType: "recipe"),
+
           ],
         ),
         const SizedBox(

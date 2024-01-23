@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/pages/ingredients/logic/ingredients_provider.dart';
 import 'package:registration/routing/app-router.dart';
 import 'package:registration/pages/home/logic/ads_provider.dart';
 import 'package:registration/pages/home/logic/home_provider.dart';
 import 'package:registration/pages/sign_up/logic/signup_provider.dart';
+import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../routing/routes.dart';
 import '../pages/favorite/logic/favorite_provider.dart';
@@ -42,23 +44,26 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<RecentlyViewedProvider>(
             create: (BuildContext context) => RecentlyViewedProvider(),
           ),
+          ChangeNotifierProvider<IngredientsProvider>(
+            create: (BuildContext context) => IngredientsProvider(),
+          ),
         ],
         child: OverlayKit(
           child: MaterialApp(
             title: AppStrings.appTitle,
             debugShowCheckedModeBanner: false,
             // navigatorKey: navigatorKey,
-            // theme: ThemeData(
-            //     inputDecorationTheme: InputDecorationTheme(
-            //       filled: true,
-            //       fillColor: Colors.grey.shade200,
-            //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-            //     ),
-            //     colorScheme: ColorScheme.fromSeed(
-            //       seedColor: ColorManager.primaryColor,
-            //       primary: ColorManager.primaryColor,
-            //       secondary: ColorManager.primaryColor,
-            //     )),
+            theme: ThemeData(
+                // inputDecorationTheme: InputDecorationTheme(
+                //   filled: true,
+                //   fillColor: Colors.grey.shade200,
+                //   border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                // ),
+                colorScheme: ColorScheme.fromSeed(
+                  seedColor: ColorManager.primaryColor,
+                  primary: ColorManager.primaryColor,
+                  secondary: ColorManager.primaryColor,
+                )),
             initialRoute: Routes.splashScreen,
             onGenerateRoute: appRouter.generateRoute,
           ),

@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/pages/drawer/menu_screen.dart';
+import 'package:registration/pages/home/logic/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
-import 'package:registration/pages/favorite/logic/favorite_provider.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
-import '../drawer/my_drawer.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
 
-class FavoriteScreen extends StatelessWidget {
+class FavoriteScreen extends StatefulWidget {
   FavoriteScreen({super.key});
 
+  @override
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
+}
+
+class _FavoriteScreenState extends State<FavoriteScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  init() async {
+    await Provider.of<HomeProvider>(context, listen: false)
+        .getFavoriteRecipes();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +36,7 @@ class FavoriteScreen extends StatelessWidget {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MyDrawer(),
+      drawer: MenuScreen(),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
@@ -38,10 +54,10 @@ class FavoriteScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s10,
               ),
-              Consumer<FavoriteProvider>(builder: (context, value, child) {
-                return value.favoriteList.isEmpty
+              Consumer<HomeProvider>(builder: (context, value, child) {
+                return value.favRecipeList!.isEmpty
                     ? const Center(child: CircularProgressIndicator())
-                    : RecommendedRecipeList(recipeList: value.favoriteList);
+                    : RecommendedRecipeList(recipeList: value.favRecipeList!,screen: "fav",);
               }),
             ],
           ),

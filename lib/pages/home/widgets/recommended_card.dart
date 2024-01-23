@@ -1,5 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+
 import 'package:registration/pages/home/widgets/prep_time_and_serving.dart';
 
 import '../../../model/recipe.dart';
@@ -12,15 +16,21 @@ import 'my_fav_icon.dart';
 import 'my_rating_bar.dart';
 
 class RecommendedCard extends StatelessWidget {
-  const RecommendedCard({
+  RecommendedCard({
     super.key,
     required this.recipe,
+    required this.screen
   });
 
   final Recipe recipe;
 
+  bool? isFav;
+  String? screen;
+
   @override
   Widget build(BuildContext context) {
+    isFav = recipe.favUsersIds
+        ?.contains(FirebaseAuth.instance.currentUser?.uid);
     return InkWell(
       onTap: () => NavigationUtils.push(
           context: context,
@@ -34,11 +44,11 @@ class RecommendedCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppSize.s30),
               borderSide: BorderSide.none),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 20.0, right: 10),
+                padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
                 child: CachedNetworkImage(
                   imageUrl: recipe.image!,
                   placeholder: (context, url) =>
@@ -48,56 +58,69 @@ class RecommendedCard extends StatelessWidget {
                       backgroundImage: NetworkImage(
                         recipe.image!,
                       ),
-                      radius: AppSize.s40),
+                      radius: AppSize.s30),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(recipe.mealType!,
-                          style: TextStyles.textStyleMedium10Blue),
-                      const SizedBox(
-                        height: AppSize.s8,
-                      ),
-                      Text(recipe.title!,
-                          style: TextStyles.textStyleMedium14Black),
-                      Padding(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: AppPadding.p8),
-                        child: Row(
-                          children: [
-                            MyRatingBar(
-                              rate: recipe.rating!,
-                            ),
-                            const SizedBox(
-                              width: AppSize.s10,
-                            ),
-                            Text(
-                              "${recipe.calories!} Calories",
-                              style: TextStyles.textStyleRegular10Orange,
-                            ),
-                          ],
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: AppPadding.p20),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(recipe.mealType!,
+                            style: TextStyles.textStyleMedium10Blue),
+                        const SizedBox(
+                          height: AppSize.s8,
                         ),
-                      ),
-                      const SizedBox(
-                        width: AppSize.s10,
-                      ),
-                      PrepTimeAndServing(
-                          prepTime: recipe.prepTime!, serving: recipe.serving!),
-                    ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: AppPadding.p20, left: AppPadding.p20),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: MyFavIcon(favourite: recipe.favorite!),
+                        Text(recipe.title!,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyles.textStyleMedium14Black),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: AppPadding.p8),
+                          child: Row(
+                            children: [
+                              MyRatingBar(
+                                rate: recipe.rating!,
+                              ),
+                              const SizedBox(
+                                width: AppSize.s10,
+                              ),
+                              Text(
+                                "${recipe.calories!} Calories",
+                                style: TextStyles.textStyleRegular10Orange,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          width: AppSize.s10,
+                        ),
+                        PrepTimeAndServing(
+                            prepTime: recipe.prepTime!,
+                            serving: recipe.serving!),
+                      ]),
                 ),
               ),
+              MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
+              // Consumer<HomeProvider>(
+              //     builder: (context, value, child) => IconButton(
+              //         onPressed: () {
+              //           isFav = !isFav!;
+              //           print("============ $isFav");
+              //           value.addFavToRecipe(
+              //               widget.recipe.docId!, isFav!, "recommended");
+              //         },
+              //         icon: Icon(
+              //           isFav == true ? Icons.favorite : Icons.favorite_border,
+              //           color: isFav == true
+              //               ? ColorManager.primaryColor
+              //               : ColorManager.greyText,
+              //         ))),
+
             ],
           )),
     );

@@ -4,12 +4,16 @@ import 'recommended_card.dart';
 
 
 class RecommendedRecipeList extends StatelessWidget {
-  const RecommendedRecipeList({
+   RecommendedRecipeList({
     super.key,
     required this.recipeList,
+    required this.screen
+
   });
 
   final List<Recipe> recipeList;
+  String? screen;
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class RecommendedRecipeList extends StatelessWidget {
           return SizedBox(
             width: MediaQuery.of(context).size.width,
             // height: MediaQuery.of(context).size.height * .27,
-            child: RecommendedCard(recipe: recipeList[index]),
+            child: RecommendedCard(recipe: recipeList[index],screen: screen,),
           );
         },
       ),

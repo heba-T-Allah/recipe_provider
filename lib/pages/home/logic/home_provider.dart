@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_kit/overlay_kit.dart';
 import '../../../model/recipe.dart';
+import '../../../utils/toast_msg_status.dart';
+import '../../widgets/overlay_custom_toast.dart';
 
 class HomeProvider extends ChangeNotifier {
   List<Recipe>? _recipeList;
@@ -29,7 +33,14 @@ class HomeProvider extends ChangeNotifier {
     _recommendedRecipeList = value;
     notifyListeners();
   }
+  List<Recipe>? _favRecipeList;
 
+  List<Recipe>? get favRecipeList => _favRecipeList;
+
+  set favRecipeList(List<Recipe>? value) {
+    _favRecipeList = value;
+    notifyListeners();
+  }
   Future<void> getAllRecipes() async {
     try {
       var result = await FirebaseFirestore.instance.collection("recipe").get();
@@ -44,11 +55,11 @@ class HomeProvider extends ChangeNotifier {
       recipeList = [];
       print(e);
       notifyListeners();
-      // OverlayToastMessage.show(
-      //     widget: OverlayCustomToast(
-      //       message: "Error: $e",
-      //       status: ToastMessageStatus.failed,
-      //     ));
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "Error: $e",
+            status: ToastMessageStatus.failed,
+          ));
     }
   }
 
@@ -69,11 +80,11 @@ class HomeProvider extends ChangeNotifier {
       freshRecipeList = [];
       print(e);
       notifyListeners();
-      // OverlayToastMessage.show(
-      //     widget: OverlayCustomToast(
-      //       message: "Error: $e",
-      //       status: ToastMessageStatus.failed,
-      //     ));
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "Error: $e",
+            status: ToastMessageStatus.failed,
+          ));
     }
   }
 
@@ -94,11 +105,82 @@ class HomeProvider extends ChangeNotifier {
       recommendedRecipeList = [];
       print(e);
       notifyListeners();
-      // OverlayToastMessage.show(
-      //     widget: OverlayCustomToast(
-      //       message: "Error: $e",
-      //       status: ToastMessageStatus.failed,
-      //     ));
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "Error: $e",
+            status: ToastMessageStatus.failed,
+          ));
     }
   }
+
+  Future<void> addFavToRecipe(String recipeId, bool isAdd,String listType) async {
+    try {
+      OverlayLoadingProgress.start();
+      if (isAdd) {
+        await FirebaseFirestore.instance
+            .collection('recipe')
+            .doc(recipeId)
+            .update({
+          "users_ids":
+          FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection('recipe')
+            .doc(recipeId)
+            .update({
+          "users_ids":
+          FieldValue.arrayRemove([FirebaseAuth.instance.currentUser?.uid])
+        });
+      }
+      notifyListeners();
+      OverlayLoadingProgress.stop();
+      if(listType=="recommended"){
+        getRecommendedRecipes();
+      }else if(listType=="fresh"){
+        getFreshRecipes();
+      }else if(listType=="fav"){
+        getFavoriteRecipes();
+      }else if(listType=="recipe"){
+        // getFavoriteRecipes();
+      }else {
+        getAllRecipes();
+      }
+      notifyListeners();
+
+
+    } catch (e) {
+      OverlayLoadingProgress.stop();
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "Error: $e",
+            status: ToastMessageStatus.failed,
+          ));
+    }
+  }
+  Future<void> getFavoriteRecipes() async {
+    try {
+      var result = await FirebaseFirestore.instance
+          .collection("recipe")
+          .where('users_ids', arrayContains:FirebaseAuth.instance.currentUser?.uid )
+          .get();
+      if (result.docs.isNotEmpty) {
+        favRecipeList = List<Recipe>.from(
+            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+      } else {
+        favRecipeList = [];
+      }
+      notifyListeners();
+    } catch (e) {
+      favRecipeList = [];
+      print(e);
+      notifyListeners();
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "Error: $e",
+            status: ToastMessageStatus.failed,
+          ));
+    }
+  }
+
 }

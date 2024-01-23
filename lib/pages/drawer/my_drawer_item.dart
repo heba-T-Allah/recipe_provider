@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/pages/ingredients/ingredients_screen.dart';
 import '../../resources/color_manager.dart';
 import '../../resources/text_style.dart';
 import '../../utils/navigation.dart';
@@ -51,20 +52,23 @@ class _MyDrawerItemState extends State<MyDrawerItem> {
             context: context, page: HomeScreen());
       case 1:
         return NavigationUtils.pushReplacement(
-            context: context, page: FavoriteScreen());
+            context: context, page: IngredientsScreen());
       case 2:
-        return NavigationUtils.pushAndRemoveUntil(
-            context: context, page: RecentlyViewedScreen());
+        return NavigationUtils.pushReplacement(
+            context: context, page: FavoriteScreen());
       case 3:
         return NavigationUtils.pushAndRemoveUntil(
-            context: context, page: SettingScreen());
+            context: context, page: RecentlyViewedScreen());
       case 4:
         return NavigationUtils.pushAndRemoveUntil(
-            context: context, page: AboutScreen());
+            context: context, page: SettingScreen());
       case 5:
         return NavigationUtils.pushAndRemoveUntil(
-            context: context, page: HelpScreen());
+            context: context, page: AboutScreen());
       case 6:
+        return NavigationUtils.pushAndRemoveUntil(
+            context: context, page: HelpScreen());
+      case 7:
         Provider.of<SignUpProvider>(context, listen: false).signOut(context);
       default:
         return NavigationUtils.pushAndRemoveUntil(

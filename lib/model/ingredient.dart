@@ -9,7 +9,7 @@ class Ingredient {
   Ingredient.fromJson(Map<String, dynamic> data, [String? id]) {
     docId = id;
     name = data['name'];
-    imageUrl = data['imageUrl'];
+    imageUrl = data['image'];
     users_ids = data['users_ids'] != null
         ? List<String>.from(data['users_ids'].map((e) => e.toString()))
         : null;
@@ -18,7 +18,7 @@ class Ingredient {
   Map<String, dynamic> toJson() {
     return {
       "name": name,
-      "imageUrl": imageUrl,
+      "image": imageUrl,
       "users_ids": users_ids,
     };
   }

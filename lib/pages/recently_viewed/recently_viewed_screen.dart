@@ -5,7 +5,7 @@ import 'package:registration/resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
-import '../drawer/my_drawer.dart';
+import '../drawer/menu_screen.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
 import 'logic/recently_viewed_provider.dart';
@@ -23,7 +23,7 @@ class RecentlyViewedScreen extends StatelessWidget {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MyDrawer(),
+      drawer: MenuScreen(),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
@@ -46,7 +46,7 @@ class RecentlyViewedScreen extends StatelessWidget {
                 return value.recentlyViewedList.isEmpty
                     ? const Center(child: CircularProgressIndicator())
                     : RecommendedRecipeList(
-                        recipeList: value.recentlyViewedList);
+                        recipeList: value.recentlyViewedList,screen: "recentlyViewed",);
               }),
             ],
           ),

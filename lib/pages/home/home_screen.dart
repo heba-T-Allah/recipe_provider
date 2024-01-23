@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:registration/pages/drawer/my_drawer.dart';
+import 'package:registration/pages/drawer/menu_screen.dart';
 import 'package:registration/pages/home/widgets/cards_title.dart';
 import 'package:registration/pages/home/widgets/fresh_recipe_list.dart';
 import 'package:registration/pages/home/widgets/my_carousel_slider.dart';
@@ -29,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   init() async {
     await Provider.of<HomeProvider>(context, listen: false).getFreshRecipes();
-    await Provider.of<HomeProvider>(context, listen: false).getRecommendedRecipes();
-
+    await Provider.of<HomeProvider>(context, listen: false)
+        .getRecommendedRecipes();
   }
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
@@ -38,13 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     String userName =
-        FirebaseAuth.instance.currentUser?.displayName.toString() ??
-            "No name";
+        FirebaseAuth.instance.currentUser?.displayName.toString() ?? "No name";
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MyDrawer(),
+      drawer: MenuScreen(),
       body: Consumer<HomeProvider>(builder: (context, value, child) {
         return value.freshRecipeList == null
             ? const Center(child: CircularProgressIndicator())
@@ -92,7 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: AppSize.s20,
                                 ),
-                                FreshRecipeList(recipeList: value.freshRecipeList!),
+                                FreshRecipeList(
+                                    recipeList: value.freshRecipeList!),
                                 const SizedBox(
                                   height: AppSize.s20,
                                 ),
@@ -100,8 +100,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: AppSize.s10,
                                 ),
-                                RecommendedRecipeList(
-                                    recipeList: value.recommendedRecipeList!),
+                                value.recommendedRecipeList == null
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : value.recommendedRecipeList!.isEmpty
+                                        ? const Text('No Data Found')
+                                        : RecommendedRecipeList(
+                                            recipeList:
+                                                value.recommendedRecipeList!,screen: "recommended",),
                               ],
                             ),
                     ),
