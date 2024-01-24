@@ -54,7 +54,7 @@ class FreshCardRecipe extends StatelessWidget {
                       MyFavIcon(isFav: isFav, docId: recipe.docId, listType: "fresh"),
 
                       Transform.translate(
-                        offset: Offset(70, 0),
+                        offset: Offset(40, 0),
                         child: CachedNetworkImage(
                             imageUrl: recipe.image!,
                             placeholder: (context, url) => new CircularProgressIndicator(),

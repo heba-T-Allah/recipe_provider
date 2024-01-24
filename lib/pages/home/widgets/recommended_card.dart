@@ -16,11 +16,7 @@ import 'my_fav_icon.dart';
 import 'my_rating_bar.dart';
 
 class RecommendedCard extends StatelessWidget {
-  RecommendedCard({
-    super.key,
-    required this.recipe,
-    required this.screen
-  });
+  RecommendedCard({super.key, required this.recipe, required this.screen});
 
   final Recipe recipe;
 
@@ -29,8 +25,8 @@ class RecommendedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    isFav = recipe.favUsersIds
-        ?.contains(FirebaseAuth.instance.currentUser?.uid);
+    isFav =
+        recipe.favUsersIds?.contains(FirebaseAuth.instance.currentUser?.uid);
     return InkWell(
       onTap: () => NavigationUtils.push(
           context: context,
@@ -106,20 +102,6 @@ class RecommendedCard extends StatelessWidget {
                 ),
               ),
               MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
-              // Consumer<HomeProvider>(
-              //     builder: (context, value, child) => IconButton(
-              //         onPressed: () {
-              //           isFav = !isFav!;
-              //           print("============ $isFav");
-              //           value.addFavToRecipe(
-              //               widget.recipe.docId!, isFav!, "recommended");
-              //         },
-              //         icon: Icon(
-              //           isFav == true ? Icons.favorite : Icons.favorite_border,
-              //           color: isFav == true
-              //               ? ColorManager.primaryColor
-              //               : ColorManager.greyText,
-              //         ))),
 
             ],
           )),

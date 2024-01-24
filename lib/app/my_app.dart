@@ -62,7 +62,7 @@ class _MyAppState extends State<MyApp> {
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: ColorManager.primaryColor,
                   primary: ColorManager.primaryColor,
-                  secondary: ColorManager.primaryColor,
+                  // secondary: ColorManager.primaryColor,
                 )),
             initialRoute: Routes.splashScreen,
             onGenerateRoute: appRouter.generateRoute,

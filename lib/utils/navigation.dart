@@ -8,6 +8,7 @@ abstract class NavigationUtils {
       PageRouteBuilder(
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return ScaleTransition(
+
             alignment: Alignment.center,
             scale: Tween<double>(begin: 0.1, end: 1).animate(
               CurvedAnimation(
@@ -23,6 +24,7 @@ abstract class NavigationUtils {
             Animation<double> secondaryAnimation) {
           return page;
         },
+        maintainState: true,
       ),
     );
   }
