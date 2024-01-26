@@ -3,13 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 
-import '../../../networking/handling_error_firebase.dart';
-import '../../../utils/navigation.dart';
-import '../../../utils/toast_msg_status.dart';
-import '../../drawer/drawer_screen.dart';
-import '../../on_boarding/on_boarding_screen.dart';
-import '../../sign_in/signin_screen.dart';
-import '../../widgets/overlay_custom_toast.dart';
+import '../networking/handling_error_firebase.dart';
+import '../utils/navigation.dart';
+import '../utils/toast_msg_status.dart';
+import '../pages/drawer/drawer_screen.dart';
+import '../pages/on_boarding/on_boarding_screen.dart';
+import '../pages/sign_in/signin_screen.dart';
+import '../pages/widgets/overlay_custom_toast.dart';
 
 class SignUpProvider extends ChangeNotifier {
   TextEditingController? fullNameController;

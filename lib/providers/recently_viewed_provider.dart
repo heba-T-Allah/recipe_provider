@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../../../model/recipe.dart';
+import '../model/recipe.dart';
 
 class RecentlyViewedProvider extends ChangeNotifier {
   List<Recipe> _recentlyViewedList = [];

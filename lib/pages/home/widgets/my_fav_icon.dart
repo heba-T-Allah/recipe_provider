@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../resources/color_manager.dart';
-import '../logic/home_provider.dart';
+import '../../../providers/home_provider.dart';
 
 class MyFavIcon extends StatefulWidget {
    MyFavIcon({

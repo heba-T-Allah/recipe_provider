@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:registration/pages/drawer/menu_screen.dart';
-import 'package:registration/pages/ingredients/logic/ingredients_provider.dart';
+import 'package:registration/providers/ingredients_provider.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -38,7 +37,6 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
         key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: MyAppBar(),
-        drawer: MenuScreen(),
         body: Padding(
           padding: const EdgeInsets.only(
               top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),

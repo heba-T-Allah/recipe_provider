@@ -5,7 +5,7 @@ import 'package:registration/resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../widgets/custom_text_form_field.dart';
 import '../widgets/text_button_widget.dart';
-import 'logic/signup_provider.dart';
+import '../../providers/signup_provider.dart';
 
 class FormSectionSignUp extends StatefulWidget {
   const FormSectionSignUp({super.key});

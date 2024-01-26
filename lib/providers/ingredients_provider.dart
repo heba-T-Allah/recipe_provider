@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:registration/model/ingredient.dart';
-import '../../../utils/toast_msg_status.dart';
-import '../../widgets/overlay_custom_toast.dart';
+import '../utils/toast_msg_status.dart';
+import '../pages/widgets/overlay_custom_toast.dart';
 
 class IngredientsProvider extends ChangeNotifier {
   List<Ingredient>? _ingredientList;

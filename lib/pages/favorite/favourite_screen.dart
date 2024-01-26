@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/pages/drawer/menu_screen.dart';
-import 'package:registration/pages/home/logic/home_provider.dart';
+import 'package:registration/providers/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
@@ -36,7 +36,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MenuScreen(),
+      drawer: MenuScreen(onPageSelected: (p0) {
+        
+      },),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
@@ -55,8 +57,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 height: AppSize.s10,
               ),
               Consumer<HomeProvider>(builder: (context, value, child) {
-                return value.favRecipeList!.isEmpty
+                return  value.favRecipeList == null
                     ? const Center(child: CircularProgressIndicator())
+                    : value.favRecipeList!.isEmpty
+                    ? const Text('No Data Found')
                     : RecommendedRecipeList(recipeList: value.favRecipeList!,screen: "fav",);
               }),
             ],

@@ -11,7 +11,7 @@ import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
-import 'logic/home_provider.dart';
+import '../../providers/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -43,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MenuScreen(),
+      drawer: MenuScreen(onPageSelected: (p0) {
+
+      },),
       body: Consumer<HomeProvider>(builder: (context, value, child) {
         return value.freshRecipeList == null
             ? const Center(child: CircularProgressIndicator())

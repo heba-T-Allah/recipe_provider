@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 import '../../resources/assets_manager.dart';
-import '../../resources/constants_manager.dart';
-import '../../resources/values_manager.dart';
+
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   MyAppBar({super.key, this.backbtn = false});
@@ -29,18 +28,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 15,
               ),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppConstants.horizontalPadding),
-          child: Image.asset(
-            ImageAssets.notificationsIcon,
-            color: Colors.black,
-            width: AppSize.s20,
-            height: AppSize.s20,
-          ),
-        )
-      ],
+
     );
   }
 

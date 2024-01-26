@@ -6,9 +6,9 @@ import 'package:overlay_kit/overlay_kit.dart';
 import 'package:registration/utils/toast_msg_status.dart';
 import 'package:registration/pages/drawer/drawer_screen.dart';
 import 'package:registration/pages/sign_up/signup_screen.dart';
-import '../../../networking/handling_error_firebase.dart';
-import '../../../utils/navigation.dart';
-import '../../widgets/overlay_custom_toast.dart';
+import '../networking/handling_error_firebase.dart';
+import '../utils/navigation.dart';
+import '../pages/widgets/overlay_custom_toast.dart';
 
 class LoginProvider extends ChangeNotifier {
   TextEditingController? emailController;

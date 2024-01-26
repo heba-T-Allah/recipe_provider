@@ -5,10 +5,9 @@ import 'package:registration/resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
-import '../drawer/menu_screen.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
-import 'logic/recently_viewed_provider.dart';
+import '../../providers/recently_viewed_provider.dart';
 
 class RecentlyViewedScreen extends StatelessWidget {
   RecentlyViewedScreen({super.key});
@@ -23,7 +22,7 @@ class RecentlyViewedScreen extends StatelessWidget {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MenuScreen(),
+      // drawer: MenuScreen(),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),

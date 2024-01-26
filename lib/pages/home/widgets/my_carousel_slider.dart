@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../../../resources/constants_manager.dart';
 import '../../../resources/text_style.dart';
 import '../../../resources/values_manager.dart';
-import '../logic/ads_provider.dart';
+import '../../../providers/ads_provider.dart';
 
 class MyCarouselSlider extends StatefulWidget {
   const MyCarouselSlider({super.key});
@@ -51,6 +51,7 @@ class _MyCarouselSliderState extends State<MyCarouselSlider> {
                                         children: [
                                           Center(
                                             child: CachedNetworkImage(
+                                              color: Colors.white,
                                               imageUrl: recipeAd.image!,
                                               placeholder: (context, url) =>
                                                   new CircularProgressIndicator(),
