@@ -41,6 +41,14 @@ class HomeProvider extends ChangeNotifier {
     _favRecipeList = value;
     notifyListeners();
   }
+  List<Recipe>? _recentlyViewedRecipeList;
+
+  List<Recipe>? get recentlyViewedRecipeList => _recentlyViewedRecipeList;
+
+  set recentlyViewedRecipeList(List<Recipe>? value) {
+    _recentlyViewedRecipeList = value;
+    notifyListeners();
+  }
   Future<void> getAllRecipes() async {
     try {
       var result = await FirebaseFirestore.instance.collection("recipe").get();
@@ -68,6 +76,7 @@ class HomeProvider extends ChangeNotifier {
       var result = await FirebaseFirestore.instance
           .collection("recipe")
           .where('is_fresh', isEqualTo: true)
+      .limit(5)
           .get();
       if (result.docs.isNotEmpty) {
         freshRecipeList = List<Recipe>.from(
@@ -93,6 +102,7 @@ class HomeProvider extends ChangeNotifier {
       var result = await FirebaseFirestore.instance
           .collection("recipe")
           .where('is_fresh', isEqualTo: false)
+          .limit(5)
           .get();
       if (result.docs.isNotEmpty) {
         recommendedRecipeList = List<Recipe>.from(
@@ -145,7 +155,11 @@ class HomeProvider extends ChangeNotifier {
         getFreshRecipes();
         getRecommendedRecipes();
         getAllRecipes();
-      }else {
+      }else if(listType=="allRecipe"){
+    getFreshRecipes();
+    getRecommendedRecipes();
+    getAllRecipes();
+    }else {
         getAllRecipes();
       }
       notifyListeners();
@@ -184,5 +198,63 @@ class HomeProvider extends ChangeNotifier {
           ));
     }
   }
+  // Future<void> getRecentlyViewedRecipes() async {
+  //   try {
+  //     var result = await FirebaseFirestore.instance
+  //         .collection("recipe")
+  //         .where('users_ids', arrayContains:FirebaseAuth.instance.currentUser?.uid )
+  //         .get();
+  //     if (result.docs.isNotEmpty) {
+  //       recentlyViewedRecipeList = List<Recipe>.from(
+  //           result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+  //     } else {
+  //       recentlyViewedRecipeList = [];
+  //     }
+  //     notifyListeners();
+  //   } catch (e) {
+  //     recentlyViewedRecipeList = [];
+  //     print(e);
+  //     notifyListeners();
+  //     OverlayToastMessage.show(
+  //         widget: OverlayCustomToast(
+  //           message: "Error: $e",
+  //           status: ToastMessageStatus.failed,
+  //         ));
+  //   }
+  // }
+  Future<void> addToRecentRecipe(String recipeId, bool isAdd) async {
+    try {
+      OverlayLoadingProgress.start();
+      if (isAdd) {
+        await FirebaseFirestore.instance
+            .collection('recipe')
+            .doc(recipeId)
+            .update({
+          "recently_view_uid":
+          FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])
+        });
+      } else {
+        await FirebaseFirestore.instance
+            .collection('recipe')
+            .doc(recipeId)
+            .update({
+          "recently_view_uid":
+          FieldValue.arrayRemove([FirebaseAuth.instance.currentUser?.uid])
+        });
+      }
+      notifyListeners();
+      OverlayLoadingProgress.stop();
 
+      notifyListeners();
+
+
+    } catch (e) {
+      OverlayLoadingProgress.stop();
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "Error: $e",
+            status: ToastMessageStatus.failed,
+          ));
+    }
+  }
 }

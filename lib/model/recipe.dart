@@ -12,6 +12,7 @@ class Recipe {
   List<dynamic>? ingredients;
   List<dynamic>? directions;
   List<String>? favUsersIds;
+  List<String>? recentlyViewUid;
 
   Recipe();
 
@@ -30,6 +31,9 @@ class Recipe {
     favUsersIds = data['users_ids'] != null
         ? List<String>.from(data['users_ids'].map((e) => e.toString()))
         : null;
+    recentlyViewUid = data['recently_view_uid'] != null
+        ? List<String>.from(data['recently_view_uid'].map((e) => e.toString()))
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -45,7 +49,7 @@ class Recipe {
       'directions': directions,
       'ingredients': ingredients,
       "users_ids": favUsersIds,
-
+    'recently_view_uid':recentlyViewUid
     };
   }
 }

@@ -56,7 +56,9 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                         child: Align(
                           alignment: Alignment.bottomRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              provider.openForgetPasswordScreen(context);
+                            },
                             child: Text(
                               AppStrings.forgetPassword,
                               style: TextStyles.textStyleRegular12Blue,

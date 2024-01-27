@@ -1,13 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/providers/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../model/recipe.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
+import '../../utils/toast_msg_status.dart';
 import '../app_bar/my_app_bar.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
-import '../../providers/recently_viewed_provider.dart';
+import '../widgets/overlay_custom_toast.dart';
 
 class RecentlyViewedScreen extends StatelessWidget {
   RecentlyViewedScreen({super.key});
@@ -16,13 +23,10 @@ class RecentlyViewedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<RecentlyViewedProvider>(context, listen: false)
-        .getRecentlyViewedRecipes();
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      // drawer: MenuScreen(),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
@@ -40,12 +44,59 @@ class RecentlyViewedScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s10,
               ),
-              Consumer<RecentlyViewedProvider>(
-                  builder: (context, value, child) {
-                return value.recentlyViewedList.isEmpty
-                    ? const Center(child: CircularProgressIndicator())
-                    : RecommendedRecipeList(
-                        recipeList: value.recentlyViewedList,screen: "recentlyViewed",);
+              Consumer<HomeProvider>(builder: (context, value, child) {
+                return StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('recipe')
+                        .where("recently_view_uid",
+                            arrayContains:
+                                FirebaseAuth.instance.currentUser!.uid)
+                        .snapshots(),
+                    builder: (context, snapShots) {
+                      if (snapShots.connectionState ==
+                          ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else {
+                        if (snapShots.hasError) {
+                          return OverlayToastMessage.show(
+                              widget: OverlayCustomToast(
+                            message: "Error when get data",
+                            status: ToastMessageStatus.failed,
+                          ));
+                        } else {
+                          if (snapShots.hasData) {
+                            List<Recipe> recipeList = snapShots.data!.docs
+                                .map((e) => Recipe.fromJson(e.data(), e.id))
+                                .toList();
+                            return Skeletonizer(
+                                enabled: recipeList.isEmpty,
+                                child: RecommendedRecipeList(
+                                  recipeList: recipeList,
+                                  screen: "recentlyView",
+                                ));
+                          } else {
+                            return OverlayToastMessage.show(
+                                widget: OverlayCustomToast(
+                              message: "There is No data found",
+                              status: ToastMessageStatus.success,
+                            ));
+                          }
+                        }
+                      }
+                    });
+
+                // FutureBuilderEx<RecentlyViewedProvider>(
+                // future: () => value,
+                // waitingBuilder: (context) => Text('Select your favourite team'),
+                // builder: (context, teamName)
+                // => RecommendedRecipeList(
+                //   recipeList: value.recentlyViewedList,
+                //   screen: "recentlyViewed",
+                // ),
+                // errorBuilder: (error) => Text('Oops: $error')
+                // )
+
+                // );
               }),
             ],
           ),

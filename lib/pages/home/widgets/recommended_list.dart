@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../model/recipe.dart';
 import 'recommended_card.dart';
 
@@ -14,12 +15,12 @@ class RecommendedRecipeList extends StatelessWidget {
   final List<Recipe> recipeList;
   String? screen;
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       // height: MediaQuery.of(context).size.height * .4,
-      child: ListView.builder(
+      child:
+      ListView.builder(
         itemCount: recipeList.length,
         shrinkWrap: true,
         primary: false,

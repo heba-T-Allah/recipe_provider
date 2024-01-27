@@ -23,7 +23,7 @@ class FreshRecipeList extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
 
-          return FreshCardRecipe(recipe: recipeList[index]);
+          return FreshCardRecipe(recipe: recipeList[index],screen: "fresh",);
         },
       ),
     );

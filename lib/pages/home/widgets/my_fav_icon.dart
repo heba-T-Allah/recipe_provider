@@ -39,13 +39,6 @@ class _MyFavIconState extends State<MyFavIcon> {
                   ? ColorManager.primaryColor
                   : ColorManager.greyText,
             )));
-    //   Icon(
-    //  favourite == true
-    //       ? Icons.favorite
-    //       : Icons.favorite_border,
-    //   color: favourite == true
-    //       ? ColorManager.primaryColor
-    //       : ColorManager.greyText,
-    // );
+
   }
 }

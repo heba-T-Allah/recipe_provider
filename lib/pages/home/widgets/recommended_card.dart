@@ -3,10 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 import 'package:registration/pages/home/widgets/prep_time_and_serving.dart';
 
 import '../../../model/recipe.dart';
+import '../../../providers/home_provider.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/text_style.dart';
 import '../../../resources/values_manager.dart';
@@ -96,12 +98,18 @@ class RecommendedCard extends StatelessWidget {
                           width: AppSize.s10,
                         ),
                         PrepTimeAndServing(
-                            prepTime: recipe.prepTime!,
+                            prepTime: recipe.prepTime! ,
                             serving: recipe.serving!),
                       ]),
                 ),
               ),
-              MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
+              screen=="recentlyView"?
+                  IconButton(onPressed: () async{
+                    await Provider.of<HomeProvider>(context, listen: false)
+                        .addToRecentRecipe(recipe.docId!, false);
+                    print("recipe removed");
+                  }, icon: Icon(Icons.close,color: Colors.red,))
+                  :MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
 
             ],
           )),

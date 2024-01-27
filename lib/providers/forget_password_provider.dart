@@ -3,57 +3,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
-import 'package:registration/pages/forget_password/forget_password_screen.dart';
 import 'package:registration/utils/toast_msg_status.dart';
-import 'package:registration/pages/drawer/drawer_screen.dart';
-import 'package:registration/pages/sign_up/signup_screen.dart';
+
 import '../networking/handling_error_firebase.dart';
-import '../utils/navigation.dart';
 import '../pages/widgets/overlay_custom_toast.dart';
 
-class LoginProvider extends ChangeNotifier {
+class ForgetPasswordProvider extends ChangeNotifier {
   TextEditingController? emailController;
-  TextEditingController? passwordController;
   GlobalKey<FormState>? formKey;
 
   void init() {
     emailController = TextEditingController();
-    passwordController = TextEditingController();
     formKey = GlobalKey<FormState>();
   }
 
   void providerDispose() {
-    passwordController = null;
     emailController = null;
     formKey = null;
   }
 
-  void openSignUpScreen(BuildContext context) {
-    providerDispose();
-    NavigationUtils.pushReplacement(context: context, page: SignUpScreen());
-  }
 
-  void openForgetPasswordScreen(BuildContext context) {
-    providerDispose();
-    NavigationUtils.push(context: context, page: ForgetPasswordScreen());
-  }
-  Future<void> login(BuildContext context) async {
+
+  Future<void> forgetPassword(BuildContext context) async {
     OverlayLoadingProgress.start();
 
     try {
       if (formKey?.currentState?.validate() ?? false) {
-        var credentials = await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: emailController!.text,
-                password: passwordController!.text);
-        print("login Successfully. $credentials ");
+        await FirebaseAuth.instance.sendPasswordResetEmail(email:  emailController!.text,);
+
         OverlayToastMessage.show(
             widget: OverlayCustomToast(
-              message: "You login Successfully",status: ToastMessageStatus.success,
+              message: "Mail send Successfully",status: ToastMessageStatus.success,
             ));
-        providerDispose();
         OverlayLoadingProgress.stop();
-        NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
+        // providerDispose();
+        Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -67,8 +51,8 @@ class LoginProvider extends ChangeNotifier {
       print(e);
       OverlayToastMessage.show(
           widget: OverlayCustomToast(
-        message: "General error: $e",status: ToastMessageStatus.failed,
-      ));
+            message: "General error: $e",status: ToastMessageStatus.failed,
+          ));
       OverlayLoadingProgress.stop();
     }
   }

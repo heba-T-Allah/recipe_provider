@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/providers/ingredients_provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../resources/color_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -56,46 +57,43 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                 ),
                 Consumer<IngredientsProvider>(
                   builder: (context, ingredientsProvider, child) =>
-                      ingredientsProvider.ingredientList == null
-                          ? const Center(child: CircularProgressIndicator())
-                          : ingredientsProvider.ingredientList!.isEmpty
-                              ? const Text('No Data Found')
-                              : Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: AppPadding.p8,
-                                      left: AppPadding.p20,
-                                      right: AppPadding.p20),
-                                  child: ListView.builder(
-                                      primary: false,
-                                      shrinkWrap: true,
-                                      itemCount: ingredientsProvider
-                                          .ingredientList!.length,
-                                      itemBuilder: (ctx, index) => ListTile(
-                                            leading: Checkbox(
-                                              checkColor: ColorManager.backgroundGreyColor,
-                                              activeColor: ColorManager.primaryColor,
-                                              value: ingredientsProvider
-                                                  .ingredientList![index]
-                                                  .users_ids
-                                                  ?.contains(FirebaseAuth
-                                                      .instance
-                                                      .currentUser
-                                                      ?.uid),
-                                              onChanged: (value) async {
-                                                await ingredientsProvider
-                                                    .addIngredientToUser(
-                                                        ingredientsProvider
-                                                            .ingredientList![
-                                                                index]
-                                                            .docId!,
-                                                        value ?? false);
-                                              },
-                                            ),
-                                            title: Text(ingredientsProvider
-                                                    .ingredientList![index]
-                                                    .name ??
-                                                'No Name'),
-                                          ))),
+                      Skeletonizer(
+                    enabled: ingredientsProvider.ingredientList == null,
+                    child: ingredientsProvider.ingredientList!.isEmpty
+                        ? const Text('No Data Found')
+                        : Padding(
+                            padding: const EdgeInsets.only(
+                                top: AppPadding.p8,
+                                left: AppPadding.p20,
+                                right: AppPadding.p20),
+                            child: ListView.builder(
+                                primary: false,
+                                shrinkWrap: true,
+                                itemCount:
+                                    ingredientsProvider.ingredientList!.length,
+                                itemBuilder: (ctx, index) => ListTile(
+                                      leading: Checkbox(
+                                        checkColor:
+                                            ColorManager.backgroundGreyColor,
+                                        activeColor: ColorManager.primaryColor,
+                                        value: ingredientsProvider
+                                            .ingredientList![index].users_ids
+                                            ?.contains(FirebaseAuth
+                                                .instance.currentUser?.uid),
+                                        onChanged: (value) async {
+                                          await ingredientsProvider
+                                              .addIngredientToUser(
+                                                  ingredientsProvider
+                                                      .ingredientList![index]
+                                                      .docId!,
+                                                  value ?? false);
+                                        },
+                                      ),
+                                      title: Text(ingredientsProvider
+                                              .ingredientList![index].name ??
+                                          'No Name'),
+                                    ))),
+                  ),
                 ),
               ])),
         ));

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:registration/pages/drawer/menu_screen.dart';
 import 'package:registration/providers/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
@@ -57,11 +58,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 height: AppSize.s10,
               ),
               Consumer<HomeProvider>(builder: (context, value, child) {
-                return  value.favRecipeList == null
-                    ? const Center(child: CircularProgressIndicator())
-                    : value.favRecipeList!.isEmpty
-                    ? const Text('No Data Found')
-                    : RecommendedRecipeList(recipeList: value.favRecipeList!,screen: "fav",);
+                return  Skeletonizer(
+                    enabled: value.favRecipeList == null,child:value.favRecipeList!.isEmpty
+                    ? const Text('No Data Found'): RecommendedRecipeList(recipeList: value.favRecipeList!,screen: "fav",));
               }),
             ],
           ),

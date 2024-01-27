@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
 
                         Center(
                           child: Text(
-                            AppStrings.signIn,
+                            AppStrings.signUp,
                             style: TextStyles.textStyleBold22White
                                 .copyWith(height: 1.5),
                           ),

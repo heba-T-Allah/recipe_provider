@@ -10,6 +10,8 @@ class AppStrings {
   static const forgetPassword = "Forget Password";
   static const donotHaveAccount = "Don't have an account? ";
   static const registerDot = "Register.";
+  static const sendMail = "Send Mail";
+
 
   static const confirmPassword = "Confirm Password";
   static const login = "Login";
@@ -48,7 +50,7 @@ class AppStrings {
 
   static const ingredients ="Ingredients";
   static const directions ="Directions";
-
+  static const allRecipe ="All Recipe";
 
 
 

@@ -19,13 +19,13 @@ class PrepTimeAndServing extends StatelessWidget {
         RowIconAndText(
           title: "  $prepTime  Min  ",
           icon: ImageAssets.timeIcon,
-          iconSize: 16,
+          iconSize: 14,
           textStyle: TextStyles.textStyleRegular10Grey,
         ),
         RowIconAndText(
           title: "  $serving Serving",
           icon: ImageAssets.servingIcon,
-          iconSize: 16,
+          iconSize: 14,
           textStyle: TextStyles.textStyleRegular10Grey,
         ),
       ],

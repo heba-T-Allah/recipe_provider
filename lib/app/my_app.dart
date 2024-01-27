@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/providers/forget_password_provider.dart';
 import 'package:registration/providers/ingredients_provider.dart';
 import 'package:registration/routing/app-router.dart';
 import 'package:registration/providers/ads_provider.dart';
@@ -9,7 +10,6 @@ import 'package:registration/providers/signup_provider.dart';
 import '../resources/color_manager.dart';
 import '../resources/strings_manager.dart';
 import '../routing/routes.dart';
-import '../providers/recently_viewed_provider.dart';
 import '../providers/login_provider.dart';
 
 class MyApp extends StatefulWidget {
@@ -31,15 +31,16 @@ class _MyAppState extends State<MyApp> {
           ),ChangeNotifierProvider<SignUpProvider>(
             create: (BuildContext context) => SignUpProvider(),
           ),
+          ChangeNotifierProvider<ForgetPasswordProvider>(
+            create: (BuildContext context) => ForgetPasswordProvider(),
+          ),
           ChangeNotifierProvider<HomeProvider>(
             create: (BuildContext context) => HomeProvider(),
           ),
           ChangeNotifierProvider<AdsProvider>(
             create: (BuildContext context) => AdsProvider(),
           ),
-          ChangeNotifierProvider<RecentlyViewedProvider>(
-            create: (BuildContext context) => RecentlyViewedProvider(),
-          ),
+
           ChangeNotifierProvider<IngredientsProvider>(
             create: (BuildContext context) => IngredientsProvider(),
           ),
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
                 colorScheme: ColorScheme.fromSeed(
                   seedColor: ColorManager.primaryColor,
                   primary: ColorManager.primaryColor,
-                  // secondary: ColorManager.primaryColor,
+                  secondary: ColorManager.primaryColor,
                 )),
             initialRoute: Routes.splashScreen,
             onGenerateRoute: appRouter.generateRoute,

@@ -16,9 +16,12 @@ class FreshCardRecipe extends StatelessWidget {
    FreshCardRecipe({
     super.key,
     required this.recipe,
+     required this.screen
+
   });
 
   final Recipe recipe;
+  String screen;
 
   bool? isFav;
 
@@ -33,7 +36,7 @@ class FreshCardRecipe extends StatelessWidget {
             recipe: recipe,
           )),
       child: Card(
-          margin: const EdgeInsets.only(right: AppMargin.m60),
+          margin:screen=="fresh"? const EdgeInsets.only(right: AppMargin.m60):EdgeInsets.all(0),
           color: ColorManager.backgroundGreyColor,
           elevation: 2,
           shape: OutlineInputBorder(
@@ -51,10 +54,10 @@ class FreshCardRecipe extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MyFavIcon(isFav: isFav, docId: recipe.docId, listType: "fresh"),
+                      MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
 
                       Transform.translate(
-                        offset: Offset(40, 0),
+                        offset:Offset(40, 0),
                         child: CachedNetworkImage(
                             imageUrl: recipe.image!,
                             placeholder: (context, url) => new CircularProgressIndicator(),
@@ -64,7 +67,7 @@ class FreshCardRecipe extends StatelessWidget {
                                 backgroundImage: NetworkImage(
                                    recipe.image!,
                                 ),
-                                radius: AppSize.s60)),
+                                radius:screen=="fresh"?AppSize.s60 : AppSize.s30)),
                       ),
                     ],
                   ),
@@ -79,7 +82,7 @@ class FreshCardRecipe extends StatelessWidget {
                     child: Text(recipe.title!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: TextStyles.textStyleMedium14Black),
+                        style: screen=="fresh"?TextStyles.textStyleMedium14Black:TextStyles.textStyleMedium12Black),
                   ),
                   const SizedBox(
                     height: AppSize.s5,

@@ -61,9 +61,7 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                           isObsecureText: true,
                           inputType: TextInputType.visiblePassword),
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
+
                     const SizedBox(
                       height: 40,
                     ),
@@ -74,7 +72,7 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                           provider.signUp(context);
                         }),
                     const SizedBox(
-                      height: 80,
+                      height: 60,
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
