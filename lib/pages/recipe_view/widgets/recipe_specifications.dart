@@ -87,19 +87,16 @@ class RecipeSpecifications extends StatelessWidget {
                   ),
                 ],
               ),
-              Transform.translate(
-                offset: Offset(20, -40),
-                child: CachedNetworkImage(
-                    imageUrl: recipe.image!,
-                    placeholder: (context, url) =>  new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
-                    imageBuilder: (context, image) => CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            recipe.image!,
-                          ),
-                          radius: 100,
-                        )),
-              ),
+              CachedNetworkImage(
+                  imageUrl: recipe.image!,
+                  placeholder: (context, url) =>  new CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  imageBuilder: (context, image) => CircleAvatar(
+                        backgroundImage: NetworkImage(
+                          recipe.image!,
+                        ),
+                        radius: 80,
+                      )),
             ],
           ),
         ),

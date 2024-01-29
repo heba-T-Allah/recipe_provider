@@ -1,13 +1,18 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/model/ingredient.dart';
 import 'package:registration/pages/recipe_view/widgets/recipe_specifications.dart';
 import 'package:registration/providers/home_provider.dart';
 import '../../model/recipe.dart';
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
+import '../../utils/toast_msg_status.dart';
 import '../app_bar/my_app_bar.dart';
+import '../widgets/overlay_custom_toast.dart';
 
 class RecipeViewScreen extends StatefulWidget {
   RecipeViewScreen({super.key, required this.recipe});
@@ -55,17 +60,74 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p12),
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    primary: false,
-                    itemCount: widget.recipe!.ingredients!.length,
-                    itemBuilder: (context, index) {
-                      return Text(
-                        "• ${widget.recipe!.ingredients![index]}",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyles.textStyleRegular16Black,
-                      );
+                  child: FutureBuilder(
+                    future: FirebaseFirestore.instance.collection("ingredient")
+                        .where("users_ids",
+                        arrayContains: FirebaseAuth.instance.currentUser?.uid)
+                        .get(),
+                    builder: (context, snapShot) {
+                      if (snapShot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      }
+                      else {
+                        if (snapShot.hasError) {
+                          return OverlayToastMessage.show(
+                              widget: OverlayCustomToast(
+                                message: "Error when get data",
+                                status: ToastMessageStatus.failed,
+                              ));
+                        } else {
+                          if (snapShot.hasData) {
+                            List<Ingredient> userIngredients = snapShot.data!
+                                .docs
+                                .map((e) => Ingredient.fromJson(e.data(), e.id))
+                                .toList();
+                            var userIngredientsTitles = userIngredients.map((
+                                e) => e.name).toList();
+                            Widget checkingregient(String recipeIngredient) {
+                              for (var userIngredientTitle in userIngredientsTitles) {
+                                if (recipeIngredient.contains(
+                                    userIngredientTitle!)) {
+                                  return Icon(
+                                    Icons.check, color: Colors.green,);
+                                } else {
+                                  return Icon(Icons.close, color: Colors.red,);
+                                }
+                              }
+                              return Container();
+                            }
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              primary: false,
+                              itemCount: widget.recipe!.ingredients!.length,
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+                                    checkingregient(widget.recipe!.ingredients![index]),
+
+                                    Flexible(
+                                      child: Text(
+                                        " ${widget.recipe!.ingredients![index]}",
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style: TextStyles.textStyleRegular16Black,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            return OverlayToastMessage.show(
+                                widget: OverlayCustomToast(
+                                  message: "There is No data found",
+                                  status: ToastMessageStatus.success,
+                                ));
+                          }
+                        }
+                      }
                     },
                   ),
                 ),
@@ -89,7 +151,7 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                         children: [
                           Text(
                             "• Step ${index + 1}:",
-                            style: TextStyles.textStyleMedium16Black,
+                            style: TextStyles.textStyleRegular16Orange,
                           ),
                           Padding(
                               padding: const EdgeInsets.all(10),

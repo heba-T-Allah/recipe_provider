@@ -40,7 +40,7 @@ class RecentlyViewedScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s10,
               ),
-              const SearchAndFilter(),
+               SearchAndFilter(screen: 'recentlyView',),
               const SizedBox(
                 height: AppSize.s10,
               ),

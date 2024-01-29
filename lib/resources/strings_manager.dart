@@ -59,7 +59,7 @@ class AppStrings {
   static const calories ="Calories";
   static const rate ="Rating";
   static const apply ="Apply";
-
+  static const searchUsingKeyword ="Search using keyword";
 
 
 

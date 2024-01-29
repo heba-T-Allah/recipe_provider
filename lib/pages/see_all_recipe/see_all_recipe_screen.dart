@@ -52,7 +52,7 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
               const SizedBox(
                 height: AppSize.s10,
               ),
-              const SearchAndFilter(),
+               SearchAndFilter(screen: "allRecipe",),
               const SizedBox(
                 height: AppSize.s10,
               ),

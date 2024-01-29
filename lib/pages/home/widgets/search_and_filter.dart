@@ -8,9 +8,9 @@ import '../../../resources/text_style.dart';
 import '../../../utils/navigation.dart';
 
 class SearchAndFilter extends StatelessWidget {
-  const SearchAndFilter({
-    super.key,
-  });
+  SearchAndFilter({super.key, required this.screen});
+
+  String? screen;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +26,22 @@ class SearchAndFilter extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Center(
-                child: TextField(
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    hintText: AppStrings.search,
-                    hintStyle: TextStyles.textStyleRegular13Grey,
+                child: InkWell(
+                  onTap: () {
+                    if (screen == "home") {
+                      NavigationUtils.push(
+                          context: context, page: FilterScreen());
+                    } else {}
+                  },
+                  child: TextField(
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.search,color:ColorManager.greyText ,),
+                      border: InputBorder.none,
+                      hintText: screen == "home"
+                          ? AppStrings.searchUsingKeyword
+                          : AppStrings.search,
+                      hintStyle: TextStyles.textStyleRegular13Grey,
+                    ),
                   ),
                 ),
               ),

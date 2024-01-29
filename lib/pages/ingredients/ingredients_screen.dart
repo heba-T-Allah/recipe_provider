@@ -51,7 +51,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                 const SizedBox(
                   height: AppSize.s10,
                 ),
-                const SearchAndFilter(),
+                 SearchAndFilter(screen: "ingredients",),
                 const SizedBox(
                   height: AppSize.s10,
                 ),

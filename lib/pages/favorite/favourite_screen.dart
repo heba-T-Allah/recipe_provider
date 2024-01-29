@@ -37,9 +37,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
-      drawer: MenuScreen(onPageSelected: (p0) {
-        
-      },),
+      drawer: MenuScreen(
+        onPageSelected: (p0) {},
+      ),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
@@ -53,7 +53,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               const SizedBox(
                 height: AppSize.s10,
               ),
-              const SearchAndFilter(),
+              SearchAndFilter(
+                screen: "favorite",
+              ),
               const SizedBox(
                 height: AppSize.s10,
               ),
@@ -61,21 +63,19 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 builder: (context, value, child) {
                   if (value.favRecipeList == null) {
                     // If favRecipeList is null, return the Skeletonizer
-                    return Skeletonizer(enabled: true,
-                        child:  Text('Loading...')
-                            );
-
+                    return Skeletonizer(
+                        enabled: true, child: Text('Loading...'));
                   } else if (value.favRecipeList!.isEmpty) {
                     // If favRecipeList is empty, show "No Data Found" message
                     return Text('No Data Found');
                   } else {
                     // If favRecipeList has data, show the list of recommended recipes
 
-                    return RecommendedRecipeList(recipeList: value.favRecipeList!, screen: "fav");
+                    return RecommendedRecipeList(
+                        recipeList: value.favRecipeList!, screen: "fav");
                   }
                 },
               )
-
             ],
           ),
         ),
