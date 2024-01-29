@@ -70,6 +70,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     return Text('No Data Found');
                   } else {
                     // If favRecipeList has data, show the list of recommended recipes
+
                     return RecommendedRecipeList(recipeList: value.favRecipeList!, screen: "fav");
                   }
                 },
