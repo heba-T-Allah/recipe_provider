@@ -56,45 +56,47 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                   height: AppSize.s10,
                 ),
                 Consumer<IngredientsProvider>(
-                  builder: (context, ingredientsProvider, child) =>
-                      Skeletonizer(
-                    enabled: ingredientsProvider.ingredientList == null,
-                    child: ingredientsProvider.ingredientList!.isEmpty
-                        ? const Text('No Data Found')
-                        : Padding(
-                            padding: const EdgeInsets.only(
-                                top: AppPadding.p8,
-                                left: AppPadding.p20,
-                                right: AppPadding.p20),
-                            child: ListView.builder(
-                                primary: false,
-                                shrinkWrap: true,
-                                itemCount:
-                                    ingredientsProvider.ingredientList!.length,
-                                itemBuilder: (ctx, index) => ListTile(
-                                      leading: Checkbox(
-                                        checkColor:
-                                            ColorManager.backgroundGreyColor,
-                                        activeColor: ColorManager.primaryColor,
-                                        value: ingredientsProvider
-                                            .ingredientList![index].users_ids
-                                            ?.contains(FirebaseAuth
-                                                .instance.currentUser?.uid),
-                                        onChanged: (value) async {
-                                          await ingredientsProvider
-                                              .addIngredientToUser(
-                                                  ingredientsProvider
-                                                      .ingredientList![index]
-                                                      .docId!,
-                                                  value ?? false);
-                                        },
-                                      ),
-                                      title: Text(ingredientsProvider
-                                              .ingredientList![index].name ??
-                                          'No Name'),
-                                    ))),
-                  ),
-                ),
+                    builder: (context, ingredientsProvider, child) {
+                  if (ingredientsProvider.ingredientList == null) {
+                    return Skeletonizer(
+                        enabled: true, child: Text('Loading...'));
+                  } else if (ingredientsProvider.ingredientList!.isEmpty) {
+                    return Text('No Data Found');
+                  } else {
+                    return Padding(
+                        padding: const EdgeInsets.only(
+                            top: AppPadding.p8,
+                            left: AppPadding.p20,
+                            right: AppPadding.p20),
+                        child: ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount:
+                                ingredientsProvider.ingredientList!.length,
+                            itemBuilder: (ctx, index) => ListTile(
+                                  leading: Checkbox(
+                                    checkColor:
+                                        ColorManager.backgroundGreyColor,
+                                    activeColor: ColorManager.primaryColor,
+                                    value: ingredientsProvider
+                                        .ingredientList![index].users_ids
+                                        ?.contains(FirebaseAuth
+                                            .instance.currentUser?.uid),
+                                    onChanged: (value) async {
+                                      await ingredientsProvider
+                                          .addIngredientToUser(
+                                              ingredientsProvider
+                                                  .ingredientList![index]
+                                                  .docId!,
+                                              value ?? false);
+                                    },
+                                  ),
+                                  title: Text(ingredientsProvider
+                                          .ingredientList![index].name ??
+                                      'No Name'),
+                                )));
+                  }
+                }),
               ])),
         ));
   }

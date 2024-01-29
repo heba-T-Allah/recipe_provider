@@ -57,11 +57,24 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               const SizedBox(
                 height: AppSize.s10,
               ),
-              Consumer<HomeProvider>(builder: (context, value, child) {
-                return  Skeletonizer(
-                    enabled: value.favRecipeList == null,child:value.favRecipeList!.isEmpty
-                    ? const Text('No Data Found'): RecommendedRecipeList(recipeList: value.favRecipeList!,screen: "fav",));
-              }),
+              Consumer<HomeProvider>(
+                builder: (context, value, child) {
+                  if (value.favRecipeList == null) {
+                    // If favRecipeList is null, return the Skeletonizer
+                    return Skeletonizer(enabled: true,
+                        child:  Text('Loading...')
+                            );
+
+                  } else if (value.favRecipeList!.isEmpty) {
+                    // If favRecipeList is empty, show "No Data Found" message
+                    return Text('No Data Found');
+                  } else {
+                    // If favRecipeList has data, show the list of recommended recipes
+                    return RecommendedRecipeList(recipeList: value.favRecipeList!, screen: "fav");
+                  }
+                },
+              )
+
             ],
           ),
         ),

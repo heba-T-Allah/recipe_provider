@@ -36,7 +36,9 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      appBar: MyAppBar(backbtn: true,),
+      appBar: MyAppBar(
+        backbtn: true,
+      ),
       body: Padding(
         padding: const EdgeInsets.only(
             top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
@@ -55,41 +57,29 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
                 height: AppSize.s10,
               ),
               Consumer<HomeProvider>(builder: (context, value, child) {
-                return Skeletonizer(
-                    enabled: value.recipeList == null,
-                    child: value.recipeList!.isEmpty
-                        ? const Text('No Data Found')
-                        : FlexibleGridView(
-                            shrinkWrap: true,
-                            children: value.recipeList!
-                                .map(
-                                  (e) => SizedBox(
-                                    height: MediaQuery.of(context).size.height/4,
-                                    // width:
-                                    //     MediaQuery.of(context).size.width ,
-                                    child: FreshCardRecipe(
-                                      recipe: e,
-                                      screen:"allRecipe"
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            // List.generate(
-                            //   20,
-                            //   (index) => RecommendedCard(
-                            //     recipe: value.recentlyViewedList[index],
-                            //     screen: "recentlyViewed",
-                            //   ),
-                            // ),
-                            axisCount: GridLayoutEnum.twoElementsInRow,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ));
-
-                // RecommendedRecipeList(
-                //   recipeList: value.recentlyViewedList,
-                //   screen: "recentlyViewed",
-                // ));
+                if (value.recipeList == null) {
+                  return Skeletonizer(enabled: true, child: Text('Loading...'));
+                } else if (value.recipeList!.isEmpty) {
+                  return const Text('No Data Found');
+                } else {
+                  return FlexibleGridView(
+                    shrinkWrap: true,
+                    children: value.recipeList!
+                        .map(
+                          (e) => SizedBox(
+                            height: MediaQuery.of(context).size.height / 4,
+                            // width:
+                            //     MediaQuery.of(context).size.width ,
+                            child:
+                                FreshCardRecipe(recipe: e, screen: "allRecipe"),
+                          ),
+                        )
+                        .toList(),
+                    axisCount: GridLayoutEnum.twoElementsInRow,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                  );
+                }
               }),
             ],
           ),
