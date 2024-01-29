@@ -10,4 +10,7 @@ class ColorManager {
   static Color textBlack = const Color(0xff1f222b);
   static Color error = const Color(0xFFEF1111);
   static Color blue = const Color(0xff128fae);
+  static Color darkGreyBg = const Color(0xffe1e3e9);
+  static Color darkTextGrey= const Color(0xff969aa2);
+
 }

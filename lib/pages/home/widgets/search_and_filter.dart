@@ -1,10 +1,11 @@
-
 import 'package:flutter/material.dart';
+import 'package:registration/pages/filter/filter_screen.dart';
 
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
 import '../../../resources/strings_manager.dart';
 import '../../../resources/text_style.dart';
+import '../../../utils/navigation.dart';
 
 class SearchAndFilter extends StatelessWidget {
   const SearchAndFilter({
@@ -30,8 +31,7 @@ class SearchAndFilter extends StatelessWidget {
                     prefixIcon: Icon(Icons.search),
                     border: InputBorder.none,
                     hintText: AppStrings.search,
-                    hintStyle:
-                    TextStyles.textStyleRegular13Grey,
+                    hintStyle: TextStyles.textStyleRegular13Grey,
                   ),
                 ),
               ),
@@ -39,19 +39,23 @@ class SearchAndFilter extends StatelessWidget {
         Expanded(flex: 1, child: Container()),
         Expanded(
           flex: 2,
-          child: Container(
-            height: 60,
-            width: 30,
-            decoration: BoxDecoration(
-              color: ColorManager.backgroundGreyColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Image.asset(
-                ImageAssets.filterIcon,
-                height: 30,
-                width: 30,
+          child: InkWell(
+            onTap: () =>
+                NavigationUtils.push(context: context, page: FilterScreen()),
+            child: Container(
+              height: 60,
+              width: 30,
+              decoration: BoxDecoration(
+                color: ColorManager.backgroundGreyColor,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(
+                  ImageAssets.filterIcon,
+                  height: 30,
+                  width: 30,
+                ),
               ),
             ),
           ),
@@ -60,4 +64,3 @@ class SearchAndFilter extends StatelessWidget {
     );
   }
 }
-

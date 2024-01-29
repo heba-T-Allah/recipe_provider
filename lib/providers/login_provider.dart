@@ -51,7 +51,7 @@ class LoginProvider extends ChangeNotifier {
             widget: OverlayCustomToast(
               message: "You login Successfully",status: ToastMessageStatus.success,
             ));
-        providerDispose();
+        // providerDispose();
         OverlayLoadingProgress.stop();
         NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
       }

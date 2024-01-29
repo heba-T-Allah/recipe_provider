@@ -51,6 +51,16 @@ class AppStrings {
   static const ingredients ="Ingredients";
   static const directions ="Directions";
   static const allRecipe ="All Recipe";
+  static const meal ="Meal";
+  static const filter ="Filter";
+  static const reset ="Reset";
+  static const serving ="Serving";
+  static const preparationTime ="Preparation Time";
+  static const calories ="Calories";
+  static const rate ="Rating";
+  static const apply ="Apply";
+
+
 
 
 

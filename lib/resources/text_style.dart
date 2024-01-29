@@ -115,4 +115,14 @@ class TextStyles {
       fontWeight: FontWeightManager.medium,
       fontFamily: FontConstants.fontFamilyHellix,
       color: ColorManager.textBlack);
+  static TextStyle textStyleMedium12DarkGrey = TextStyle(
+      fontSize: FontSize.s12,
+      fontWeight: FontWeightManager.medium,
+      fontFamily: FontConstants.fontFamilyHellix,
+      color: ColorManager.darkTextGrey);
+  static TextStyle textStyleMedium12Orange = TextStyle(
+      fontSize: FontSize.s12,
+      fontWeight: FontWeightManager.medium,
+      fontFamily: FontConstants.fontFamilyHellix,
+      color: ColorManager.primaryColor);
 }
