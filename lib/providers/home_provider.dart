@@ -62,6 +62,7 @@ class HomeProvider extends ChangeNotifier {
     print(filterValue);
     notifyListeners();
   }
+
 //filtered list from firebase
 //   var value = {"type": "breakfast", "serving": 4, "prep_time": 70};
   List<Recipe>? _filteredList;
@@ -87,10 +88,11 @@ class HomeProvider extends ChangeNotifier {
       var ref = FirebaseFirestore.instance.collection("recipe");
       var filteredData;
       for (var entry in filterValue.entries) {
-        if(entry.key=="meal_type") {
-          filteredData=await ref.where(entry.key, isEqualTo: entry.value);
+        if (entry.key == "meal_type") {
+          filteredData = await ref.where(entry.key, isEqualTo: entry.value);
         } else {
-          filteredData=  await  ref.where(entry.key, isLessThanOrEqualTo: entry.value);
+          filteredData =
+              await ref.where(entry.key, isLessThanOrEqualTo: entry.value);
         }
       }
       var result = await filteredData.get();
@@ -103,10 +105,10 @@ class HomeProvider extends ChangeNotifier {
         filteredList = [];
       }
       notifyListeners();
-      filterValue={};
+      filterValue = {};
     } catch (e) {
       filteredList = [];
-      filterValue={};
+      filterValue = {};
       print(e);
       notifyListeners();
       OverlayToastMessage.show(
@@ -268,7 +270,6 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-
   Future<void> addToRecentRecipe(String recipeId, bool isAdd) async {
     try {
       OverlayLoadingProgress.start();
@@ -302,4 +303,53 @@ class HomeProvider extends ChangeNotifier {
       ));
     }
   }
+
+  List<Recipe> _updatedRecipeList = [];
+
+  List<Recipe> get updatedRecipeList => _updatedRecipeList;
+
+  set updatedRecipeList(List<Recipe> value) {
+    _updatedRecipeList = value;
+    notifyListeners();
+  }
+
+  bool haveResult = false;
+  List<Recipe>? _recentlyViewedRecipe;
+
+  List<Recipe>? get recentlyViewedRecipe => _recentlyViewedRecipe;
+
+  set recentlyViewedRecipe(List<Recipe>? value) {
+    _recentlyViewedRecipe = value;
+    notifyListeners();
+  }
+
+  void searchRecipe(String keyword, String screen) {
+    List<Recipe> myRecipeList = [];
+    List<Recipe> result = [];
+    if (screen == "favorite") {
+      myRecipeList = favRecipeList!;
+    } else if (screen == "allRecipe") {
+      myRecipeList = recipeList!;
+    } else if (screen == "recentlyView") {
+      myRecipeList = recentlyViewedRecipe!;
+    }
+    if (keyword.isEmpty) {
+      result = myRecipeList;
+    } else {
+      result = myRecipeList
+          .where((recipe) => {recipe.title}
+              .toString()
+              .toLowerCase()
+              .contains(keyword.toLowerCase()))
+          .toList();
+    }
+    updatedRecipeList = result;
+
+    haveResult = true;
+    notifyListeners();
+    print("-------------- - updatedRecipeList$updatedRecipeList");
+
+  }
+
+
 }

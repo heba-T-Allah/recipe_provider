@@ -19,7 +19,6 @@ class FavoriteScreen extends StatefulWidget {
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
-
   @override
   void initState() {
     init();
@@ -27,8 +26,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   init() async {
+   await Future.delayed(Duration(seconds: 2));
     await Provider.of<HomeProvider>(context, listen: false)
         .getFavoriteRecipes();
+    Provider.of<HomeProvider>(context,listen: false).haveResult = false;
+    // print("------------------myFav $myFav");
   }
 
   @override
@@ -55,12 +57,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
               ),
               SearchAndFilter(
                 screen: "favorite",
+
               ),
               const SizedBox(
                 height: AppSize.s10,
               ),
               Consumer<HomeProvider>(
                 builder: (context, value, child) {
+                  if(!value.haveResult){
                   if (value.favRecipeList == null) {
                     // If favRecipeList is null, return the Skeletonizer
                     return Skeletonizer(
@@ -73,9 +77,22 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
                     return RecommendedRecipeList(
                         recipeList: value.favRecipeList!, screen: "fav");
+                  }}else{
+                     if (value.updatedRecipeList.isEmpty) {
+                      // If favRecipeList is empty, show "No Data Found" message
+                      return Text('No Data Found');
+                    } else {
+                      // If favRecipeList has data, show the list of recommended recipes
+
+                      return RecommendedRecipeList(
+                          recipeList: value.updatedRecipeList, screen: "fav");
+                    }
+
+
+
                   }
                 },
-              )
+              ),
             ],
           ),
         ),

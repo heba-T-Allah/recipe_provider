@@ -54,7 +54,7 @@ class _MenuScreenState extends State<MenuScreen> {
       'index': 4,
       'icon': Icons.settings,
       'title': AppStrings.setting,
-      'page': SettingScreen()
+      'page': SettingsScreen()
     },
     {
       'index': 5,

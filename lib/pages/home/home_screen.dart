@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: AppSize.s10,
                                 ),
-                                 SearchAndFilter(screen: "home",),
+                                 SearchAndFilter(screen: "home"),
                                 const SizedBox(
                                   height: AppSize.s10,
                                 ),

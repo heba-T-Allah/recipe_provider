@@ -23,6 +23,7 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
 
   init() async {
     await Provider.of<HomeProvider>(context, listen: false).getAllRecipes();
+    Provider.of<HomeProvider>(context, listen: false).haveResult = false;
   }
 
   @override
@@ -52,33 +53,56 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
               const SizedBox(
                 height: AppSize.s10,
               ),
-               SearchAndFilter(screen: "allRecipe",),
+              SearchAndFilter(screen: "allRecipe"),
               const SizedBox(
                 height: AppSize.s10,
               ),
               Consumer<HomeProvider>(builder: (context, value, child) {
-                if (value.recipeList == null) {
-                  return Skeletonizer(enabled: true, child: Text('Loading...'));
-                } else if (value.recipeList!.isEmpty) {
-                  return const Text('No Data Found');
+                if (!value.haveResult) {
+                  if (value.recipeList == null) {
+                    return Skeletonizer(
+                        enabled: true, child: Text('Loading...'));
+                  } else if (value.recipeList!.isEmpty) {
+                    return const Text('No Data Found');
+                  } else {
+                    return FlexibleGridView(
+                      shrinkWrap: true,
+                      children: value.recipeList!
+                          .map(
+                            (e) => SizedBox(
+                              height: MediaQuery.of(context).size.height / 4,
+                              // width:
+                              //     MediaQuery.of(context).size.width ,
+                              child: FreshCardRecipe(
+                                  recipe: e, screen: "allRecipe"),
+                            ),
+                          )
+                          .toList(),
+                      axisCount: GridLayoutEnum.twoElementsInRow,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    );
+                  }
                 } else {
-                  return FlexibleGridView(
-                    shrinkWrap: true,
-                    children: value.recipeList!
-                        .map(
-                          (e) => SizedBox(
-                            height: MediaQuery.of(context).size.height / 4,
-                            // width:
-                            //     MediaQuery.of(context).size.width ,
-                            child:
-                                FreshCardRecipe(recipe: e, screen: "allRecipe"),
-                          ),
-                        )
-                        .toList(),
-                    axisCount: GridLayoutEnum.twoElementsInRow,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                  );
+                  if (value.updatedRecipeList.isEmpty) {
+                    return const Text('No Data Found');
+                  } else {
+                    return FlexibleGridView(
+                      shrinkWrap: true,
+                      children: value.updatedRecipeList
+                          .map(
+                            (e) => SizedBox(
+                              height: MediaQuery.of(context).size.height / 4,
+                              child: FreshCardRecipe(
+                                  recipe: e, screen: "allRecipe"),
+                            ),
+                          )
+                          .toList(),
+                      axisCount: GridLayoutEnum.twoElementsInRow,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8,
+                    );
+                  }
                 }
               }),
             ],

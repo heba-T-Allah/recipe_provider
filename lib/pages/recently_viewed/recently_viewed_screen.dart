@@ -16,11 +16,20 @@ import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
 import '../widgets/overlay_custom_toast.dart';
 
-class RecentlyViewedScreen extends StatelessWidget {
+class RecentlyViewedScreen extends StatefulWidget {
   RecentlyViewedScreen({super.key});
 
-  var scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  State<RecentlyViewedScreen> createState() => _RecentlyViewedScreenState();
+}
 
+class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+@override
+  void initState() {
+  Provider.of<HomeProvider>(context,listen: false).haveResult = false;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +49,7 @@ class RecentlyViewedScreen extends StatelessWidget {
               const SizedBox(
                 height: AppSize.s10,
               ),
-               SearchAndFilter(screen: 'recentlyView',),
+              SearchAndFilter(screen: 'recentlyView'),
               const SizedBox(
                 height: AppSize.s10,
               ),
@@ -68,12 +77,23 @@ class RecentlyViewedScreen extends StatelessWidget {
                             List<Recipe> recipeList = snapShots.data!.docs
                                 .map((e) => Recipe.fromJson(e.data(), e.id))
                                 .toList();
-                            return Skeletonizer(
-                                enabled: recipeList.isEmpty,
-                                child: RecommendedRecipeList(
-                                  recipeList: recipeList,
-                                  screen: "recentlyView",
-                                ));
+                            value.recentlyViewedRecipe=recipeList;
+
+                            if (value.haveResult) {
+                              return Skeletonizer(
+                                  enabled: value.updatedRecipeList.isEmpty,
+                                  child: RecommendedRecipeList(
+                                    recipeList: value.updatedRecipeList,
+                                    screen: "recentlyView",
+                                  ));
+                            } else {
+                              return Skeletonizer(
+                                  enabled: recipeList.isEmpty,
+                                  child: RecommendedRecipeList(
+                                    recipeList: recipeList,
+                                    screen: "recentlyView",
+                                  ));
+                            }
                           } else {
                             return OverlayToastMessage.show(
                                 widget: OverlayCustomToast(
@@ -84,19 +104,6 @@ class RecentlyViewedScreen extends StatelessWidget {
                         }
                       }
                     });
-
-                // FutureBuilderEx<RecentlyViewedProvider>(
-                // future: () => value,
-                // waitingBuilder: (context) => Text('Select your favourite team'),
-                // builder: (context, teamName)
-                // => RecommendedRecipeList(
-                //   recipeList: value.recentlyViewedList,
-                //   screen: "recentlyViewed",
-                // ),
-                // errorBuilder: (error) => Text('Oops: $error')
-                // )
-
-                // );
               }),
             ],
           ),

@@ -18,7 +18,8 @@ class IngredientsProvider extends ChangeNotifier {
 
   Future<void> getIngredients() async {
     try {
-      var result = await FirebaseFirestore.instance.collection("ingredient").get();
+      var result =
+          await FirebaseFirestore.instance.collection("ingredient").get();
       if (result.docs.isNotEmpty) {
         ingredientList = List<Ingredient>.from(
             result.docs.map((doc) => Ingredient.fromJson(doc.data(), doc.id)));
@@ -32,11 +33,12 @@ class IngredientsProvider extends ChangeNotifier {
       notifyListeners();
       OverlayToastMessage.show(
           widget: OverlayCustomToast(
-            message: "Error: $e",
-            status: ToastMessageStatus.failed,
-          ));
+        message: "Error: $e",
+        status: ToastMessageStatus.failed,
+      ));
     }
   }
+
   Future<void> addIngredientToUser(String ingredientId, bool isAdd) async {
     try {
       OverlayLoadingProgress.start();
@@ -46,7 +48,7 @@ class IngredientsProvider extends ChangeNotifier {
             .doc(ingredientId)
             .update({
           "users_ids":
-          FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])
+              FieldValue.arrayUnion([FirebaseAuth.instance.currentUser?.uid])
         });
       } else {
         await FirebaseFirestore.instance
@@ -54,7 +56,7 @@ class IngredientsProvider extends ChangeNotifier {
             .doc(ingredientId)
             .update({
           "users_ids":
-          FieldValue.arrayRemove([FirebaseAuth.instance.currentUser?.uid])
+              FieldValue.arrayRemove([FirebaseAuth.instance.currentUser?.uid])
         });
       }
       OverlayLoadingProgress.stop();
@@ -63,9 +65,40 @@ class IngredientsProvider extends ChangeNotifier {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
           widget: OverlayCustomToast(
-            message: "Error: $e",
-            status: ToastMessageStatus.failed,
-          ));
+        message: "Error: $e",
+        status: ToastMessageStatus.failed,
+      ));
     }
+  }
+
+  List<Ingredient>? _searchResultIngredientList;
+
+  List<Ingredient>? get searchResultIngredientList =>
+      _searchResultIngredientList;
+
+  set searchResultIngredientList(List<Ingredient>? value) {
+    _searchResultIngredientList = value;
+    notifyListeners();
+  }
+
+  bool haveResult = false;
+
+  void searchIngredients(String keyword) {
+    List<Ingredient> result = [];
+
+    if (keyword.isEmpty) {
+      result = ingredientList!;
+    } else {
+      result = ingredientList!
+          .where((ingredient) => {ingredient.name}
+              .toString()
+              .toLowerCase()
+              .contains(keyword.toLowerCase()))
+          .toList();
+    }
+    searchResultIngredientList = result;
+
+    haveResult = true;
+    notifyListeners();
   }
 }
