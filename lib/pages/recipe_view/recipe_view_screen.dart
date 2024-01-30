@@ -61,41 +61,56 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p12),
                   child: FutureBuilder(
-                    future: FirebaseFirestore.instance.collection("ingredient")
+                    future: FirebaseFirestore.instance
+                        .collection("ingredient")
                         .where("users_ids",
-                        arrayContains: FirebaseAuth.instance.currentUser?.uid)
+                            arrayContains:
+                                FirebaseAuth.instance.currentUser?.uid)
                         .get(),
                     builder: (context, snapShot) {
                       if (snapShot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
-                      }
-                      else {
+                      } else {
                         if (snapShot.hasError) {
                           return OverlayToastMessage.show(
                               widget: OverlayCustomToast(
-                                message: "Error when get data",
-                                status: ToastMessageStatus.failed,
-                              ));
+                            message: "Error when get data",
+                            status: ToastMessageStatus.failed,
+                          ));
                         } else {
                           if (snapShot.hasData) {
-                            List<Ingredient> userIngredients = snapShot.data!
-                                .docs
+                            List<Ingredient> userIngredients = snapShot
+                                .data!.docs
                                 .map((e) => Ingredient.fromJson(e.data(), e.id))
                                 .toList();
-                            var userIngredientsTitles = userIngredients.map((
-                                e) => e.name).toList();
-                            Widget checkingregient(String recipeIngredient) {
-                              for (var userIngredientTitle in userIngredientsTitles) {
-                                if (recipeIngredient.contains(
-                                    userIngredientTitle!)) {
-                                  return Icon(
-                                    Icons.check, color: Colors.green,);
+                            var userIngredientsTitles =
+                                userIngredients.map((e) => e.name).toList();
+                            Widget _checkIngregient(String recipeIngredient) {
+                              bool isExsit = false;
+                              for (var userIngredientTitle
+                                  in userIngredientsTitles) {
+                                if (recipeIngredient
+                                    .contains(userIngredientTitle!)) {
+                                  isExsit = true;
+                                  break;
                                 } else {
-                                  return Icon(Icons.close, color: Colors.red,);
+                                  isExsit = false;
                                 }
                               }
-                              return Container();
+
+                              if (isExsit) {
+                                return Icon(
+                                  Icons.check,
+                                  color: Colors.green,
+                                );
+                              } else {
+                                return Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                );
+                              }
                             }
+
                             return ListView.builder(
                               shrinkWrap: true,
                               primary: false,
@@ -104,15 +119,15 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                                 return Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-
-                                    checkingregient(widget.recipe!.ingredients![index]),
-
+                                    _checkIngregient(
+                                        widget.recipe!.ingredients![index]),
                                     Flexible(
                                       child: Text(
                                         " ${widget.recipe!.ingredients![index]}",
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
-                                        style: TextStyles.textStyleRegular16Black,
+                                        style:
+                                            TextStyles.textStyleRegular16Black,
                                       ),
                                     ),
                                   ],
@@ -122,9 +137,9 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                           } else {
                             return OverlayToastMessage.show(
                                 widget: OverlayCustomToast(
-                                  message: "There is No data found",
-                                  status: ToastMessageStatus.success,
-                                ));
+                              message: "There is No data found",
+                              status: ToastMessageStatus.success,
+                            ));
                           }
                         }
                       }

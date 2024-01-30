@@ -28,7 +28,7 @@ class _TitleAndSliderState extends State<TitleAndSlider> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Divider(
-            height: 50,
+            height: 30,
             color: ColorManager.greyText,
             thickness: 1,
           ),
