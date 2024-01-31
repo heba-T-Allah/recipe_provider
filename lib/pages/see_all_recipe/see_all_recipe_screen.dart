@@ -1,6 +1,7 @@
 import 'package:flexible_grid_view/flexible_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/model/recipe.dart';
 import 'package:registration/pages/home/widgets/fresh_card_recipe.dart';
 import 'package:registration/providers/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
@@ -10,6 +11,7 @@ import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
 import '../home/widgets/search_and_filter.dart';
+import '../widgets/skelton_see_all.dart';
 
 class SeeAllRecipeScreen extends StatefulWidget {
   SeeAllRecipeScreen({super.key});
@@ -22,6 +24,7 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   init() async {
+    await Future.delayed(Duration(seconds: 1));
     await Provider.of<HomeProvider>(context, listen: false).getAllRecipes();
     Provider.of<HomeProvider>(context, listen: false).haveResult = false;
   }
@@ -61,47 +64,21 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
                 if (!value.haveResult) {
                   if (value.recipeList == null) {
                     return Skeletonizer(
-                        enabled: true, child: Text('Loading...'));
+                      enabled: true,
+                      child: skeltonGridView(),
+                    );
                   } else if (value.recipeList!.isEmpty) {
                     return const Text('No Data Found');
                   } else {
-                    return FlexibleGridView(
-                      shrinkWrap: true,
-                      children: value.recipeList!
-                          .map(
-                            (e) => SizedBox(
-                              height: MediaQuery.of(context).size.height / 4,
-                              // width:
-                              //     MediaQuery.of(context).size.width ,
-                              child: FreshCardRecipe(
-                                  recipe: e, screen: "allRecipe"),
-                            ),
-                          )
-                          .toList(),
-                      axisCount: GridLayoutEnum.twoElementsInRow,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                    );
+                    return buildFlexibleGridView(
+                        value, context, value.recipeList!);
                   }
                 } else {
                   if (value.updatedRecipeList.isEmpty) {
                     return const Text('No Data Found');
                   } else {
-                    return FlexibleGridView(
-                      shrinkWrap: true,
-                      children: value.updatedRecipeList
-                          .map(
-                            (e) => SizedBox(
-                              height: MediaQuery.of(context).size.height / 4,
-                              child: FreshCardRecipe(
-                                  recipe: e, screen: "allRecipe"),
-                            ),
-                          )
-                          .toList(),
-                      axisCount: GridLayoutEnum.twoElementsInRow,
-                      crossAxisSpacing: 8,
-                      mainAxisSpacing: 8,
-                    );
+                    return buildFlexibleGridView(
+                        value, context, value.updatedRecipeList);
                   }
                 }
               }),
@@ -110,5 +87,37 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
         ),
       ),
     );
+  }
+
+  FlexibleGridView buildFlexibleGridView(
+      HomeProvider provider, BuildContext context, List<Recipe> recipeList) {
+    return FlexibleGridView(
+      shrinkWrap: true,
+      children: recipeList
+          .map(
+            (e) => SizedBox(
+              height: MediaQuery.of(context).size.height / 4,
+              child: FreshCardRecipe(recipe: e, screen: "allRecipe"),
+            ),
+          )
+          .toList(),
+      axisCount: GridLayoutEnum.twoElementsInRow,
+      crossAxisSpacing: 8,
+      mainAxisSpacing: 8,
+    );
+  }
+
+  FlexibleGridView skeltonGridView() {
+    return FlexibleGridView(
+        shrinkWrap: true,
+        axisCount: GridLayoutEnum.twoElementsInRow,
+        crossAxisSpacing: 8,
+        mainAxisSpacing: 8,
+        children: [
+          SkeltonSeeAll(),
+          SkeltonSeeAll(),
+          SkeltonSeeAll(),
+          SkeltonSeeAll()
+        ]);
   }
 }

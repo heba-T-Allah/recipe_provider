@@ -34,8 +34,8 @@ class UpdateProfileProvider extends ChangeNotifier {
     if (user != null) {
       // Update the display name
       user.updateDisplayName(nameController!.text.toString()).then((_) {
-        notifyListeners();
         getUserName();
+        notifyListeners();
 
         OverlayToastMessage.show(
             widget: OverlayCustomToast(

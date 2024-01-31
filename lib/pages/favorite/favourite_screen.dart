@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/pages/drawer/menu_screen.dart';
+import 'package:registration/pages/widgets/skelton.dart';
 import 'package:registration/providers/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -26,7 +27,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   init() async {
-   await Future.delayed(Duration(seconds: 2));
+   await Future.delayed(Duration(seconds: 1));
     await Provider.of<HomeProvider>(context, listen: false)
         .getFavoriteRecipes();
     Provider.of<HomeProvider>(context,listen: false).haveResult = false;
@@ -68,16 +69,23 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   if (value.favRecipeList == null) {
                     // If favRecipeList is null, return the Skeletonizer
                     return Skeletonizer(
-                        enabled: true, child: Text('Loading...'));
+                        enabled: true, child:
+                    ListView.builder(itemCount:3,
+                      primary: false,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                          return Skelton();
+                    },),
+                    );
                   } else if (value.favRecipeList!.isEmpty) {
                     // If favRecipeList is empty, show "No Data Found" message
                     return Text('No Data Found');
                   } else {
                     // If favRecipeList has data, show the list of recommended recipes
-
                     return RecommendedRecipeList(
                         recipeList: value.favRecipeList!, screen: "fav");
-                  }}else{
+                  }
+                  }else{
                      if (value.updatedRecipeList.isEmpty) {
                       // If favRecipeList is empty, show "No Data Found" message
                       return Text('No Data Found');

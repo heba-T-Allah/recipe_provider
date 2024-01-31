@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/model/ingredient.dart';
 import 'package:registration/providers/ingredients_provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -28,6 +30,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
   }
 
   init() async {
+    await Future.delayed(Duration(seconds: 1));
     await Provider.of<IngredientsProvider>(context, listen: false)
         .getIngredients();
     Provider.of<IngredientsProvider>(context, listen: false).haveResult = false;
@@ -63,87 +66,79 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                   if (!ingredientsProvider.haveResult) {
                     if (ingredientsProvider.ingredientList == null) {
                       return Skeletonizer(
-                          enabled: true, child: Text('Loading...'));
+                          enabled: true, child: skeltonWidget());
                     } else if (ingredientsProvider.ingredientList!.isEmpty) {
                       return Text('No Data Found');
                     } else {
-                      return Padding(
-                          padding: const EdgeInsets.only(
-                              top: AppPadding.p8,
-                              left: AppPadding.p20,
-                              right: AppPadding.p20),
-                          child: ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount:
-                                  ingredientsProvider.ingredientList!.length,
-                              itemBuilder: (ctx, index) => ListTile(
-                                    leading: Checkbox(
-                                      checkColor:
-                                          ColorManager.backgroundGreyColor,
-                                      activeColor: ColorManager.primaryColor,
-                                      value: ingredientsProvider
-                                          .ingredientList![index].users_ids
-                                          ?.contains(FirebaseAuth
-                                              .instance.currentUser?.uid),
-                                      onChanged: (value) async {
-                                        await ingredientsProvider
-                                            .addIngredientToUser(
-                                                ingredientsProvider
-                                                    .ingredientList![index]
-                                                    .docId!,
-                                                value ?? false);
-                                      },
-                                    ),
-                                    title: Text(ingredientsProvider
-                                            .ingredientList![index].name ??
-                                        'No Name'),
-                                  )));
+                      return listData(ingredientsProvider,
+                          ingredientsProvider.ingredientList!);
                     }
                   } else {
-                    if (ingredientsProvider.ingredientList == null) {
+                    if (ingredientsProvider.searchResultIngredientList ==
+                        null) {
                       return Skeletonizer(
-                          enabled: true, child: Text('Loading...'));
-                    } else if (ingredientsProvider.ingredientList!.isEmpty) {
+                        enabled: true,
+                        child: skeltonWidget(),
+                      );
+                    } else if (ingredientsProvider
+                        .searchResultIngredientList!.isEmpty) {
                       return Text('No Data Found');
                     } else {
-                      return Padding(
-                          padding: const EdgeInsets.only(
-                              top: AppPadding.p8,
-                              left: AppPadding.p20,
-                              right: AppPadding.p20),
-                          child: ListView.builder(
-                              primary: false,
-                              shrinkWrap: true,
-                              itemCount:
-                              ingredientsProvider.searchResultIngredientList!.length,
-                              itemBuilder: (ctx, index) => ListTile(
-                                leading: Checkbox(
-                                  checkColor:
-                                  ColorManager.backgroundGreyColor,
-                                  activeColor: ColorManager.primaryColor,
-                                  value: ingredientsProvider
-                                      .searchResultIngredientList![index].users_ids
-                                      ?.contains(FirebaseAuth
-                                      .instance.currentUser?.uid),
-                                  onChanged: (value) async {
-                                    await ingredientsProvider
-                                        .addIngredientToUser(
-                                        ingredientsProvider
-                                            .searchResultIngredientList![index]
-                                            .docId!,
-                                        value ?? false);
-
-                                  },
-                                ),
-                                title: Text(ingredientsProvider
-                                    .searchResultIngredientList![index].name ??
-                                    'No Name'),
-                              )));
+                      return listData(ingredientsProvider,
+                          ingredientsProvider.searchResultIngredientList!);
                     }
                   }
                 }),
               ])),
         ));
+  }
+
+  Padding listData(IngredientsProvider ingredientsProvider,
+      List<Ingredient> ingredientList) {
+    return Padding(
+        padding: const EdgeInsets.only(
+            top: AppPadding.p8, left: AppPadding.p20, right: AppPadding.p20),
+        child: ListView.builder(
+            primary: false,
+            shrinkWrap: true,
+            itemCount: ingredientList.length,
+            itemBuilder: (ctx, index) => ListTile(
+                  leading: Checkbox(
+                    checkColor: ColorManager.backgroundGreyColor,
+                    activeColor: ColorManager.primaryColor,
+                    value: ingredientList[index]
+                        .users_ids
+                        ?.contains(FirebaseAuth.instance.currentUser?.uid),
+                    onChanged: (value) async {
+                      await ingredientsProvider.addIngredientToUser(
+                          ingredientList[index].docId!, value ?? false);
+                    },
+                  ),
+                  title: Text(ingredientList[index].name ?? 'No Name'),
+                )));
+  }
+
+  ListView skeltonWidget() {
+    return ListView.builder(
+      itemCount: 3,
+      primary: false,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: ColorManager.backgroundGreyColor,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text("data")
+            ],
+          ),
+        );
+      },
+    );
   }
 }
