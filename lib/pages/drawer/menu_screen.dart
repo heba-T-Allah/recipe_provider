@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/pages/about/about_screen.dart';
 import 'package:registration/pages/favorite/favourite_screen.dart';
-import 'package:registration/pages/help/help_screen.dart';
 import 'package:registration/pages/home/home_screen.dart';
 import 'package:registration/pages/ingredients/ingredients_screen.dart';
 import 'package:registration/pages/settings/settings_screen.dart';
@@ -62,13 +61,8 @@ class _MenuScreenState extends State<MenuScreen> {
       'title': AppStrings.aboutUs,
       'page': AboutScreen()
     },
-    {
-      'index': 6,
-      'icon': Icons.help,
-      'title': AppStrings.help,
-      'page': HelpScreen()
-    },
-    {'index': 7, 'icon': Icons.logout, 'title': AppStrings.signOut},
+
+    {'index': 6, 'icon': Icons.logout, 'title': AppStrings.signOut},
   ];
 
   TextStyle? drawerTextStyle(int index) {
@@ -103,7 +97,7 @@ class _MenuScreenState extends State<MenuScreen> {
                           selected: selectedIndex == e['index'],
                           onTap: () {
                             selectedIndex = e['index'];
-                            if (selectedIndex == 7) {
+                            if (selectedIndex == 6) {
                               Provider.of<SignUpProvider>(context,
                                       listen: false)
                                   .signOut(context);
