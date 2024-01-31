@@ -24,7 +24,7 @@ abstract class NavigationUtils {
             Animation<double> secondaryAnimation) {
           return page;
         },
-        maintainState: true,
+        // maintainState: true,
       ),
     );
   }

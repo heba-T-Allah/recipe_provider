@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-
 import '../../resources/assets_manager.dart';
-
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   MyAppBar({super.key, this.backbtn = false});
@@ -28,7 +26,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 15,
               ),
       ),
-
     );
   }
 

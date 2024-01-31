@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:provider/provider.dart';
 import 'package:registration/pages/forget_password/forget_password_screen.dart';
+import 'package:registration/providers/update_profile_provider.dart';
 import 'package:registration/utils/toast_msg_status.dart';
 import 'package:registration/pages/drawer/drawer_screen.dart';
 import 'package:registration/pages/sign_up/signup_screen.dart';
@@ -47,6 +49,8 @@ class LoginProvider extends ChangeNotifier {
                 email: emailController!.text,
                 password: passwordController!.text);
         print("login Successfully. $credentials ");
+        Provider.of<UpdateProfileProvider>(context,listen: false).getUserPhotoUrl();
+        Provider.of<UpdateProfileProvider>(context,listen: false).getUserName();
         OverlayToastMessage.show(
             widget: OverlayCustomToast(
               message: "You login Successfully",status: ToastMessageStatus.success,
