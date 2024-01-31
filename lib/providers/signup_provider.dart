@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:provider/provider.dart';
+import 'package:registration/providers/update_profile_provider.dart';
 
 import '../networking/handling_error_firebase.dart';
 import '../utils/navigation.dart';
@@ -48,8 +50,11 @@ class SignUpProvider extends ChangeNotifier {
                 message: "You register Successfully",status: ToastMessageStatus.success,
               ));
           print("signUp Successfully. $credentials ");
+          String defaultProfileImage="https://firebasestorage.googleapis.com/v0/b/recipe-app-6ad17.appspot.com/o/user%2Ficon.png?alt=media&token=4f9b092d-8895-4386-9130-d425defcf3c1";
+          sendEmailVerification();
+          Provider.of<UpdateProfileProvider>(context,listen: false).updateProfileImage(defaultProfileImage);
           NavigationUtils.pushReplacement(
-              context: context, page: DrawerScreen());
+              context: context, page: SignInScreen());
         }
         OverlayLoadingProgress.stop();
       }
@@ -70,7 +75,19 @@ class SignUpProvider extends ChangeNotifier {
       OverlayLoadingProgress.stop();
     }
   }
+  void sendEmailVerification() {
+    User? user = FirebaseAuth.instance.currentUser;
 
+    if (user != null && !user.emailVerified) {
+      user.sendEmailVerification().then((_) {
+        print("Email verification sent successfully!");
+      }).catchError((error) {
+        print("Failed to send email verification: $error");
+      });
+    } else {
+      print("User is either not signed in or email is already verified.");
+    }
+  }
   void openSigninScreen(BuildContext context) {
     // providerDispose();
     NavigationUtils.pushReplacement(context: context, page: SignInScreen());

@@ -36,7 +36,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void openForgetPasswordScreen(BuildContext context) {
-    providerDispose();
+    // providerDispose();
     NavigationUtils.push(context: context, page: ForgetPasswordScreen());
   }
   Future<void> login(BuildContext context) async {

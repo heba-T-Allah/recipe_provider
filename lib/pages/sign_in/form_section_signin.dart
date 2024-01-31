@@ -107,11 +107,11 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                 )));
   }
 
-  // @override
-  // void dispose() {
-  //   if (context.mounted) {
-  //     Provider.of<LoginProvider>(context, listen: false).providerDispose();
-  //   }
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    if (context.mounted) {
+      Provider.of<LoginProvider>(context, listen: false).providerDispose();
+    }
+    super.dispose();
+  }
 }
