@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:provider/provider.dart';
+import 'package:registration/providers/update_profile_provider.dart';
 
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
@@ -23,9 +23,7 @@ class MyDrawerHeader extends StatefulWidget {
 class _MyDrawerHeaderState extends State<MyDrawerHeader> {
   @override
   Widget build(BuildContext context) {
-    String userName =
-        FirebaseAuth.instance.currentUser?.displayName.toString() ?? "No name";
-    var imageUrl="gs://recipe-app-6ad17.appspot.com/373697722_843580807125672_4441472092080271988_n.jpg";
+       var imageUrl="gs://recipe-app-6ad17.appspot.com/373697722_843580807125672_4441472092080271988_n.jpg";
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -91,7 +89,7 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      userName,
+                      Provider.of<UpdateProfileProvider>(context,listen: false).getUserName() ,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyles.textStyleRegular18Black,

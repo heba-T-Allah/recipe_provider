@@ -125,4 +125,9 @@ class TextStyles {
       fontWeight: FontWeightManager.medium,
       fontFamily: FontConstants.fontFamilyHellix,
       color: ColorManager.primaryColor);
+  static TextStyle textStyleRegular14grey = TextStyle(
+      fontSize: FontSize.s14,
+      fontWeight: FontWeightManager.regular,
+      fontFamily: FontConstants.fontFamilyHellix,
+      color: ColorManager.greyText);
 }

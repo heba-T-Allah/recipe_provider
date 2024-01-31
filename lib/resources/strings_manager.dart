@@ -20,7 +20,7 @@ class AppStrings {
   static const homeScreen = "Home";
   static const logOut = "Log Out";
   static const isLoggedInPref = "loggedIn";
-  static const userNamePref = "userName";
+  static const userName = "User name";
   static const emailPref = "email";
   static const passwordPref = "password";
   static const notValidEmail = "Not Valid Email";
@@ -60,6 +60,13 @@ class AppStrings {
   static const rate ="Rating";
   static const apply ="Apply";
   static const searchUsingKeyword ="Search using keyword";
+  static const language ="Language";
+  static const english ="English";
+  static const profile ="Profile";
+  static const updateProfile ="Update Profile";
+  static const changeName ="Change Name";
+
+
 
 
 

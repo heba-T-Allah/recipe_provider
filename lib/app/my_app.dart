@@ -3,6 +3,7 @@ import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/providers/forget_password_provider.dart';
 import 'package:registration/providers/ingredients_provider.dart';
+import 'package:registration/providers/update_profile_provider.dart';
 import 'package:registration/routing/app-router.dart';
 import 'package:registration/providers/ads_provider.dart';
 import 'package:registration/providers/home_provider.dart';
@@ -43,6 +44,9 @@ class _MyAppState extends State<MyApp> {
 
           ChangeNotifierProvider<IngredientsProvider>(
             create: (BuildContext context) => IngredientsProvider(),
+          ),
+          ChangeNotifierProvider<UpdateProfileProvider>(
+            create: (BuildContext context) => UpdateProfileProvider(),
           ),
         ],
         child: OverlayKit(
