@@ -15,6 +15,7 @@ import '../app_bar/my_app_bar.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
 import '../widgets/overlay_custom_toast.dart';
+import '../widgets/skelton.dart';
 
 class RecentlyViewedScreen extends StatefulWidget {
   RecentlyViewedScreen({super.key});
@@ -25,11 +26,18 @@ class RecentlyViewedScreen extends StatefulWidget {
 
 class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
-@override
+
+  @override
   void initState() {
-  Provider.of<HomeProvider>(context,listen: false).haveResult = false;
+    init();
     super.initState();
   }
+
+  void init() async {
+    await Future.delayed(Duration(seconds: 1));
+    Provider.of<HomeProvider>(context, listen: false).haveResult = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +72,17 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
                     builder: (context, snapShots) {
                       if (snapShots.connectionState ==
                           ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return Skeletonizer(
+                          enabled: value.updatedRecipeList.isEmpty,
+                          child: ListView.builder(
+                            itemCount: 3,
+                            primary: false,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Skelton();
+                            },
+                          ),
+                        );
                       } else {
                         if (snapShots.hasError) {
                           return OverlayToastMessage.show(
@@ -77,22 +95,26 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
                             List<Recipe> recipeList = snapShots.data!.docs
                                 .map((e) => Recipe.fromJson(e.data(), e.id))
                                 .toList();
-                            value.recentlyViewedRecipe=recipeList;
+                            value.recentlyViewedRecipe = recipeList;
 
                             if (value.haveResult) {
-                              return Skeletonizer(
-                                  enabled: value.updatedRecipeList.isEmpty,
-                                  child: RecommendedRecipeList(
-                                    recipeList: value.updatedRecipeList,
-                                    screen: "recentlyView",
-                                  ));
+                              if (value.updatedRecipeList.isEmpty) {
+                                return Text('No Data Found');
+                              } else {
+                                return RecommendedRecipeList(
+                                  recipeList: value.updatedRecipeList,
+                                  screen: "recentlyView",
+                                );
+                              }
                             } else {
-                              return Skeletonizer(
-                                  enabled: recipeList.isEmpty,
-                                  child: RecommendedRecipeList(
-                                    recipeList: recipeList,
-                                    screen: "recentlyView",
-                                  ));
+                              if (recipeList.isEmpty) {
+                                return Text('No Data Found');
+                              } else {
+                                return RecommendedRecipeList(
+                                  recipeList: recipeList,
+                                  screen: "recentlyView",
+                                );
+                              }
                             }
                           } else {
                             return OverlayToastMessage.show(

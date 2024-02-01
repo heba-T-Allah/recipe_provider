@@ -6,7 +6,6 @@ import 'package:registration/pages/home/home_screen.dart';
 import 'package:registration/pages/ingredients/ingredients_screen.dart';
 import 'package:registration/pages/settings/settings_screen.dart';
 import 'package:registration/resources/color_manager.dart';
-
 import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../recently_viewed/recently_viewed_screen.dart';

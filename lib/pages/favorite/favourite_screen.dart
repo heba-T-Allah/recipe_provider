@@ -31,7 +31,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     await Provider.of<HomeProvider>(context, listen: false)
         .getFavoriteRecipes();
     Provider.of<HomeProvider>(context,listen: false).haveResult = false;
-    // print("------------------myFav $myFav");
   }
 
   @override

@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:registration/utils/toast_msg_status.dart';
-
 import '../networking/handling_error_firebase.dart';
 import '../pages/widgets/overlay_custom_toast.dart';
 
