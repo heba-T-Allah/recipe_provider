@@ -8,6 +8,8 @@ import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../home/widgets/recommended_list.dart';
+import '../widgets/no_data_found_widget.dart';
+import '../widgets/skelton.dart';
 import '../widgets/text_button_widget.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -18,19 +20,19 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  String? _mealValue = "Breakfast";
+  late bool filtered;
+
   @override
   void initState() {
     filtered = false;
     super.initState();
   }
 
-  String? _mealValue = "Breakfast";
-  late bool filtered;
-
   void resetFilter() {
     _mealValue = "Breakfast";
     //clear all filters
-    Provider.of<HomeProvider>(context, listen: false).filterValue = {};
+    Provider.of<HomeProvider>(context, listen: false).filterSendValue = {};
   }
 
   @override
@@ -46,9 +48,20 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Consumer<HomeProvider>(builder: (context, provider, child) {
               if (filtered) {
                 if (provider.filteredList == null) {
-                  return Skeletonizer(enabled: true, child: Text('Loading...'));
+                  // If favRecipeList is null, return the Skeletonizer
+                  return Skeletonizer(
+                    enabled: true,
+                    child: ListView.builder(
+                      itemCount: 3,
+                      primary: false,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return Skelton();
+                      },
+                    ),
+                  );
                 } else if (provider.filteredList!.isEmpty) {
-                  return const Text('No Data Found');
+                  return const NoDataFoundWidget();
                 } else {
                   return RecommendedRecipeList(
                     recipeList: provider.filteredList!,
@@ -102,7 +115,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                     onSelected: (bool selected) {
                                       setState(() {});
                                       _mealValue = e;
-                                      provider.filterValue['meal_type'] = e;
+                                      provider.filterSendValue['meal_type'] = e;
                                       // selectedFilterValue['meal_type'] = e;
                                       // print(selectedFilterValue);
                                     }),
@@ -129,7 +142,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       max: 5,
                       division: 5,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     TextButtonWidget(

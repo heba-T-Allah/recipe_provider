@@ -74,7 +74,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             Icons.language,
                             color: ColorManager.textBlack,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 20,
                           ),
                           Text(
@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     imageUrl: Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl! ,
                     placeholder: (context, url) =>
                     new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                     imageBuilder: (context, image) => CircleAvatar(
                         backgroundImage: NetworkImage(
                           Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl!,
@@ -115,8 +115,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         radius: AppSize.s40),
                   ),
 
-                  SizedBox(
-                    width: 20,
+                  const SizedBox(
+                    width: AppSize.s20,
                   ),
                   Flexible(
                     child: Text(
@@ -136,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   textStyle: TextStyles.textStyleRegular16White,
                   onPressed: () {
                     NavigationUtils.push(
-                        context: context, page: UpdateProfileScreen());
+                        context: context, page: const UpdateProfileScreen());
 
                   }),
             ],

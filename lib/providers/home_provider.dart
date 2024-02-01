@@ -55,11 +55,11 @@ class HomeProvider extends ChangeNotifier {
   //filter map from ui
   var _filterValue = {};
 
-  get filterValue => _filterValue;
+  get filterSendValue => _filterValue;
 
-  set filterValue(value) {
+  set filterSendValue(value) {
     _filterValue = value;
-    print(filterValue);
+    print(filterSendValue);
     notifyListeners();
   }
 
@@ -74,20 +74,22 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  double? _selectedValue;
-
-  double? get selectedValue => _selectedValue;
-
-  set selectedValue(double? value) {
-    _selectedValue = value;
-    notifyListeners();
-  }
+  // double? _selectedValue;
+  //
+  // double? get selectedValue => _selectedValue;
+  //
+  // set selectedValue(double? value) {
+  //   _selectedValue = value;
+  //   notifyListeners();
+  // }
 
   Future<void> getFilteredRecipes() async {
+    if(filterSendValue!=null||!filterSendValue.isEmpty){
     try {
       var ref = FirebaseFirestore.instance.collection("recipe");
       var filteredData;
-      for (var entry in filterValue.entries) {
+
+      for (var entry in filterSendValue.entries) {
         if (entry.key == "meal_type") {
           filteredData = await ref.where(entry.key, isEqualTo: entry.value);
         } else {
@@ -95,20 +97,22 @@ class HomeProvider extends ChangeNotifier {
               await ref.where(entry.key, isLessThanOrEqualTo: entry.value);
         }
       }
-      var result = await filteredData.get();
+      if(filteredData!=null){
+        var result = await filteredData.get();
       if (result.docs.isNotEmpty) {
         filteredList = List<Recipe>.from(
             result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
-        // print("${filterValue} filteredd ");
-        // print("${filteredList?.length} filteredd  ${filteredList?.first.title}");
+
       } else {
         filteredList = [];
       }
       notifyListeners();
-      filterValue = {};
+      filterSendValue = {};
+      }
+
     } catch (e) {
       filteredList = [];
-      filterValue = {};
+      filterSendValue = {};
       print(e);
       notifyListeners();
       OverlayToastMessage.show(
@@ -116,6 +120,12 @@ class HomeProvider extends ChangeNotifier {
         message: "Error: $e",
         status: ToastMessageStatus.failed,
       ));
+    }}else{
+      OverlayToastMessage.show(
+          widget: OverlayCustomToast(
+            message: "No filter Data entered.",
+            status: ToastMessageStatus.failed,
+          ));
     }
   }
 

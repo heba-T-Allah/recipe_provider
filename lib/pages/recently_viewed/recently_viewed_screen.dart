@@ -14,6 +14,7 @@ import '../../utils/toast_msg_status.dart';
 import '../app_bar/my_app_bar.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
+import '../widgets/no_data_found_widget.dart';
 import '../widgets/overlay_custom_toast.dart';
 import '../widgets/skelton.dart';
 
@@ -34,7 +35,7 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
   }
 
   void init() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     Provider.of<HomeProvider>(context, listen: false).haveResult = false;
   }
 
@@ -99,7 +100,7 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
 
                             if (value.haveResult) {
                               if (value.updatedRecipeList.isEmpty) {
-                                return Text('No Data Found');
+                                return const NoDataFoundWidget();
                               } else {
                                 return RecommendedRecipeList(
                                   recipeList: value.updatedRecipeList,
@@ -108,7 +109,7 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
                               }
                             } else {
                               if (recipeList.isEmpty) {
-                                return Text('No Data Found');
+                                return const NoDataFoundWidget();
                               } else {
                                 return RecommendedRecipeList(
                                   recipeList: recipeList,

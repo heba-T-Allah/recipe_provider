@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/toast_msg_status.dart';
@@ -36,16 +37,18 @@ class OverlayCustomToast extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                message,
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 18,
-                    color: status == ToastMessageStatus.normal
-                        ? Colors.black
-                        : Colors.white),
-                textAlign: TextAlign.start,
-                maxLines: 2,
+              Flexible(
+                child: Text(
+                  message,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 18,
+                      color: status == ToastMessageStatus.normal
+                          ? Colors.black
+                          : Colors.white),
+                  textAlign: TextAlign.start,
+                  maxLines: 4,
+                ),
               ),
             ],
           ),

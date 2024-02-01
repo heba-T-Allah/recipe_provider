@@ -12,6 +12,7 @@ import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
 import '../home/widgets/search_and_filter.dart';
+import '../widgets/no_data_found_widget.dart';
 
 class IngredientsScreen extends StatefulWidget {
   IngredientsScreen({super.key});
@@ -30,7 +31,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
   }
 
   init() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     await Provider.of<IngredientsProvider>(context, listen: false)
         .getIngredients();
     Provider.of<IngredientsProvider>(context, listen: false).haveResult = false;
@@ -68,7 +69,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                       return Skeletonizer(
                           enabled: true, child: skeltonWidget());
                     } else if (ingredientsProvider.ingredientList!.isEmpty) {
-                      return Text('No Data Found');
+                      return const NoDataFoundWidget();
                     } else {
                       return listData(ingredientsProvider,
                           ingredientsProvider.ingredientList!);
@@ -82,7 +83,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                       );
                     } else if (ingredientsProvider
                         .searchResultIngredientList!.isEmpty) {
-                      return Text('No Data Found');
+                      return const NoDataFoundWidget();
                     } else {
                       return listData(ingredientsProvider,
                           ingredientsProvider.searchResultIngredientList!);
@@ -131,10 +132,10 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
               CircleAvatar(
                 backgroundColor: ColorManager.backgroundGreyColor,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
-              Text("data")
+              const Text("data")
             ],
           ),
         );

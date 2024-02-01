@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/model/recipe.dart';
 import 'package:registration/pages/home/widgets/fresh_card_recipe.dart';
+import 'package:registration/pages/widgets/no_data_found_widget.dart';
 import 'package:registration/providers/home_provider.dart';
 import 'package:registration/resources/strings_manager.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -24,7 +25,7 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   init() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     await Provider.of<HomeProvider>(context, listen: false).getAllRecipes();
     Provider.of<HomeProvider>(context, listen: false).haveResult = false;
   }
@@ -68,14 +69,19 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
                       child: skeltonGridView(),
                     );
                   } else if (value.recipeList!.isEmpty) {
-                    return const Text('No Data Found');
+                    return const NoDataFoundWidget();
                   } else {
                     return buildFlexibleGridView(
                         value, context, value.recipeList!);
                   }
                 } else {
-                  if (value.updatedRecipeList.isEmpty) {
-                    return const Text('No Data Found');
+                  if (value.updatedRecipeList == null) {
+                    return Skeletonizer(
+                      enabled: true,
+                      child: skeltonGridView(),
+                    );
+                  } else if (value.updatedRecipeList.isEmpty) {
+                    return const NoDataFoundWidget();
                   } else {
                     return buildFlexibleGridView(
                         value, context, value.updatedRecipeList);

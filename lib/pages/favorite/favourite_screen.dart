@@ -10,6 +10,7 @@ import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
 import '../home/widgets/recommended_list.dart';
 import '../home/widgets/search_and_filter.dart';
+import '../widgets/no_data_found_widget.dart';
 
 class FavoriteScreen extends StatefulWidget {
   FavoriteScreen({super.key});
@@ -78,7 +79,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                     );
                   } else if (value.favRecipeList!.isEmpty) {
                     // If favRecipeList is empty, show "No Data Found" message
-                    return Text('No Data Found');
+                    return const NoDataFoundWidget();
                   } else {
                     // If favRecipeList has data, show the list of recommended recipes
                     return RecommendedRecipeList(
@@ -87,7 +88,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   }else{
                      if (value.updatedRecipeList.isEmpty) {
                       // If favRecipeList is empty, show "No Data Found" message
-                      return Text('No Data Found');
+                      return const NoDataFoundWidget();
                     } else {
                       // If favRecipeList has data, show the list of recommended recipes
 

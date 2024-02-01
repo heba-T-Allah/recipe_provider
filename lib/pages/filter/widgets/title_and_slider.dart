@@ -6,14 +6,14 @@ import '../../../resources/text_style.dart';
 
 class TitleAndSlider extends StatefulWidget {
   TitleAndSlider(
-      {super.key, required this.title,
-        required this.max,
-
+      {super.key,
+      required this.title,
+      required this.max,
       required this.division});
 
   String? title;
-  double? value=0;
-int?division;
+  double? value = 0;
+  int? division;
   double? max;
 
   @override
@@ -23,8 +23,8 @@ int?division;
 class _TitleAndSliderState extends State<TitleAndSlider> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<HomeProvider>(builder:(context, provider, child) =>
-     Column(
+    return Consumer<HomeProvider>(
+      builder: (context, provider, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Divider(
@@ -35,24 +35,23 @@ class _TitleAndSliderState extends State<TitleAndSlider> {
           Text(widget.title!, style: TextStyles.textStyleBold18Black),
           Slider(
             min: 0.0,
-            label: "${widget.value}" ,
+            label: "${widget.value}",
             max: widget.max!,
             value: widget.value!,
             divisions: widget.division!,
             inactiveColor: ColorManager.greyText,
             onChanged: (val) {
-              setState(() { });
+              setState(() {});
               //   provider.selectedValue=val;
               String key;
-              if(widget.title=='Preparation Time'){
-                key="prep_time";
-              }else {
+              if (widget.title == 'Preparation Time') {
+                key = "prep_time";
+              } else {
                 key = widget.title!.toLowerCase();
               }
-              provider.filterValue[key] =val;
-              print( "${provider.filterValue}  from  slider");
-                widget.value = val;
-
+              provider.filterSendValue[key] = val;
+              print("${provider.filterSendValue}  from  slider");
+              widget.value = val;
             },
           ),
         ],
