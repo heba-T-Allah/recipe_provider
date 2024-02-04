@@ -48,7 +48,6 @@ class _FilterScreenState extends State<FilterScreen> {
             child: Consumer<HomeProvider>(builder: (context, provider, child) {
               if (filtered) {
                 if (provider.filteredList == null) {
-                  // If favRecipeList is null, return the Skeletonizer
                   return Skeletonizer(
                     enabled: true,
                     child: ListView.builder(
@@ -60,7 +59,8 @@ class _FilterScreenState extends State<FilterScreen> {
                       },
                     ),
                   );
-                } else if (provider.filteredList!.isEmpty) {
+                }
+                else if (provider.filteredList!.isEmpty) {
                   return const NoDataFoundWidget();
                 } else {
                   return RecommendedRecipeList(

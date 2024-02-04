@@ -71,8 +71,14 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
                   } else if (value.recipeList!.isEmpty) {
                     return const NoDataFoundWidget();
                   } else {
-                    return buildFlexibleGridView(
-                        value, context, value.recipeList!);
+                    return SizedBox(
+                      height: 600,
+                      child: Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                        child: buildFlexibleGridView(
+                            value, context, value.recipeList!),
+                      ),
+                    );
                   }
                 } else {
                   if (value.updatedRecipeList == null) {

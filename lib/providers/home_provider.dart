@@ -74,14 +74,6 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // double? _selectedValue;
-  //
-  // double? get selectedValue => _selectedValue;
-  //
-  // set selectedValue(double? value) {
-  //   _selectedValue = value;
-  //   notifyListeners();
-  // }
 
   Future<void> getFilteredRecipes() async {
     if(filterSendValue!=null||!filterSendValue.isEmpty){
@@ -108,6 +100,8 @@ class HomeProvider extends ChangeNotifier {
       }
       notifyListeners();
       filterSendValue = {};
+      }else {
+        filteredList = [];
       }
 
     } catch (e) {
