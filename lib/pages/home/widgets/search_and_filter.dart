@@ -36,7 +36,7 @@ class _SearchAndFilterState extends State<SearchAndFilter> {
                 }
               },
               child: Center(
-                child: TextField(
+                child: TextFormField(
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: ColorManager.backgroundGreyColor,

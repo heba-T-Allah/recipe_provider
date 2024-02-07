@@ -143,6 +143,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               );
                             } else {
                               value.updateUserName(context);
+                              setState(() {
+
+                              });
                             }
                           },
                           style: ButtonStyle(

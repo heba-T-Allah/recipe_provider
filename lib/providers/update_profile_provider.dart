@@ -67,10 +67,10 @@ class UpdateProfileProvider extends ChangeNotifier {
   void getUserPhotoUrl() {
     User? user = FirebaseAuth.instance.currentUser;
 
-    if (user != null && user.photoURL != null) {
-      String photoUrl = user.photoURL!;
+    if (user != null || user!.photoURL != null) {
+      String photoUrlString = user.photoURL!;
       profileImageUrl = user.photoURL!;
-      print("User photo URL: $photoUrl");
+      print("User photo URL: $photoUrlString");
     } else {
       print("User photo URL is not available.");
     }

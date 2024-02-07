@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:registration/pages/drawer/menu_screen.dart';
@@ -23,7 +22,6 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  late String userName;
 
   @override
   void initState() {
@@ -32,10 +30,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   init() {
-    userName =
-        FirebaseAuth.instance.currentUser?.displayName.toString() ?? "No name";
-    Provider.of<UpdateProfileProvider>(context,listen: false).getUserPhotoUrl();
 
+    Provider.of<UpdateProfileProvider>(context, listen: false)
+        .getUserPhotoUrl();
   }
 
   @override
@@ -55,7 +52,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.setting, style: TextStyles.textStyleRegular26Black),
+              Text(AppStrings.setting,
+                  style: TextStyles.textStyleRegular26Black),
               const SizedBox(
                 height: AppSize.s50,
               ),
@@ -96,37 +94,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 color: ColorManager.greyText,
                 thickness: 1,
               ),
-              Text(AppStrings.profile, style: TextStyles.textStyleRegular26Black),
+              Text(AppStrings.profile,
+                  style: TextStyles.textStyleRegular26Black),
               const SizedBox(
                 height: AppSize.s20,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl! ,
-                    placeholder: (context, url) =>
-                    new CircularProgressIndicator(),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
-                    imageBuilder: (context, image) => CircleAvatar(
-                        backgroundImage: NetworkImage(
-                          Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl!,
-                        ),
-                        radius: AppSize.s40),
-                  ),
-
-                  const SizedBox(
-                    width: AppSize.s20,
-                  ),
-                  Flexible(
-                    child: Text(
-                      userName,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyles.textStyleRegular26Black,
+              Consumer<UpdateProfileProvider>(
+                builder: (BuildContext context, value, Widget? child) =>
+                    Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CachedNetworkImage(
+                                          imageUrl: value.profileImageUrl!,
+                                          placeholder: (context, url) =>
+                      new CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                                          imageBuilder: (context, image) => CircleAvatar(
+                      backgroundImage: NetworkImage(
+                       value.profileImageUrl!,
+                      ),
+                      radius: AppSize.s40),
+                                        ),
+                    const SizedBox(
+                      width: AppSize.s20,
                     ),
-                  ),
-                ],
+                    Flexible(
+                      child: Text(
+                        value.getUserName(),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyles.textStyleRegular26Black,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: AppSize.s20,
@@ -137,7 +139,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onPressed: () {
                     NavigationUtils.push(
                         context: context, page: const UpdateProfileScreen());
-
                   }),
             ],
           ),

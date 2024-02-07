@@ -26,47 +26,50 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CachedNetworkImage(
-              imageUrl: Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl! ,
-              placeholder: (context, url) =>
-              new CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-              imageBuilder: (context, image) => CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl!,
-                  ),
-                  radius: AppSize.s40),
-            ),
-            // SizedBox(width: 10,),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, top: 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      Provider.of<UpdateProfileProvider>(context,listen: false).getUserName() ,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                      style: TextStyles.textStyleRegular18Black,
+
+        child: Consumer<UpdateProfileProvider>(builder: (context, value, child) =>
+     Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CachedNetworkImage(
+                imageUrl: value.profileImageUrl! ,
+                placeholder: (context, url) =>
+                new CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageBuilder: (context, image) => CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      value.profileImageUrl!,
                     ),
-                    InkWell(
-                      onTap: () =>  NavigationUtils.push(
-                          context: context, page: UpdateProfileScreen()),
-                      child: Text(
-                        AppStrings.viewProfile,
-                        style: TextStyles.textStyleRegular10Grey,
+                    radius: AppSize.s40),
+              ),
+              // SizedBox(width: 10,),
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8, top: 14),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        value.getUserName() ,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: TextStyles.textStyleRegular18Black,
                       ),
-                    ),
-                  ],
+                      InkWell(
+                        onTap: () =>  NavigationUtils.push(
+                            context: context, page: UpdateProfileScreen()),
+                        child: Text(
+                          AppStrings.viewProfile,
+                          style: TextStyles.textStyleRegular10Grey,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
