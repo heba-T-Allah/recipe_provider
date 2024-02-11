@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
@@ -59,7 +60,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(130),
                               color: Colors.black),
-              
+
                           child: CachedNetworkImage(
                             imageUrl: Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl!,
                             placeholder: (context, url) =>
@@ -99,6 +100,23 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ),
                   SizedBox(
                     height: 40,
+                  ),
+                  Center(
+                    child: TextField(
+                     enabled: false,
+                      decoration: InputDecoration(
+
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide.none),
+                        hintText: FirebaseAuth.instance.currentUser!.email,
+
+                        hintStyle: TextStyles.textStyleRegular14grey,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   Center(
                     child: TextField(
