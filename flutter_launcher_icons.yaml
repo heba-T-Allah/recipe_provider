@@ -4,5 +4,6 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/lancher.jpg"
+  background_color: "#ffffff"
+  image_path: "assets/images/lancher_new.png"
   min_sdk_android: 21 # android min sdk min:16, default 21

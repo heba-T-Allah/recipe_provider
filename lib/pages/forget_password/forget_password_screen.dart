@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/providers/forget_password_provider.dart';
 import '../../resources/assets_manager.dart';
 import '../../resources/strings_manager.dart';
@@ -17,7 +18,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   @override
   void initState() {
-    Provider.of<ForgetPasswordProvider>(context,listen: false).init();
+    Provider.of<ForgetPasswordProvider>(context, listen: false).init();
     super.initState();
   }
 
@@ -52,7 +53,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                     ),
                     Center(
                       child: Text(
-                        AppStrings.forgetPassword,
+                        S.of(context).forgetPassword,
                         style: TextStyles.textStyleBold22White
                             .copyWith(height: 1.5),
                       ),
@@ -74,7 +75,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                             horizontal: 30.0),
                                         child: CustomTextFormField(
                                           controller: provider.emailController!,
-                                          hintText: AppStrings.emailHintText,
+                                          hintForMsg: AppStrings.emailHintText,
+                                          hintText: S.of(context).emailHintText,
                                           prefixIcon: Icons.email,
                                           obsecureType: false,
                                           isObsecureText: false,
@@ -89,7 +91,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                             ForgetPasswordProvider value,
                                             Widget? child) {
                                           return TextButtonWidget(
-                                              buttonText: AppStrings.sendMail,
+                                              buttonText:
+                                                  S.of(context).sendMail,
                                               textStyle: TextStyles
                                                   .textStyleRegular16White,
                                               onPressed: () {

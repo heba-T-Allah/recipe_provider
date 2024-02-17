@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/providers/update_profile_provider.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../../utils/navigation.dart';
@@ -20,23 +20,22 @@ class MyDrawerHeader extends StatefulWidget {
 class _MyDrawerHeaderState extends State<MyDrawerHeader> {
   @override
   Widget build(BuildContext context) {
-    Provider.of<UpdateProfileProvider>(context,listen: false).getUserPhotoUrl();
-    Provider.of<UpdateProfileProvider>(context,listen: false).getUserName();
+    Provider.of<UpdateProfileProvider>(context, listen: false)
+        .getUserPhotoUrl();
+    Provider.of<UpdateProfileProvider>(context, listen: false).getUserName();
 
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-
-        child: Consumer<UpdateProfileProvider>(builder: (context, value, child) =>
-     Row(
+        child: Consumer<UpdateProfileProvider>(
+          builder: (context, value, child) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CachedNetworkImage(
-                imageUrl: value.profileImageUrl! ,
-                placeholder: (context, url) =>
-                new CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                imageUrl: value.profileImageUrl!,
+                placeholder: (context, url) => new CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
                 imageBuilder: (context, image) => CircleAvatar(
                     backgroundImage: NetworkImage(
                       value.profileImageUrl!,
@@ -51,16 +50,17 @@ class _MyDrawerHeaderState extends State<MyDrawerHeader> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        value.getUserName() ,
+                        value.getUserName(),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyles.textStyleRegular18Black,
                       ),
                       InkWell(
-                        onTap: () =>  NavigationUtils.push(
-                            context: context, page: UpdateProfileScreen()),
+                        onTap: () => NavigationUtils.push(
+                            context: context,
+                            page: const UpdateProfileScreen()),
                         child: Text(
-                          AppStrings.viewProfile,
+                          S.of(context).viewProfile,
                           style: TextStyles.textStyleRegular10Grey,
                         ),
                       ),

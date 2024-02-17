@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/resources/strings_manager.dart';
 
 import '../../resources/text_style.dart';
@@ -35,7 +36,8 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: CustomTextFormField(
                           controller: provider.fullNameController!,
-                          hintText: AppStrings.fullNameHintText,
+                          hintForMsg: AppStrings.nameHintText,
+                          hintText: S.of(context).fullNameHintText,
                           prefixIcon: Icons.person,
                           obsecureType: false,
                           isObsecureText: false,
@@ -44,8 +46,9 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: CustomTextFormField(
+                          hintForMsg: AppStrings.emailHintText,
                           controller: provider.emailController!,
-                          hintText: AppStrings.emailHintText,
+                          hintText: S.of(context).emailHintText,
                           prefixIcon: Icons.email,
                           obsecureType: false,
                           isObsecureText: false,
@@ -54,19 +57,19 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
                       child: CustomTextFormField(
+                          hintForMsg: AppStrings.password,
                           controller: provider.passwordController!,
-                          hintText: AppStrings.password,
+                          hintText: S.of(context).password,
                           prefixIcon: Icons.lock,
                           obsecureType: true,
                           isObsecureText: true,
                           inputType: TextInputType.visiblePassword),
                     ),
-
                     const SizedBox(
                       height: 40,
                     ),
                     TextButtonWidget(
-                        buttonText: AppStrings.register,
+                        buttonText: S.of(context).register,
                         textStyle: TextStyles.textStyleRegular16White,
                         onPressed: () {
                           provider.signUp(context);
@@ -79,14 +82,14 @@ class _FormSectionSignUpState extends State<FormSectionSignUp> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(AppStrings.alreadyRegistered,
+                          Text(S.of(context).alreadyRegistered,
                               style: TextStyles.textStyleRegular16Grey
                                   .copyWith(height: 1.5)),
                           GestureDetector(
                             onTap: () {
                               provider.openSigninScreen(context);
                             },
-                            child: Text(AppStrings.signIn,
+                            child: Text(S.of(context).signIn,
                                 style: TextStyles.textStyleRegular16Orange
                                     .copyWith(height: 1.5)),
                           )

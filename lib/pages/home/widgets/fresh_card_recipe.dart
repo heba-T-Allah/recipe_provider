@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
+import 'package:registration/providers/setting_provider.dart';
 import 'package:registration/utils/navigation.dart';
 import 'package:registration/pages/home/widgets/prep_time_and_serving.dart';
 import 'package:registration/pages/recipe_view/recipe_view_screen.dart';
@@ -13,12 +16,7 @@ import 'my_fav_icon.dart';
 import 'my_rating_bar.dart';
 
 class FreshCardRecipe extends StatelessWidget {
-   FreshCardRecipe({
-    super.key,
-    required this.recipe,
-     required this.screen
-
-  });
+  FreshCardRecipe({super.key, required this.recipe, required this.screen});
 
   final Recipe recipe;
   String screen;
@@ -27,8 +25,10 @@ class FreshCardRecipe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    isFav = recipe.favUsersIds
-        ?.contains(FirebaseAuth.instance.currentUser?.uid);
+    isFav =
+        recipe.favUsersIds?.contains(FirebaseAuth.instance.currentUser?.uid);
+    String local =
+        Provider.of<SettingProvider>(context, listen: false).getLocal();
     return InkWell(
       onTap: () => NavigationUtils.push(
           context: context,
@@ -36,7 +36,9 @@ class FreshCardRecipe extends StatelessWidget {
             recipe: recipe,
           )),
       child: Card(
-          margin:screen=="fresh"? const EdgeInsets.only(right: AppMargin.m60):EdgeInsets.all(0),
+          margin: screen == "fresh"
+              ? const EdgeInsets.only(right: AppMargin.m60)
+              : EdgeInsets.all(0),
           color: ColorManager.backgroundGreyColor,
           elevation: 2,
           shape: OutlineInputBorder(
@@ -54,20 +56,24 @@ class FreshCardRecipe extends StatelessWidget {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
-
+                      MyFavIcon(
+                          isFav: isFav, docId: recipe.docId, listType: screen),
                       Transform.translate(
-                        offset:Offset(40, 0),
+                        offset:
+                            (local == "ar") ? Offset(-40, 0) : Offset(40, 0),
                         child: CachedNetworkImage(
                             imageUrl: recipe.image!,
-                            placeholder: (context, url) => new CircularProgressIndicator(),
+                            placeholder: (context, url) =>
+                                new CircularProgressIndicator(),
                             errorWidget: (context, url, error) =>
-                                  Icon(Icons.error),
+                                Icon(Icons.error),
                             imageBuilder: (context, image) => CircleAvatar(
                                 backgroundImage: NetworkImage(
-                                   recipe.image!,
+                                  recipe.image!,
                                 ),
-                                radius:screen=="fresh"?AppSize.s60 : AppSize.s30)),
+                                radius: screen == "fresh"
+                                    ? AppSize.s60
+                                    : AppSize.s30)),
                       ),
                     ],
                   ),
@@ -82,7 +88,9 @@ class FreshCardRecipe extends StatelessWidget {
                     child: Text(recipe.title!,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: screen=="fresh"?TextStyles.textStyleMedium14Black:TextStyles.textStyleMedium12Black),
+                        style: screen == "fresh"
+                            ? TextStyles.textStyleMedium14Black
+                            : TextStyles.textStyleMedium12Black),
                   ),
                   const SizedBox(
                     height: AppSize.s5,
@@ -94,7 +102,7 @@ class FreshCardRecipe extends StatelessWidget {
                     height: AppSize.s5,
                   ),
                   Text(
-                    "${recipe.calories!} Calories",
+                    "${recipe.calories!} ${S.of(context).calorie}",
                     style: TextStyles.textStyleRegular10Orange,
                   ),
                   const SizedBox(

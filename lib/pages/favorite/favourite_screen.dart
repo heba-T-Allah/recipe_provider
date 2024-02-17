@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/drawer/menu_screen.dart';
 import 'package:registration/pages/widgets/skelton.dart';
 import 'package:registration/providers/home_provider.dart';
-import 'package:registration/resources/strings_manager.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
@@ -28,20 +28,22 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   }
 
   init() async {
-   await Future.delayed(Duration(seconds: 1));
-    await Provider.of<HomeProvider>(context, listen: false)
-        .getFavoriteRecipes();
-    Provider.of<HomeProvider>(context,listen: false).haveResult = false;
+    await Future.delayed(Duration(seconds: 1));
+
+    Provider.of<HomeProvider>(context, listen: false).haveResult = false;
   }
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeProvider>(context, listen: false)
+        .getFavoriteRecipes(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
       drawer: MenuScreen(
-        onPageSelected: (p0) {},
+        context: context,
+        onPageSelected: (p0, p1) {},
       ),
       body: Padding(
         padding: const EdgeInsets.only(
@@ -51,42 +53,43 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.favorites,
+              Text(S.of(context).favorites,
                   style: TextStyles.textStyleRegular26Black),
               const SizedBox(
                 height: AppSize.s10,
               ),
               SearchAndFilter(
                 screen: "favorite",
-
               ),
               const SizedBox(
                 height: AppSize.s10,
               ),
               Consumer<HomeProvider>(
                 builder: (context, value, child) {
-                  if(!value.haveResult){
-                  if (value.favRecipeList == null) {
-                    // If favRecipeList is null, return the Skeletonizer
-                    return Skeletonizer(
-                        enabled: true, child:
-                    ListView.builder(itemCount:3,
-                      primary: false,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                          return Skelton();
-                    },),
-                    );
-                  } else if (value.favRecipeList!.isEmpty) {
-                    // If favRecipeList is empty, show "No Data Found" message
-                    return const NoDataFoundWidget();
+                  if (!value.haveResult) {
+                    if (value.favRecipeList == null) {
+                      // If favRecipeList is null, return the Skeletonizer
+                      return Skeletonizer(
+                        enabled: true,
+                        child: ListView.builder(
+                          itemCount: 3,
+                          primary: false,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return Skelton();
+                          },
+                        ),
+                      );
+                    } else if (value.favRecipeList!.isEmpty) {
+                      // If favRecipeList is empty, show "No Data Found" message
+                      return const NoDataFoundWidget();
+                    } else {
+                      // If favRecipeList has data, show the list of recommended recipes
+                      return RecommendedRecipeList(
+                          recipeList: value.favRecipeList!, screen: "fav");
+                    }
                   } else {
-                    // If favRecipeList has data, show the list of recommended recipes
-                    return RecommendedRecipeList(
-                        recipeList: value.favRecipeList!, screen: "fav");
-                  }
-                  }else{
-                     if (value.updatedRecipeList.isEmpty) {
+                    if (value.updatedRecipeList.isEmpty) {
                       // If favRecipeList is empty, show "No Data Found" message
                       return const NoDataFoundWidget();
                     } else {
@@ -95,9 +98,6 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       return RecommendedRecipeList(
                           recipeList: value.updatedRecipeList, screen: "fav");
                     }
-
-
-
                   }
                 },
               ),

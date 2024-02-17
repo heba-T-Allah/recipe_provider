@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/resources/strings_manager.dart';
 import 'package:registration/providers/login_provider.dart';
 import '../../resources/text_style.dart';
@@ -34,7 +35,8 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: CustomTextFormField(
                           controller: provider.emailController!,
-                          hintText: AppStrings.emailHintText,
+                          hintText: S.of(context).emailHintText,
+                          hintForMsg: AppStrings.emailHintText,
                           prefixIcon: Icons.email,
                           obsecureType: false,
                           isObsecureText: false,
@@ -45,7 +47,8 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: CustomTextFormField(
                             controller: provider.passwordController!,
-                            hintText: AppStrings.password,
+                            hintText: S.of(context).password,
+                            hintForMsg: AppStrings.password,
                             prefixIcon: Icons.lock,
                             obsecureType: true,
                             isObsecureText: true,
@@ -60,7 +63,7 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                               provider.openForgetPasswordScreen(context);
                             },
                             child: Text(
-                              AppStrings.forgetPassword,
+                              S.of(context).forgetPassword,
                               style: TextStyles.textStyleRegular12Blue,
                             ),
                           ),
@@ -73,7 +76,7 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                         builder: (BuildContext context, LoginProvider value,
                             Widget? child) {
                           return TextButtonWidget(
-                              buttonText: AppStrings.signIn,
+                              buttonText: S.of(context).signIn,
                               textStyle: TextStyles.textStyleRegular16White,
                               onPressed: () {
                                 provider.login(context);
@@ -88,14 +91,14 @@ class _FormSectionSignInState extends State<FormSectionSignIn> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(AppStrings.donotHaveAccount,
+                            Text(S.of(context).donotHaveAccount,
                                 style: TextStyles.textStyleRegular16Grey
                                     .copyWith(height: 1.5)),
                             GestureDetector(
                               onTap: () {
                                 provider.openSignUpScreen(context);
                               },
-                              child: Text(AppStrings.registerDot,
+                              child: Text(S.of(context).registerDot,
                                   style: TextStyles.textStyleRegular16Orange
                                       .copyWith(height: 1.5)),
                             )

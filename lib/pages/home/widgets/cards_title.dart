@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/see_all_recipe/see_all_recipe_screen.dart';
 import 'package:registration/utils/navigation.dart';
-
-import '../../../resources/strings_manager.dart';
 import '../../../resources/text_style.dart';
 
 class CardsTitle extends StatelessWidget {
@@ -22,9 +21,12 @@ class CardsTitle extends StatelessWidget {
         InkWell(
           onTap: () => NavigationUtils.push(
               context: context, page: SeeAllRecipeScreen()),
-          child: Text(
-            AppStrings.seeAll,
-            style: TextStyles.textStyleMedium14Orange,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Text(
+              S.of(context).seeAll,
+              style: TextStyles.textStyleMedium14Orange,
+            ),
           ),
         )
       ],

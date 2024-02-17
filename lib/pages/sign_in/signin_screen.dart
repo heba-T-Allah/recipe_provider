@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/sign_in/form_section_signin.dart';
 import '../../resources/assets_manager.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -45,25 +45,23 @@ class _SignInScreenState extends State<SignInScreen> {
                     image: AssetImage(ImageAssets.bgMask),
                     fit: BoxFit.cover,
                   )),
-                  child: ListView(
-                      children: [
-                        Image.asset(
-                          ImageAssets.logo,
-                          scale: 3,
-                        ),
-
-                        Center(
-                          child: Text(
-                            AppStrings.signIn,
-                            style: TextStyles.textStyleBold22White
-                                .copyWith(height: 1.5),
-                          ),
-                        ),
-                        SizedBox(
-                          height:20,
-                        ),
-                        const FormSectionSignIn(),
-                      ])),
+                  child: ListView(children: [
+                    Image.asset(
+                      ImageAssets.logo,
+                      scale: 3,
+                    ),
+                    Center(
+                      child: Text(
+                        S.of(context).signIn,
+                        style: TextStyles.textStyleBold22White
+                            .copyWith(height: 1.5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    const FormSectionSignIn(),
+                  ])),
             ],
           ),
         ),

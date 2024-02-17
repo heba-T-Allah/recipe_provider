@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -44,16 +43,16 @@ class AdsProvider extends ChangeNotifier {
     await buttonCarouselController!.animateToPage(currentPos);
   }
 
-   initCarousal() {
+  initCarousal() {
     buttonCarouselController = CarouselController();
   }
 
-  Future<void> getAds() async {
+  Future<void> getAds(BuildContext context) async {
     try {
       var result = await FirebaseFirestore.instance.collection("ads").get();
       if (result.docs.isNotEmpty) {
-        adsList = List<RecipeAd>.from(
-            result.docs.map((doc) => RecipeAd.fromJson(doc.data(), doc.id)));
+        adsList = List<RecipeAd>.from(result.docs
+            .map((doc) => RecipeAd.fromJson(doc.data(), context, doc.id)));
       } else {
         adsList = [];
       }
@@ -68,7 +67,8 @@ class AdsProvider extends ChangeNotifier {
       ));
     }
   }
-  void disposeProvider(){
-    buttonCarouselController=null;
+
+  void disposeProvider() {
+    buttonCarouselController = null;
   }
 }

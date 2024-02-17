@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/providers/update_profile_provider.dart';
 
 import '../networking/handling_error_firebase.dart';
 import '../utils/navigation.dart';
 import '../utils/toast_msg_status.dart';
-import '../pages/drawer/drawer_screen.dart';
 import '../pages/on_boarding/on_boarding_screen.dart';
 import '../pages/sign_in/signin_screen.dart';
 import '../pages/widgets/overlay_custom_toast.dart';
@@ -47,12 +47,15 @@ class SignUpProvider extends ChangeNotifier {
           providerDispose();
           OverlayToastMessage.show(
               widget: OverlayCustomToast(
-                message: "You register Successfully",status: ToastMessageStatus.success,
-              ));
+            message: S.of(context).youRegisteredSuccessfully,
+            status: ToastMessageStatus.success,
+          ));
           print("signUp Successfully. $credentials ");
-          String defaultProfileImage="https://firebasestorage.googleapis.com/v0/b/recipe-app-6ad17.appspot.com/o/user%2Ficon.png?alt=media&token=4f9b092d-8895-4386-9130-d425defcf3c1";
+          String defaultProfileImage =
+              "https://firebasestorage.googleapis.com/v0/b/recipe-app-6ad17.appspot.com/o/user%2Ficon.png?alt=media&token=4f9b092d-8895-4386-9130-d425defcf3c1";
           sendEmailVerification();
-          Provider.of<UpdateProfileProvider>(context,listen: false).updateProfileImage(defaultProfileImage);
+          Provider.of<UpdateProfileProvider>(context, listen: false)
+              .updateProfileImage(defaultProfileImage);
           NavigationUtils.pushReplacement(
               context: context, page: SignInScreen());
         }
@@ -62,7 +65,8 @@ class SignUpProvider extends ChangeNotifier {
       print(e.code);
       OverlayToastMessage.show(
         widget: OverlayCustomToast(
-          message: ErrorHandler.getErrorMsg(e.code),status: ToastMessageStatus.failed,
+          message: ErrorHandler.getErrorMsg(e.code),
+          status: ToastMessageStatus.failed,
         ),
       );
       OverlayLoadingProgress.stop();
@@ -70,11 +74,13 @@ class SignUpProvider extends ChangeNotifier {
       print(e);
       OverlayToastMessage.show(
           widget: OverlayCustomToast(
-        message: "General error: $e",status: ToastMessageStatus.failed,
+        message: "General error: $e",
+        status: ToastMessageStatus.failed,
       ));
       OverlayLoadingProgress.stop();
     }
   }
+
   void sendEmailVerification() {
     User? user = FirebaseAuth.instance.currentUser;
 
@@ -88,6 +94,7 @@ class SignUpProvider extends ChangeNotifier {
       print("User is either not signed in or email is already verified.");
     }
   }
+
   void openSigninScreen(BuildContext context) {
     // providerDispose();
     NavigationUtils.pushReplacement(context: context, page: SignInScreen());

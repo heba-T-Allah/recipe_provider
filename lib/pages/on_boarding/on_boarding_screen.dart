@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:registration/resources/strings_manager.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/resources/text_style.dart';
 import 'package:registration/resources/values_manager.dart';
 import 'package:registration/pages/sign_in/signin_screen.dart';
@@ -22,12 +22,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.transparent,
-
       body: SingleChildScrollView(
         child: Stack(children: [
-          SplashLogoAndTitle(height: height, width: width,
-            mainAxisAlignment: MainAxisAlignment.center,
-              textTitle:AppStrings.splashTitle ),
+          SplashLogoAndTitle(
+              height: height,
+              width: width,
+              mainAxisAlignment: MainAxisAlignment.center,
+              textTitle: S.of(context).splashTitle),
 
           //register button
           Positioned(
@@ -35,10 +36,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             left: 0,
             right: 0,
             child: TextButtonWidget(
-              buttonText: AppStrings.register,
+              buttonText: S.of(context).register,
               textStyle: TextStyles.textStyleRegular16White,
-              onPressed: () =>
-                  NavigationUtils.pushReplacement(context: context,page: const SignUpScreen()),
+              onPressed: () => NavigationUtils.pushReplacement(
+                  context: context, page: const SignUpScreen()),
 
               // Navigator.pushReplacementNamed(context, Routes.signUpScreen),
             ),
@@ -52,12 +53,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             right: 0,
             child: TextButton(
               onPressed: () {
-                NavigationUtils.pushReplacement(context: context,page: const SignInScreen());
+                NavigationUtils.pushReplacement(
+                    context: context, page: const SignInScreen());
 
                 // Navigator.pushReplacementNamed(context, Routes.signInScreen);
               },
               child: Text(
-                AppStrings.signIn,
+                S.of(context).signIn,
                 style: TextStyles.textStyleRegular16White,
               ),
             ),

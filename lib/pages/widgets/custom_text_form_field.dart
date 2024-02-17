@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/resources/color_manager.dart';
 import 'package:registration/resources/text_style.dart';
 import '../../resources/strings_manager.dart';
@@ -9,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
       {super.key,
       required this.controller,
       required this.hintText,
+      required this.hintForMsg,
       required this.prefixIcon,
       required this.obsecureType,
       required this.isObsecureText,
@@ -16,6 +18,8 @@ class CustomTextFormField extends StatefulWidget {
 
   final TextEditingController controller;
   final String hintText;
+  final String hintForMsg;
+
   final IconData prefixIcon;
   bool obsecureType;
   bool isObsecureText;
@@ -34,15 +38,15 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   }
 
   String _errorMsg(String str) {
-    switch (widget.hintText) {
-      case "Enter Your Name":
-        return "name is empty!";
+    switch (widget.hintForMsg) {
+      case AppStrings.nameHintText:
+        return S.of(context).nameIsEmpty;
       case AppStrings.emailHintText:
-        return "Email is empty!";
+        return S.of(context).emailIsEmpty;
       case AppStrings.password:
-        return "password is empty!";
+        return S.of(context).passwordIsEmpty;
       default:
-        return "field is empty";
+        return S.of(context).fieldIsEmpty;
     }
   }
 
@@ -87,16 +91,16 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           if (value == null || value.isEmpty) {
             return _errorMsg(widget.hintText);
           }
-          if (widget.hintText == AppStrings.emailHintText) {
+          if (widget.hintText == S.of(context).emailHintText) {
             if (!AppRegex.isEmailValid(value)) {
-              return AppStrings.notValidEmail;
+              return S.of(context).notValidEmail;
             }
           }
-          if (widget.hintText == AppStrings.password) {
+          if (widget.hintText == S.of(context).password) {
             if (value == null ||
                 value.isEmpty ||
                 !AppRegex.isPasswordValid(value)) {
-              return AppStrings.pleaseEnterValidPassword;
+              return S.of(context).pleaseEnterValidPassword;
             }
           }
         });

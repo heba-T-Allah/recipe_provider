@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/model/ingredient.dart';
 import 'package:registration/pages/recipe_view/widgets/recipe_specifications.dart';
 import 'package:registration/providers/home_provider.dart';
 import '../../model/recipe.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../../utils/toast_msg_status.dart';
@@ -55,7 +55,7 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
               children: [
                 RecipeSpecifications(recipe: widget.recipe!),
                 Text(
-                  AppStrings.ingredients,
+                  S.of(context).ingredients,
                   style: TextStyles.textStyleBold18Black,
                 ),
                 Padding(
@@ -74,14 +74,15 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                         if (snapShot.hasError) {
                           return OverlayToastMessage.show(
                               widget: OverlayCustomToast(
-                            message: "Error when get data",
+                            message: S.of(context).errorWhenGetData,
                             status: ToastMessageStatus.failed,
                           ));
                         } else {
                           if (snapShot.hasData) {
                             List<Ingredient> userIngredients = snapShot
                                 .data!.docs
-                                .map((e) => Ingredient.fromJson(e.data(), e.id))
+                                .map((e) => Ingredient.fromJson(
+                                    e.data(), context, e.id))
                                 .toList();
                             var userIngredientsTitles =
                                 userIngredients.map((e) => e.name).toList();
@@ -137,7 +138,7 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                           } else {
                             return OverlayToastMessage.show(
                                 widget: OverlayCustomToast(
-                              message: "There is No data found",
+                              message: S.of(context).NoDataFound,
                               status: ToastMessageStatus.success,
                             ));
                           }
@@ -150,7 +151,7 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                   height: AppSize.s20,
                 ),
                 Text(
-                  AppStrings.directions,
+                  S.of(context).directions,
                   style: TextStyles.textStyleBold18Black,
                 ),
                 Padding(
@@ -165,7 +166,7 @@ class _RecipeViewScreenState extends State<RecipeViewScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "• Step ${index + 1}:",
+                            "• ${S.of(context).Step} ${index + 1}:",
                             style: TextStyles.textStyleRegular16Orange,
                           ),
                           Padding(

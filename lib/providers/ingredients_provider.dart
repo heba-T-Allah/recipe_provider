@@ -16,13 +16,15 @@ class IngredientsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getIngredients() async {
+  BuildContext? context;
+  Future<void> getIngredients(BuildContext context) async {
+    this.context = context;
     try {
       var result =
           await FirebaseFirestore.instance.collection("ingredient").get();
       if (result.docs.isNotEmpty) {
-        ingredientList = List<Ingredient>.from(
-            result.docs.map((doc) => Ingredient.fromJson(doc.data(), doc.id)));
+        ingredientList = List<Ingredient>.from(result.docs
+            .map((doc) => Ingredient.fromJson(doc.data(), context, doc.id)));
       } else {
         ingredientList = [];
       }
@@ -60,7 +62,7 @@ class IngredientsProvider extends ChangeNotifier {
         });
       }
       OverlayLoadingProgress.stop();
-      getIngredients();
+      getIngredients(this.context!);
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(

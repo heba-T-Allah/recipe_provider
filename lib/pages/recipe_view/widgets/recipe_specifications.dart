@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:registration/generated/l10n.dart';
 
 import '../../../model/recipe.dart';
 import '../../../resources/assets_manager.dart';
@@ -20,8 +21,8 @@ class RecipeSpecifications extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    isFav = recipe.favUsersIds
-        ?.contains(FirebaseAuth.instance.currentUser?.uid);
+    isFav =
+        recipe.favUsersIds?.contains(FirebaseAuth.instance.currentUser?.uid);
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,14 +45,13 @@ class RecipeSpecifications extends StatelessWidget {
                   style: TextStyles.textStyleBold22Black),
             ),
             MyFavIcon(isFav: isFav, docId: recipe.docId, listType: "recipe"),
-
           ],
         ),
         const SizedBox(
           height: AppSize.s10,
         ),
         Text(
-          "${recipe.calories!} Calories",
+          "${recipe.calories!} ${S.of(context).calorie}",
           style: TextStyles.textStyleMedium14Orange,
         ),
         const SizedBox(
@@ -71,7 +71,7 @@ class RecipeSpecifications extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   RowIconAndText(
-                    title: " ${recipe.prepTime!} mins",
+                    title: " ${recipe.prepTime!} ${S.of(context).min}",
                     icon: ImageAssets.timeIcon,
                     iconSize: 30,
                     textStyle: TextStyles.textStyleRegular13Grey,
@@ -80,7 +80,7 @@ class RecipeSpecifications extends StatelessWidget {
                     height: AppSize.s30,
                   ),
                   RowIconAndText(
-                    title: "  ${recipe.serving!} Serving",
+                    title: "  ${recipe.serving!} ${S.of(context).servingNum}",
                     icon: ImageAssets.servingIcon,
                     iconSize: 30,
                     textStyle: TextStyles.textStyleRegular13Grey,
@@ -89,7 +89,8 @@ class RecipeSpecifications extends StatelessWidget {
               ),
               CachedNetworkImage(
                   imageUrl: recipe.image!,
-                  placeholder: (context, url) =>  new CircularProgressIndicator(),
+                  placeholder: (context, url) =>
+                      new CircularProgressIndicator(),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   imageBuilder: (context, image) => CircleAvatar(
                         backgroundImage: NetworkImage(

@@ -4,10 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/providers/update_profile_provider.dart';
 import 'package:registration/resources/color_manager.dart';
-
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../../utils/toast_msg_status.dart';
@@ -27,6 +26,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppStrings.updateProfile,
+                      Text(S.of(context).updateProfile,
                           style: TextStyles.textStyleRegular26Black),
                     ],
                   ),
@@ -60,16 +60,20 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(130),
                               color: Colors.black),
-
                           child: CachedNetworkImage(
-                            imageUrl: Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl!,
+                            imageUrl: Provider.of<UpdateProfileProvider>(
+                                    context,
+                                    listen: false)
+                                .profileImageUrl!,
                             placeholder: (context, url) =>
                                 new CircularProgressIndicator(),
                             errorWidget: (context, url, error) =>
                                 Icon(Icons.error),
                             imageBuilder: (context, image) => CircleAvatar(
                                 backgroundImage: NetworkImage(
-                                  Provider.of<UpdateProfileProvider>(context,listen: false).profileImageUrl!,
+                                  Provider.of<UpdateProfileProvider>(context,
+                                          listen: false)
+                                      .profileImageUrl!,
                                 ),
                                 radius: AppSize.s40),
                           ),
@@ -88,11 +92,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               color: ColorManager.backgroundGreyColor),
                           child: Center(
                             child: IconButton(
-                              icon: Icon(Icons.photo_camera_rounded),
-                              onPressed: (){
-                                value.uploadProfileImage();
-                              }
-                            ),
+                                icon: Icon(Icons.photo_camera_rounded),
+                                onPressed: () {
+                                  value.uploadProfileImage();
+                                }),
                           ),
                         ),
                       )
@@ -103,14 +106,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ),
                   Center(
                     child: TextField(
-                     enabled: false,
+                      enabled: false,
                       decoration: InputDecoration(
-
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none),
                         hintText: FirebaseAuth.instance.currentUser!.email,
-
                         hintStyle: TextStyles.textStyleRegular14grey,
                       ),
                     ),
@@ -136,7 +137,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                         hintText: value.getUserName(),
                         label: Padding(
                           padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(AppStrings.userName),
+                          child: Text(S.of(context).userName),
                         ),
                         labelStyle: TextStyles.textStyleRegular14grey,
                         hintStyle: TextStyles.textStyleRegular14grey,
@@ -155,15 +156,13 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 value.nameController!.text.toString().isEmpty) {
                               OverlayToastMessage.show(
                                 widget: OverlayCustomToast(
-                                  message: "Please enter your name.",
+                                  message: S.of(context).pleaseEnterYourName,
                                   status: ToastMessageStatus.failed,
                                 ),
                               );
                             } else {
                               value.updateUserName(context);
-                              setState(() {
-
-                              });
+                              setState(() {});
                             }
                           },
                           style: ButtonStyle(
@@ -174,7 +173,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              AppStrings.changeName,
+                              S.of(context).changeName,
                               style: TextStyles.textStyleRegular16White,
                             ),
                           )),

@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:registration/providers/setting_provider.dart';
+
 class RecipeAd {
   String? id;
   String? title;
@@ -5,8 +9,12 @@ class RecipeAd {
 
   RecipeAd();
 
-  RecipeAd.fromJson(Map<String, dynamic> data, [String? docId]) {
-    title = data['title'];
+  RecipeAd.fromJson(Map<String, dynamic> data, BuildContext context,
+      [String? docId]) {
+    String local =
+        Provider.of<SettingProvider>(context, listen: false).getLocal();
+
+    title = (local == "ar") ? data['title-ar'] : data['title'];
     image = data['image'];
     id = docId;
   }

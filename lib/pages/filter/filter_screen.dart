@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/filter/widgets/title_and_slider.dart';
 import 'package:registration/providers/home_provider.dart';
+import 'package:registration/providers/setting_provider.dart';
 import 'package:registration/resources/color_manager.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../resources/strings_manager.dart';
@@ -20,7 +22,7 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  String? _mealValue = "Breakfast";
+  String _mealValue = "Breakfast";
   late bool filtered;
 
   @override
@@ -30,14 +32,21 @@ class _FilterScreenState extends State<FilterScreen> {
   }
 
   void resetFilter() {
-    _mealValue = "Breakfast";
+    _mealValue = S.of(context).Breakfast;
+
     //clear all filters
     Provider.of<HomeProvider>(context, listen: false).filterSendValue = {};
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> mealList = ["Breakfast", "Launch", "Dinner"];
+    List<String> mealList = [
+      S.of(context).Breakfast,
+      S.of(context).Launch,
+      S.of(context).Dinner
+    ];
+    String local =
+        Provider.of<SettingProvider>(context, listen: false).getLocal();
 
     return Scaffold(
       appBar: AppBar(),
@@ -59,8 +68,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       },
                     ),
                   );
-                }
-                else if (provider.filteredList!.isEmpty) {
+                } else if (provider.filteredList!.isEmpty) {
                   return const NoDataFoundWidget();
                 } else {
                   return RecommendedRecipeList(
@@ -77,7 +85,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          AppStrings.filter,
+                          S.of(context).filter,
                           style: TextStyles.textStyleRegular26Black,
                         ),
                         InkWell(
@@ -85,60 +93,78 @@ class _FilterScreenState extends State<FilterScreen> {
                             resetFilter();
                           },
                           child: Text(
-                            AppStrings.reset,
+                            S.of(context).reset,
                             style: TextStyles.textStyleMedium14Orange,
                           ),
                         )
                       ],
                     ),
                     const SizedBox(height: 20.0),
-                    Text(AppStrings.meal,
+                    Text(S.of(context).meal,
                         style: TextStyles.textStyleBold18Black),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: mealList
                           .map((e) => Padding(
                                 padding: const EdgeInsets.all(12.0),
-                                child: ChoiceChip(
-                                    showCheckmark: false,
-                                    label: Text(
-                                      e,
-                                      style: _mealValue == e
-                                          ? TextStyles.textStyleMedium12Orange
-                                          : TextStyles
-                                              .textStyleMedium12DarkGrey,
-                                    ),
-                                    backgroundColor: _mealValue == e
-                                        ? ColorManager.primaryColor
-                                        : ColorManager.darkGreyBg,
-                                    selected: _mealValue == e,
-                                    onSelected: (bool selected) {
-                                      setState(() {});
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
                                       _mealValue = e;
-                                      provider.filterSendValue['meal_type'] = e;
-                                      // selectedFilterValue['meal_type'] = e;
-                                      // print(selectedFilterValue);
-                                    }),
+                                    });
+                                  },
+                                  child: ChoiceChip(
+                                      showCheckmark: false,
+                                      label: Text(
+                                        e,
+                                        style: _mealValue == e
+                                            ? TextStyles.textStyleMedium12Orange
+                                            : TextStyles
+                                                .textStyleMedium12DarkGrey,
+                                      ),
+                                      backgroundColor: _mealValue == e
+                                          ? ColorManager.primaryColor
+                                          : ColorManager.darkGreyBg,
+                                      selected: _mealValue == e,
+                                      onSelected: (bool selected) {
+                                        setState(() {
+                                          _mealValue = e;
+                                          print(
+                                              ",,,,,,,,,,,$_mealValue     $e");
+                                          if (local == "ar") {
+                                            provider.filterSendValue[
+                                                'meal_type_ar'] = e;
+                                          } else {
+                                            provider.filterSendValue[
+                                                'meal_type'] = e;
+                                          }
+                                        });
+                                      }),
+                                ),
                               ))
                           .toList(),
                     ),
                     TitleAndSlider(
-                      title: AppStrings.serving,
+                      title: S.of(context).serving,
+                      titleValue: AppStrings.serving,
                       max: 100,
                       division: 5,
                     ),
                     TitleAndSlider(
-                      title: AppStrings.preparationTime,
+                      title: S.of(context).preparationTime,
+                      titleValue: AppStrings.preparationTime,
                       max: 240,
                       division: 15,
                     ),
                     TitleAndSlider(
-                      title: AppStrings.calories,
+                      title: S.of(context).calories,
+                      titleValue: AppStrings.calories,
                       max: 1000,
                       division: 100,
                     ),
                     TitleAndSlider(
-                      title: AppStrings.rate,
+                      title: S.of(context).rate,
+                      titleValue: AppStrings.rate,
                       max: 5,
                       division: 5,
                     ),
@@ -146,7 +172,7 @@ class _FilterScreenState extends State<FilterScreen> {
                       height: 20,
                     ),
                     TextButtonWidget(
-                        buttonText: AppStrings.apply,
+                        buttonText: S.of(context).apply,
                         textStyle: TextStyles.textStyleRegular16White,
                         onPressed: () {
                           setState(() {});

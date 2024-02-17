@@ -1,11 +1,11 @@
 import 'package:flexible_grid_view/flexible_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/model/recipe.dart';
 import 'package:registration/pages/home/widgets/fresh_card_recipe.dart';
 import 'package:registration/pages/widgets/no_data_found_widget.dart';
 import 'package:registration/providers/home_provider.dart';
-import 'package:registration/resources/strings_manager.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../resources/text_style.dart';
@@ -26,7 +26,6 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
 
   init() async {
     await Future.delayed(const Duration(seconds: 1));
-    await Provider.of<HomeProvider>(context, listen: false).getAllRecipes();
     Provider.of<HomeProvider>(context, listen: false).haveResult = false;
   }
 
@@ -38,6 +37,8 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeProvider>(context, listen: false).getAllRecipes(context);
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
@@ -52,7 +53,7 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.allRecipe,
+              Text(S.of(context).allRecipe,
                   style: TextStyles.textStyleRegular26Black),
               const SizedBox(
                 height: AppSize.s10,
@@ -74,7 +75,7 @@ class _SeeAllRecipeScreenState extends State<SeeAllRecipeScreen> {
                     return SizedBox(
                       height: 600,
                       child: Padding(
-                padding: const EdgeInsets.only(bottom: 20.0),
+                        padding: const EdgeInsets.only(bottom: 20.0),
                         child: buildFlexibleGridView(
                             value, context, value.recipeList!),
                       ),

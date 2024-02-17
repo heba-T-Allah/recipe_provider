@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:registration/providers/setting_provider.dart';
 import '../../resources/assets_manager.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,6 +11,8 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    String local =
+        Provider.of<SettingProvider>(context, listen: false).getLocal();
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 0,
@@ -18,13 +22,21 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         icon: backbtn
             ? Icon(Icons.arrow_back)
-            : Image.asset(
-                ImageAssets.menuIcon,
-                color: Colors.black,
-                fit: BoxFit.cover,
-                width: 15,
-                height: 15,
-              ),
+            : (local == "ar")
+                ? Image.asset(
+                    ImageAssets.menuArIcon,
+                    color: Colors.black,
+                    fit: BoxFit.cover,
+                    width: 15,
+                    height: 15,
+                  )
+                : Image.asset(
+                    ImageAssets.menuIcon,
+                    color: Colors.black,
+                    fit: BoxFit.cover,
+                    width: 15,
+                    height: 15,
+                  ),
       ),
     );
   }

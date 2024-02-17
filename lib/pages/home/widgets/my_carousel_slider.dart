@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/providers/setting_provider.dart';
 import '../../../resources/constants_manager.dart';
 import '../../../resources/text_style.dart';
 import '../../../resources/values_manager.dart';
@@ -24,11 +25,13 @@ class _MyCarouselSliderState extends State<MyCarouselSlider> {
 
   void init() async {
     Provider.of<AdsProvider>(context, listen: false).initCarousal();
-    await Provider.of<AdsProvider>(context, listen: false).getAds();
   }
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<AdsProvider>(context, listen: false).getAds(context);
+    String local =
+        Provider.of<SettingProvider>(context, listen: false).getLocal();
     return Consumer<AdsProvider>(
       builder: (BuildContext context, adProvider, Widget? child) => adProvider
                   .adsList ==
@@ -63,7 +66,6 @@ class _MyCarouselSliderState extends State<MyCarouselSlider> {
                                                 recipeAd.image!,
                                               ),
                                             ),
-
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(
@@ -112,29 +114,41 @@ class _MyCarouselSliderState extends State<MyCarouselSlider> {
                               top: 80,
                               right: 4,
                               child: IconButton(
-                                  icon: const Icon(
-                                    Icons.arrow_forward_ios,
+                                  icon: Icon(
+                                    (local == "ar")
+                                        ? Icons.arrow_back_ios
+                                        : Icons.arrow_forward_ios,
                                     color: Colors.black,
                                     size: AppSize.s50,
                                   ),
                                   onPressed: () {
-                                    Provider.of<AdsProvider>(context,
-                                            listen: false)
-                                        .sliderForwardArrow();
+                                    (local == "ar")
+                                        ? Provider.of<AdsProvider>(context,
+                                                listen: false)
+                                            .sliderBackArrow()
+                                        : Provider.of<AdsProvider>(context,
+                                                listen: false)
+                                            .sliderForwardArrow();
                                   })),
                           Positioned(
                             top: 80,
                             left: 4,
                             child: IconButton(
-                                icon: const Icon(
-                                  Icons.arrow_back_ios,
+                                icon: Icon(
+                                  (local == "ar")
+                                      ? Icons.arrow_forward_ios
+                                      : Icons.arrow_back_ios,
                                   color: Colors.black,
                                   size: AppSize.s50,
                                 ),
                                 onPressed: () {
-                                  Provider.of<AdsProvider>(context,
-                                          listen: false)
-                                      .sliderBackArrow();
+                                  (local == "ar")
+                                      ? Provider.of<AdsProvider>(context,
+                                              listen: false)
+                                          .sliderForwardArrow()
+                                      : Provider.of<AdsProvider>(context,
+                                              listen: false)
+                                          .sliderBackArrow();
                                 }),
                           ),
                         ],

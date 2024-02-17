@@ -9,9 +9,5 @@ class ImageAssets {
   static const String filterIcon = "$imagePath/filter.png";
   static const String timeIcon = "$imagePath/time.png";
   static const String servingIcon = "$imagePath/serving.png";
-
-
-
-
-
+  static const String menuArIcon = "$imagePath/menu_ar.png";
 }

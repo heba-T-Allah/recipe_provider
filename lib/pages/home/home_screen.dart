@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/drawer/menu_screen.dart';
 import 'package:registration/pages/home/widgets/cards_title.dart';
 import 'package:registration/pages/home/widgets/fresh_recipe_list.dart';
@@ -7,7 +8,6 @@ import 'package:registration/pages/home/widgets/my_carousel_slider.dart';
 import 'package:registration/pages/home/widgets/recommended_list.dart';
 import 'package:registration/pages/home/widgets/search_and_filter.dart';
 import 'package:registration/providers/update_profile_provider.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
@@ -27,28 +27,28 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  init() async {
-    await Provider.of<HomeProvider>(context, listen: false).getFreshRecipes();
-    await Provider.of<HomeProvider>(context, listen: false)
-        .getRecommendedRecipes();
-  }
+  init() async {}
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<HomeProvider>(context, listen: false).getFreshRecipes(context);
+    Provider.of<HomeProvider>(context, listen: false)
+        .getRecommendedRecipes(context);
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
       appBar: MyAppBar(),
       drawer: MenuScreen(
-        onPageSelected: (p0) {},
+        context: context,
+        onPageSelected: (p0, p1) {},
       ),
       body: Consumer<HomeProvider>(builder: (context, value, child) {
         return value.freshRecipeList == null
             ? const Center(child: CircularProgressIndicator())
             : value.freshRecipeList!.isEmpty
-                ? const Text('No Data Found')
+                ? Text(S.of(context).NoDataFound)
                 : Padding(
                     padding: const EdgeInsets.only(
                         top: AppPadding.p8,
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 SizedBox(
                                   height: AppSize.s20,
                                   child: Text(
-                                    "Bonjour ${Provider.of<UpdateProfileProvider>(context,listen: false).getUserName()}",
+                                    "${S.of(context).Bonjour} ${Provider.of<UpdateProfileProvider>(context, listen: false).getUserName()}",
                                     style: TextStyles.textStyleRegular13Grey,
                                   ),
                                 ),
@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: AppSize.s10,
                                 ),
                                 Text(
-                                  AppStrings.whatWouldYouLikeToCook,
+                                  S.of(context).whatWouldYouLikeToCook,
                                   style: TextStyles.textStyleAbrilRegular20Black
                                       .copyWith(height: 1.5),
                                 ),
@@ -87,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: AppSize.s10,
                                 ),
-                                CardsTitle(title: AppStrings.todayFresh),
+                                CardsTitle(title: S.of(context).todayFresh),
                                 const SizedBox(
                                   height: AppSize.s20,
                                 ),
@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const SizedBox(
                                   height: AppSize.s20,
                                 ),
-                                CardsTitle(title: AppStrings.recommended),
+                                CardsTitle(title: S.of(context).recommended),
                                 const SizedBox(
                                   height: AppSize.s10,
                                 ),

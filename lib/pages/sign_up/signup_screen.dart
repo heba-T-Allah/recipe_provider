@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:registration/generated/l10n.dart';
 import '../../resources/assets_manager.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import 'form_section_signup.dart';
 
@@ -28,27 +28,25 @@ class SignUpScreen extends StatelessWidget {
                   width: width,
                   decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(ImageAssets.bgMask),
-                        fit: BoxFit.cover,
-                      )),
-                  child: ListView(
-                      children: [
-                        Image.asset(
-                          ImageAssets.logo,
-                          scale: 3,
-                        ),
-
-                        Center(
-                          child: Text(
-                            AppStrings.signUp,
-                            style: TextStyles.textStyleBold22White
-                                .copyWith(height: 1.5),
-                          ),
-                        ),
-                        SizedBox(
-                          height:20,
-                        ),
-                   const FormSectionSignUp(),
+                    image: AssetImage(ImageAssets.bgMask),
+                    fit: BoxFit.cover,
+                  )),
+                  child: ListView(children: [
+                    Image.asset(
+                      ImageAssets.logo,
+                      scale: 3,
+                    ),
+                    Center(
+                      child: Text(
+                        S.of(context).signUp,
+                        style: TextStyles.textStyleBold22White
+                            .copyWith(height: 1.5),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    const FormSectionSignUp(),
                   ])),
             ],
           ),

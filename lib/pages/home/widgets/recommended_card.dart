@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 
 import 'package:registration/pages/home/widgets/prep_time_and_serving.dart';
 
@@ -88,7 +88,7 @@ class RecommendedCard extends StatelessWidget {
                                 width: AppSize.s10,
                               ),
                               Text(
-                                "${recipe.calories!} Calories",
+                                "${recipe.calories!} ${S.of(context).calorie}",
                                 style: TextStyles.textStyleRegular10Orange,
                               ),
                             ],
@@ -98,19 +98,24 @@ class RecommendedCard extends StatelessWidget {
                           width: AppSize.s10,
                         ),
                         PrepTimeAndServing(
-                            prepTime: recipe.prepTime! ,
+                            prepTime: recipe.prepTime!,
                             serving: recipe.serving!),
                       ]),
                 ),
               ),
-              screen=="recentlyView"?
-                  IconButton(onPressed: () async{
-                    await Provider.of<HomeProvider>(context, listen: false)
-                        .addToRecentRecipe(recipe.docId!, false);
-                    print("recipe removed");
-                  }, icon: Icon(Icons.close,color: Colors.red,))
-                  :MyFavIcon(isFav: isFav, docId: recipe.docId, listType: screen),
-
+              screen == "recentlyView"
+                  ? IconButton(
+                      onPressed: () async {
+                        await Provider.of<HomeProvider>(context, listen: false)
+                            .addToRecentRecipe(recipe.docId!, false);
+                        print("recipe removed");
+                      },
+                      icon: Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ))
+                  : MyFavIcon(
+                      isFav: isFav, docId: recipe.docId, listType: screen),
             ],
           )),
     );

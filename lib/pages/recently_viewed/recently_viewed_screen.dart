@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/providers/home_provider.dart';
-import 'package:registration/resources/strings_manager.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../model/recipe.dart';
@@ -53,7 +53,7 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(AppStrings.recentlyViewed,
+              Text(S.of(context).recentlyViewed,
                   style: TextStyles.textStyleRegular26Black),
               const SizedBox(
                 height: AppSize.s10,
@@ -94,7 +94,8 @@ class _RecentlyViewedScreenState extends State<RecentlyViewedScreen> {
                         } else {
                           if (snapShots.hasData) {
                             List<Recipe> recipeList = snapShots.data!.docs
-                                .map((e) => Recipe.fromJson(e.data(), e.id))
+                                .map((e) =>
+                                    Recipe.fromJson(e.data(), context, e.id))
                                 .toList();
                             value.recentlyViewedRecipe = recipeList;
 

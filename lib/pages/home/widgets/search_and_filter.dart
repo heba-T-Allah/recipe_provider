@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/filter/filter_screen.dart';
 import 'package:registration/providers/home_provider.dart';
 import 'package:registration/providers/ingredients_provider.dart';
 import '../../../resources/assets_manager.dart';
 import '../../../resources/color_manager.dart';
-import '../../../resources/strings_manager.dart';
 import '../../../resources/text_style.dart';
 import '../../../utils/navigation.dart';
 
@@ -56,8 +56,8 @@ class _SearchAndFilterState extends State<SearchAndFilter> {
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide.none),
                     hintText: widget.screen == "home"
-                        ? AppStrings.search
-                        : AppStrings.searchUsingKeyword,
+                        ? S.of(context).search
+                        : S.of(context).searchUsingKeyword,
                     hintStyle: TextStyles.textStyleRegular13Grey,
                   ),
                   onChanged: (value) {

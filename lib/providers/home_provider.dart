@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
+import 'package:registration/generated/l10n.dart';
 import '../model/recipe.dart';
 import '../utils/toast_msg_status.dart';
 import '../pages/widgets/overlay_custom_toast.dart';
@@ -74,61 +75,64 @@ class HomeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<void> getFilteredRecipes() async {
-    if(filterSendValue!=null||!filterSendValue.isEmpty){
-    try {
-      var ref = FirebaseFirestore.instance.collection("recipe");
-      var filteredData;
+    if (filterSendValue != null || !filterSendValue.isEmpty) {
+      try {
+        var ref = FirebaseFirestore.instance.collection("recipe");
+        var filteredData;
 
-      for (var entry in filterSendValue.entries) {
-        if (entry.key == "meal_type") {
-          filteredData = await ref.where(entry.key, isEqualTo: entry.value);
-        } else {
-          filteredData =
-              await ref.where(entry.key, isLessThanOrEqualTo: entry.value);
+        for (var entry in filterSendValue.entries) {
+          if (entry.key == "meal_type") {
+            filteredData = await ref.where(entry.key, isEqualTo: entry.value);
+          } else if (entry.key == "meal_type_ar") {
+            filteredData = await ref.where(entry.key, isEqualTo: entry.value);
+          } else {
+            filteredData =
+                await ref.where(entry.key, isLessThanOrEqualTo: entry.value);
+          }
         }
-      }
-      if(filteredData!=null){
-        var result = await filteredData.get();
-      if (result.docs.isNotEmpty) {
-        filteredList = List<Recipe>.from(
-            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
-
-      } else {
+        if (filteredData != null) {
+          var result = await filteredData.get();
+          if (result.docs.isNotEmpty) {
+            filteredList = List<Recipe>.from(result.docs
+                .map((doc) => Recipe.fromJson(doc.data(), context!, doc.id)));
+          } else {
+            filteredList = [];
+          }
+          notifyListeners();
+          filterSendValue = {};
+        } else {
+          filteredList = [];
+        }
+      } catch (e) {
         filteredList = [];
+        filterSendValue = {};
+        print("/////////////////$e");
+        notifyListeners();
+        // OverlayToastMessage.show(
+        //     widget: OverlayCustomToast(
+        //   message: "Error: $e",
+        //   status: ToastMessageStatus.failed,
+        // ));
       }
-      notifyListeners();
-      filterSendValue = {};
-      }else {
-        filteredList = [];
-      }
-
-    } catch (e) {
-      filteredList = [];
-      filterSendValue = {};
-      print(e);
-      notifyListeners();
+    } else {
+      print("NoFilterDataEntered");
       OverlayToastMessage.show(
           widget: OverlayCustomToast(
-        message: "Error: $e",
+        message: S.of(this.context!).NoFilterDataEntered,
         status: ToastMessageStatus.failed,
       ));
-    }}else{
-      OverlayToastMessage.show(
-          widget: OverlayCustomToast(
-            message: "No filter Data entered.",
-            status: ToastMessageStatus.failed,
-          ));
     }
   }
 
-  Future<void> getAllRecipes() async {
+  BuildContext? context;
+  Future<void> getAllRecipes(BuildContext context) async {
+    this.context = context;
     try {
       var result = await FirebaseFirestore.instance.collection("recipe").get();
       if (result.docs.isNotEmpty) {
-        recipeList = List<Recipe>.from(
-            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+        recipeList = List<Recipe>.from(result.docs
+            .map((doc) => Recipe.fromJson(doc.data(), context, doc.id)));
       } else {
         recipeList = [];
       }
@@ -145,7 +149,9 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getFreshRecipes() async {
+  Future<void> getFreshRecipes(BuildContext context) async {
+    this.context = context;
+
     try {
       var result = await FirebaseFirestore.instance
           .collection("recipe")
@@ -153,8 +159,8 @@ class HomeProvider extends ChangeNotifier {
           .limit(5)
           .get();
       if (result.docs.isNotEmpty) {
-        freshRecipeList = List<Recipe>.from(
-            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+        freshRecipeList = List<Recipe>.from(result.docs
+            .map((doc) => Recipe.fromJson(doc.data(), context, doc.id)));
       } else {
         freshRecipeList = [];
       }
@@ -171,7 +177,9 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getRecommendedRecipes() async {
+  Future<void> getRecommendedRecipes(BuildContext context) async {
+    this.context = context;
+
     try {
       var result = await FirebaseFirestore.instance
           .collection("recipe")
@@ -179,8 +187,8 @@ class HomeProvider extends ChangeNotifier {
           .limit(5)
           .get();
       if (result.docs.isNotEmpty) {
-        recommendedRecipeList = List<Recipe>.from(
-            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+        recommendedRecipeList = List<Recipe>.from(result.docs
+            .map((doc) => Recipe.fromJson(doc.data(), context, doc.id)));
       } else {
         recommendedRecipeList = [];
       }
@@ -197,8 +205,10 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> addFavToRecipe(
-      String recipeId, bool isAdd, String listType) async {
+  Future<void> addFavToRecipe(String recipeId, bool isAdd, String listType,
+      BuildContext context) async {
+    this.context = context;
+
     try {
       OverlayLoadingProgress.start();
       if (isAdd) {
@@ -221,21 +231,21 @@ class HomeProvider extends ChangeNotifier {
       notifyListeners();
       OverlayLoadingProgress.stop();
       if (listType == "recommended") {
-        getRecommendedRecipes();
+        getRecommendedRecipes(context);
       } else if (listType == "fresh") {
-        getFreshRecipes();
+        getFreshRecipes(context);
       } else if (listType == "fav") {
-        getFavoriteRecipes();
+        getFavoriteRecipes(context);
       } else if (listType == "recipe") {
-        getFreshRecipes();
-        getRecommendedRecipes();
-        getAllRecipes();
+        getFreshRecipes(context);
+        getRecommendedRecipes(context);
+        getAllRecipes(context);
       } else if (listType == "allRecipe") {
-        getFreshRecipes();
-        getRecommendedRecipes();
-        getAllRecipes();
+        getFreshRecipes(context);
+        getRecommendedRecipes(context);
+        getAllRecipes(context);
       } else {
-        getAllRecipes();
+        getAllRecipes(context);
       }
       notifyListeners();
     } catch (e) {
@@ -248,7 +258,7 @@ class HomeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getFavoriteRecipes() async {
+  Future<void> getFavoriteRecipes(BuildContext context) async {
     try {
       var result = await FirebaseFirestore.instance
           .collection("recipe")
@@ -256,8 +266,8 @@ class HomeProvider extends ChangeNotifier {
               arrayContains: FirebaseAuth.instance.currentUser?.uid)
           .get();
       if (result.docs.isNotEmpty) {
-        favRecipeList = List<Recipe>.from(
-            result.docs.map((doc) => Recipe.fromJson(doc.data(), doc.id)));
+        favRecipeList = List<Recipe>.from(result.docs
+            .map((doc) => Recipe.fromJson(doc.data(), context, doc.id)));
       } else {
         favRecipeList = [];
       }
@@ -324,7 +334,7 @@ class HomeProvider extends ChangeNotifier {
 
   set recentlyViewedRecipe(List<Recipe>? value) {
     _recentlyViewedRecipe = value;
-    notifyListeners();
+    // notifyListeners();
   }
 
   void searchRecipe(String keyword, String screen) {
@@ -352,8 +362,5 @@ class HomeProvider extends ChangeNotifier {
     haveResult = true;
     notifyListeners();
     print("-------------- - updatedRecipeList$updatedRecipeList");
-
   }
-
-
 }

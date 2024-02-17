@@ -1,68 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/about/about_screen.dart';
 import 'package:registration/pages/favorite/favourite_screen.dart';
 import 'package:registration/pages/home/home_screen.dart';
 import 'package:registration/pages/ingredients/ingredients_screen.dart';
 import 'package:registration/pages/settings/settings_screen.dart';
 import 'package:registration/resources/color_manager.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../recently_viewed/recently_viewed_screen.dart';
 import '../../providers/signup_provider.dart';
 import 'my_drawer_header.dart';
 
 class MenuScreen extends StatefulWidget {
-  MenuScreen({super.key, required this.onPageSelected});
+  MenuScreen({super.key, required this.onPageSelected, required this.context});
 
-  final Function(Widget) onPageSelected;
-
+  final Function(Widget, int) onPageSelected;
+  BuildContext context;
   @override
   State<MenuScreen> createState() => _MenuScreenState();
 }
 
 class _MenuScreenState extends State<MenuScreen> {
   int selectedIndex = 0;
-  List<Map> drawerItems = [
-    {
-      'index': 0,
-      'icon': Icons.home,
-      'title': AppStrings.home,
-      'page': HomeScreen()
-    },
-    {
-      'index': 1,
-      'icon': Icons.food_bank_outlined,
-      'title': AppStrings.ingredients,
-      'page': IngredientsScreen()
-    },
-    {
-      'index': 2,
-      'icon': Icons.favorite_border,
-      'title': AppStrings.favorites,
-      'page': FavoriteScreen()
-    },
-    {
-      'index': 3,
-      'icon': Icons.play_arrow_outlined,
-      'title': AppStrings.recentlyViewed,
-      'page': RecentlyViewedScreen()
-    },
-    {
-      'index': 4,
-      'icon': Icons.settings,
-      'title': AppStrings.setting,
-      'page': SettingsScreen()
-    },
-    {
-      'index': 5,
-      'icon': Icons.info_outline_rounded,
-      'title': AppStrings.aboutUs,
-      'page': AboutScreen()
-    },
-
-    {'index': 6, 'icon': Icons.logout, 'title': AppStrings.signOut},
-  ];
 
   TextStyle? drawerTextStyle(int index) {
     return (selectedIndex == index)
@@ -78,6 +39,45 @@ class _MenuScreenState extends State<MenuScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map> drawerItems = [
+      {
+        'index': 0,
+        'icon': Icons.home,
+        'title': S.of(context).home,
+        'page': HomeScreen()
+      },
+      {
+        'index': 1,
+        'icon': Icons.food_bank_outlined,
+        'title': S.of(context).ingredients,
+        'page': IngredientsScreen()
+      },
+      {
+        'index': 2,
+        'icon': Icons.favorite_border,
+        'title': S.of(context).favorites,
+        'page': FavoriteScreen()
+      },
+      {
+        'index': 3,
+        'icon': Icons.play_arrow_outlined,
+        'title': S.of(context).recentlyViewed,
+        'page': RecentlyViewedScreen()
+      },
+      {
+        'index': 4,
+        'icon': Icons.settings,
+        'title': S.of(context).setting,
+        'page': SettingsScreen()
+      },
+      {
+        'index': 5,
+        'icon': Icons.info_outline_rounded,
+        'title': S.of(context).aboutUs,
+        'page': AboutScreen()
+      },
+      {'index': 6, 'icon': Icons.logout, 'title': S.of(context).signOut},
+    ];
     return Scaffold(
         backgroundColor: ColorManager.backgroundGreyColor,
         body: SingleChildScrollView(
@@ -101,7 +101,7 @@ class _MenuScreenState extends State<MenuScreen> {
                                       listen: false)
                                   .signOut(context);
                             } else {
-                              widget.onPageSelected(e['page']);
+                              widget.onPageSelected(e['page'], selectedIndex);
                             }
                           },
                         ))

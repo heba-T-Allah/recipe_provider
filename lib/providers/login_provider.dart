@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_kit/overlay_kit.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/pages/forget_password/forget_password_screen.dart';
 import 'package:registration/providers/update_profile_provider.dart';
 import 'package:registration/utils/toast_msg_status.dart';
@@ -39,6 +40,7 @@ class LoginProvider extends ChangeNotifier {
     // providerDispose();
     NavigationUtils.push(context: context, page: ForgetPasswordScreen());
   }
+
   Future<void> login(BuildContext context) async {
     OverlayLoadingProgress.start();
 
@@ -49,12 +51,15 @@ class LoginProvider extends ChangeNotifier {
                 email: emailController!.text,
                 password: passwordController!.text);
         print("login Successfully. $credentials ");
-        Provider.of<UpdateProfileProvider>(context,listen: false).getUserPhotoUrl();
-        Provider.of<UpdateProfileProvider>(context,listen: false).getUserName();
+        Provider.of<UpdateProfileProvider>(context, listen: false)
+            .getUserPhotoUrl();
+        Provider.of<UpdateProfileProvider>(context, listen: false)
+            .getUserName();
         OverlayToastMessage.show(
             widget: OverlayCustomToast(
-              message: "You login Successfully",status: ToastMessageStatus.success,
-            ));
+          message: S.of(context).YouLogedinSuccessfully,
+          status: ToastMessageStatus.success,
+        ));
         // providerDispose();
         OverlayLoadingProgress.stop();
         NavigationUtils.pushReplacement(context: context, page: DrawerScreen());
@@ -63,7 +68,8 @@ class LoginProvider extends ChangeNotifier {
       print(e);
       OverlayToastMessage.show(
         widget: OverlayCustomToast(
-          message: ErrorHandler.getErrorMsg(e.code),status: ToastMessageStatus.failed,
+          message: ErrorHandler.getErrorMsg(e.code),
+          status: ToastMessageStatus.failed,
         ),
       );
       OverlayLoadingProgress.stop();
@@ -71,7 +77,8 @@ class LoginProvider extends ChangeNotifier {
       print(e);
       OverlayToastMessage.show(
           widget: OverlayCustomToast(
-        message: "General error: $e",status: ToastMessageStatus.failed,
+        message: "General error: $e",
+        status: ToastMessageStatus.failed,
       ));
       OverlayLoadingProgress.stop();
     }

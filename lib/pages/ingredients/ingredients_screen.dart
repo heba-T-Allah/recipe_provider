@@ -2,12 +2,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:registration/generated/l10n.dart';
 import 'package:registration/model/ingredient.dart';
 import 'package:registration/providers/ingredients_provider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../resources/color_manager.dart';
-import '../../resources/strings_manager.dart';
 import '../../resources/text_style.dart';
 import '../../resources/values_manager.dart';
 import '../app_bar/my_app_bar.dart';
@@ -32,13 +32,14 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
 
   init() async {
     await Future.delayed(const Duration(seconds: 1));
-    await Provider.of<IngredientsProvider>(context, listen: false)
-        .getIngredients();
+
     Provider.of<IngredientsProvider>(context, listen: false).haveResult = false;
   }
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<IngredientsProvider>(context, listen: false)
+        .getIngredients(context);
     return Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
@@ -51,7 +52,7 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                Text(AppStrings.ingredients,
+                Text(S.of(context).ingredients,
                     style: TextStyles.textStyleRegular26Black),
                 const SizedBox(
                   height: AppSize.s10,
